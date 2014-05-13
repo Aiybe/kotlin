@@ -13,7 +13,8 @@ public var document: Document
         val answer = _document
         return if (answer == null) {
             kotlin.dom.createDocument()
-        } else answer
+        }
+        else answer
     }
     set(value) {
         _document = value

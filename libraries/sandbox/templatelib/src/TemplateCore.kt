@@ -10,10 +10,10 @@ import kotlin.io.*
  * stuff
  */
 trait Template {
-  var printer: Printer
+    var printer: Printer
 
-  /** Renders the template to the output printer */
-  fun render(): Unit
+    /** Renders the template to the output printer */
+    fun render(): Unit
 }
 
 /**
@@ -24,15 +24,15 @@ trait Template {
  * We abstract away java.io.* APIs here to make the JS implementation simpler
  */
 trait Printer {
-  fun print(value: Any): Unit
-  //fun print(text: String): Unit
+    fun print(value: Any): Unit
+    //fun print(text: String): Unit
 }
 
 class NullPrinter() : Printer {
-  //override fun print(text: String) = none()
-  override fun print(value: Any) {
-    throw UnsupportedOperationException("No Printer defined on the Template")
-  }
+    //override fun print(text: String) = none()
+    override fun print(value: Any) {
+        throw UnsupportedOperationException("No Printer defined on the Template")
+    }
 }
 
 /**
@@ -47,13 +47,13 @@ abstract class TemplateSupport : Template {
  * will typically output to a String, File, stream etc.
  */
 abstract class TextTemplate() : TemplateSupport(), Printer {
-  override var printer: Printer = NullPrinter()
+    override var printer: Printer = NullPrinter()
 
-  fun String.plus(): Unit {
-    printer.print(this)
-  }
+    fun String.plus(): Unit {
+        printer.print(this)
+    }
 
-  //override fun print(value: String) = printer.print(value)
+    //override fun print(value: String) = printer.print(value)
 
-  override fun print(value: Any) = printer.print(value)
+    override fun print(value: Any) = printer.print(value)
 }

@@ -7,8 +7,8 @@ import java.awt.*
 
 fun JFrame.exitOnClose(): Unit {
     // TODO causes compile error
-  //defaultCloseOperation = JFrame.EXIT_ON_CLOSE
-  defaultCloseOperation = 3
+    //defaultCloseOperation = JFrame.EXIT_ON_CLOSE
+    defaultCloseOperation = 3
 }
 
 var JFrame.defaultCloseOperation: Int

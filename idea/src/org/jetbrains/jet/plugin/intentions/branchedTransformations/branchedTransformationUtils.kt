@@ -73,12 +73,12 @@ public fun JetWhenExpression.canFlatten(): Boolean {
     if (elseBranch !is JetWhenExpression) return false
 
     return JetPsiUtil.checkWhenExpressionHasSingleElse(elseBranch) &&
-        JetPsiMatcher.checkElementMatch(subject, elseBranch.getSubjectExpression())
+           JetPsiMatcher.checkElementMatch(subject, elseBranch.getSubjectExpression())
 }
 
-fun JetWhenExpression.getSubjectCandidate(): JetExpression?  {
+fun JetWhenExpression.getSubjectCandidate(): JetExpression? {
     fun JetExpression?.getWhenConditionSubjectCandidate(): JetExpression? {
-        return when(this) {
+        return when (this) {
             is JetIsExpression -> getLeftHandSide()
             is JetBinaryExpression -> {
                 val lhs = getLeft()
@@ -170,7 +170,7 @@ public fun JetWhenExpression.introduceSubject(): JetWhenExpression {
             assert(condition is JetWhenConditionWithExpression, TRANSFORM_WITHOUT_CHECK)
 
             val conditionExpression = ((condition as JetWhenConditionWithExpression)).getExpression()
-            when (conditionExpression)  {
+            when (conditionExpression) {
                 is JetIsExpression -> {
                     builder.pattern(conditionExpression.getTypeRef(), conditionExpression.isNegated())
                 }
@@ -254,7 +254,7 @@ public fun JetIfExpression.transformToWhen() {
         return branches
     }
 
-    fun branchIterator(ifExpression: JetIfExpression): Iterator<JetIfExpression> = object: Iterator<JetIfExpression> {
+    fun branchIterator(ifExpression: JetIfExpression): Iterator<JetIfExpression> = object : Iterator<JetIfExpression> {
         private var expression: JetIfExpression? = ifExpression
 
         override fun next(): JetIfExpression {
@@ -329,7 +329,7 @@ public fun JetWhenExpression.canMergeWithNext(): Boolean {
         val conditions1 = e1.getConditions().toList()
         val conditions2 = e2.getConditions().toList()
         return conditions1.size == conditions2.size &&
-            (conditions1 zip conditions2).all { pair -> JetPsiMatcher.checkElementMatch(pair.first, pair.second)}
+               (conditions1 zip conditions2).all { pair -> JetPsiMatcher.checkElementMatch(pair.first, pair.second) }
     }
 
     fun JetWhenEntry.declarationNames(): Set<String> =

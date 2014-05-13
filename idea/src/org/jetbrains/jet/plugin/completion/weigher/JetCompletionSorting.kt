@@ -23,7 +23,7 @@ import org.jetbrains.jet.lang.psi.JetFile
 import com.intellij.codeInsight.lookup.LookupElementWeigher
 import com.intellij.codeInsight.lookup.LookupElement
 
-public fun CompletionResultSet.addJetSorting(parameters : CompletionParameters) : CompletionResultSet {
+public fun CompletionResultSet.addJetSorting(parameters: CompletionParameters): CompletionResultSet {
     var sorter = CompletionSorter.defaultSorter(parameters, getPrefixMatcher())!!
 
     sorter = sorter.weighBefore("stats", JetKindWeigher())
@@ -38,7 +38,7 @@ public fun CompletionResultSet.addJetSorting(parameters : CompletionParameters) 
     return withRelevanceSorter(sorter)
 }
 
-class PreferMatchingItemWeigher(private val parameters: CompletionParameters) : LookupElementWeigher("preferMatching", false, true){
+class PreferMatchingItemWeigher(private val parameters: CompletionParameters) : LookupElementWeigher("preferMatching", false, true) {
     override fun weigh(element: LookupElement): Comparable<Int>? {
         val prefix = parameters.getLookup().itemPattern(element)
         return if (element.getLookupString() == prefix) 0 else 1

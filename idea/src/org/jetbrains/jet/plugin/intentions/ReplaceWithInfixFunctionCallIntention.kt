@@ -66,13 +66,16 @@ public open class ReplaceWithInfixFunctionCallIntention : JetSelfTargetingIntent
                     val firstArgument = valueArguments?.getArguments()?.first()
 
                     return valueArgumentsMap?.keySet()?.any { it.getName().asString() == firstArgument?.getArgumentName()?.getText() && it.getIndex() == 0 } ?: false
-                } else {
+                }
+                else {
                     return true
                 }
-            } else {
+            }
+            else {
                 return false
             }
-        } else {
+        }
+        else {
             return false
         }
     }

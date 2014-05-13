@@ -65,12 +65,12 @@ data class ExpectedInfo(val `type`: JetType, val tail: Tail?)
 class ExpectedInfos(val bindingContext: BindingContext, val moduleDescriptor: ModuleDescriptor) {
     public fun calculate(expressionWithType: JetExpression): Collection<ExpectedInfo>? {
         return calculateForArgument(expressionWithType)
-            ?: calculateForFunctionLiteralArgument(expressionWithType)
-            ?: calculateForEq(expressionWithType)
-            ?: calculateForIf(expressionWithType)
-            ?: calculateForElvis(expressionWithType)
-            ?: calculateForBlockExpression(expressionWithType)
-            ?: getFromBindingContext(expressionWithType)
+               ?: calculateForFunctionLiteralArgument(expressionWithType)
+               ?: calculateForEq(expressionWithType)
+               ?: calculateForIf(expressionWithType)
+               ?: calculateForElvis(expressionWithType)
+               ?: calculateForBlockExpression(expressionWithType)
+               ?: getFromBindingContext(expressionWithType)
     }
 
     private fun calculateForArgument(expressionWithType: JetExpression): Collection<ExpectedInfo>? {

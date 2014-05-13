@@ -20,7 +20,8 @@ public fun <T> Array<out T>.appendString(buffer: Appendable, separator: String =
         if (limit < 0 || count <= limit) {
             val text = if (element == null) "null" else element.toString()
             buffer.append(text)
-        } else break
+        }
+        else break
     }
     if (limit >= 0 && count > limit) buffer.append(truncated)
     buffer.append(postfix)
@@ -39,7 +40,8 @@ public fun BooleanArray.appendString(buffer: Appendable, separator: String = ", 
         if (limit < 0 || count <= limit) {
             val text = if (element == null) "null" else element.toString()
             buffer.append(text)
-        } else break
+        }
+        else break
     }
     if (limit >= 0 && count > limit) buffer.append(truncated)
     buffer.append(postfix)
@@ -58,7 +60,8 @@ public fun ByteArray.appendString(buffer: Appendable, separator: String = ", ", 
         if (limit < 0 || count <= limit) {
             val text = if (element == null) "null" else element.toString()
             buffer.append(text)
-        } else break
+        }
+        else break
     }
     if (limit >= 0 && count > limit) buffer.append(truncated)
     buffer.append(postfix)
@@ -77,7 +80,8 @@ public fun CharArray.appendString(buffer: Appendable, separator: String = ", ", 
         if (limit < 0 || count <= limit) {
             val text = if (element == null) "null" else element.toString()
             buffer.append(text)
-        } else break
+        }
+        else break
     }
     if (limit >= 0 && count > limit) buffer.append(truncated)
     buffer.append(postfix)
@@ -96,7 +100,8 @@ public fun DoubleArray.appendString(buffer: Appendable, separator: String = ", "
         if (limit < 0 || count <= limit) {
             val text = if (element == null) "null" else element.toString()
             buffer.append(text)
-        } else break
+        }
+        else break
     }
     if (limit >= 0 && count > limit) buffer.append(truncated)
     buffer.append(postfix)
@@ -115,7 +120,8 @@ public fun FloatArray.appendString(buffer: Appendable, separator: String = ", ",
         if (limit < 0 || count <= limit) {
             val text = if (element == null) "null" else element.toString()
             buffer.append(text)
-        } else break
+        }
+        else break
     }
     if (limit >= 0 && count > limit) buffer.append(truncated)
     buffer.append(postfix)
@@ -134,7 +140,8 @@ public fun IntArray.appendString(buffer: Appendable, separator: String = ", ", p
         if (limit < 0 || count <= limit) {
             val text = if (element == null) "null" else element.toString()
             buffer.append(text)
-        } else break
+        }
+        else break
     }
     if (limit >= 0 && count > limit) buffer.append(truncated)
     buffer.append(postfix)
@@ -153,7 +160,8 @@ public fun LongArray.appendString(buffer: Appendable, separator: String = ", ", 
         if (limit < 0 || count <= limit) {
             val text = if (element == null) "null" else element.toString()
             buffer.append(text)
-        } else break
+        }
+        else break
     }
     if (limit >= 0 && count > limit) buffer.append(truncated)
     buffer.append(postfix)
@@ -172,7 +180,8 @@ public fun ShortArray.appendString(buffer: Appendable, separator: String = ", ",
         if (limit < 0 || count <= limit) {
             val text = if (element == null) "null" else element.toString()
             buffer.append(text)
-        } else break
+        }
+        else break
     }
     if (limit >= 0 && count > limit) buffer.append(truncated)
     buffer.append(postfix)
@@ -191,7 +200,8 @@ public fun <T> Iterable<T>.appendString(buffer: Appendable, separator: String = 
         if (limit < 0 || count <= limit) {
             val text = if (element == null) "null" else element.toString()
             buffer.append(text)
-        } else break
+        }
+        else break
     }
     if (limit >= 0 && count > limit) buffer.append(truncated)
     buffer.append(postfix)
@@ -210,7 +220,8 @@ public fun <T> Stream<T>.appendString(buffer: Appendable, separator: String = ",
         if (limit < 0 || count <= limit) {
             val text = if (element == null) "null" else element.toString()
             buffer.append(text)
-        } else break
+        }
+        else break
     }
     if (limit >= 0 && count > limit) buffer.append(truncated)
     buffer.append(postfix)
@@ -229,7 +240,8 @@ public fun String.appendString(buffer: Appendable, separator: String = ", ", pre
         if (limit < 0 || count <= limit) {
             val text = if (element == null) "null" else element.toString()
             buffer.append(text)
-        } else break
+        }
+        else break
     }
     if (limit >= 0 && count > limit) buffer.append(truncated)
     buffer.append(postfix)

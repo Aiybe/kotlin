@@ -116,12 +116,12 @@ public open class JetKeywordCompletionContributor() : CompletionContributor() {
                 .registerAll()
     }
 
-    private fun registerScopeKeywordsCompletion(placeFilter : ElementFilter, keywords : Collection<JetToken>) {
+    private fun registerScopeKeywordsCompletion(placeFilter: ElementFilter, keywords: Collection<JetToken>) {
         extend(CompletionType.BASIC, getPlacePattern(placeFilter), KeywordsCompletionProvider(keywords.map { it.toString()!! }))
     }
 
     private inner class BunchKeywordRegister() {
-        private val orFiltersToKeywords : MultiMap<HashSet<ElementFilter>, JetToken> = MultiMap.create()
+        private val orFiltersToKeywords: MultiMap<HashSet<ElementFilter>, JetToken> = MultiMap.create()
 
         fun add(keyword: JetToken, vararg filters: ElementFilter): BunchKeywordRegister {
             orFiltersToKeywords.putValue(hashSetOf(*filters), keyword)
@@ -147,7 +147,7 @@ public open class JetKeywordCompletionContributor() : CompletionContributor() {
                 NotFilter(ParentFilter(ClassFilter(javaClass<JetReferenceExpression>())))
         ))
 
-        private val GENERAL_FILTER : ElementFilter = NotFilter(OrFilter(
+        private val GENERAL_FILTER: ElementFilter = NotFilter(OrFilter(
                 CommentFilter(),
                 ParentFilter(ClassFilter(javaClass<JetLiteralStringTemplateEntry>())),
                 ParentFilter(ClassFilter(javaClass<JetConstantExpression>())),
@@ -155,34 +155,34 @@ public open class JetKeywordCompletionContributor() : CompletionContributor() {
                 LeftNeighbour(TextFilter("."))
         ))
 
-        private fun notIdentifier(filter : ElementFilter) = AndFilter(NOT_IDENTIFIER_FILTER, filter)
+        private fun notIdentifier(filter: ElementFilter) = AndFilter(NOT_IDENTIFIER_FILTER, filter)
 
-        private fun getPlacePattern(placeFilter : ElementFilter) =
-            PlatformPatterns.psiElement().and(FilterPattern(AndFilter(GENERAL_FILTER, placeFilter)))
+        private fun getPlacePattern(placeFilter: ElementFilter) =
+                PlatformPatterns.psiElement().and(FilterPattern(AndFilter(GENERAL_FILTER, placeFilter)))
 
         private open class CommentFilter() : ElementFilter {
-            override fun isAcceptable(element : Any?, context : PsiElement?) : Boolean {
+            override fun isAcceptable(element: Any?, context: PsiElement?): Boolean {
                 return (element is PsiElement) && JetPsiUtil.isInComment(element as PsiElement)
             }
 
             override fun isClassAcceptable(hintClass: Class<out Any?>?): Boolean = true
         }
 
-        private open class ParentFilter(filter : ElementFilter) : PositionElementFilter() {
+        private open class ParentFilter(filter: ElementFilter) : PositionElementFilter() {
             {
                 setFilter(filter)
             }
 
-            override fun isAcceptable(element : Any?, context : PsiElement?) : Boolean {
+            override fun isAcceptable(element: Any?, context: PsiElement?): Boolean {
                 val parent = (element as? PsiElement)?.getParent()
                 return parent != null && (getFilter()?.isAcceptable(parent, context) ?: true)
             }
         }
 
         private open class InTopFilter() : PositionElementFilter() {
-            override fun isAcceptable(element : Any?, context : PsiElement?) : Boolean {
+            override fun isAcceptable(element: Any?, context: PsiElement?): Boolean {
                 val underFile = PsiTreeUtil.getParentOfType(context, javaClass<JetFile>(), false,
-                        javaClass<JetClass>(), javaClass<JetClassBody>(), javaClass<JetBlockExpression>(), javaClass<JetFunction>()) != null
+                                                            javaClass<JetClass>(), javaClass<JetClassBody>(), javaClass<JetBlockExpression>(), javaClass<JetFunction>()) != null
 
                 val notInDeclarationElement = PsiTreeUtil.getParentOfType(
                         context,
@@ -193,22 +193,22 @@ public open class JetKeywordCompletionContributor() : CompletionContributor() {
         }
 
         private open class InNonClassBlockFilter() : PositionElementFilter() {
-            override fun isAcceptable(element : Any?, context : PsiElement?) : Boolean {
+            override fun isAcceptable(element: Any?, context: PsiElement?): Boolean {
                 return PsiTreeUtil.getParentOfType(context, javaClass<JetBlockExpression>(), true, javaClass<JetClassBody>()) != null
             }
         }
 
         private open class InTypeParameterFirstChildFilter() : PositionElementFilter() {
-            override fun isAcceptable(element : Any?, context : PsiElement?) : Boolean {
+            override fun isAcceptable(element: Any?, context: PsiElement?): Boolean {
                 val typeParameterElement = PsiTreeUtil.getParentOfType(context, javaClass<JetTypeParameter>(), true)
                 return typeParameterElement != null &&
-                        context != null &&
-                        PsiTreeUtil.isAncestor(typeParameterElement.getFirstChild(), context, false)
+                       context != null &&
+                       PsiTreeUtil.isAncestor(typeParameterElement.getFirstChild(), context, false)
             }
         }
 
         private open class InClassBodyFilter() : PositionElementFilter() {
-            override fun isAcceptable(element : Any?, context : PsiElement?) : Boolean {
+            override fun isAcceptable(element: Any?, context: PsiElement?): Boolean {
                 return PsiTreeUtil.getParentOfType(
                         context, javaClass<JetClassBody>(), true,
                         javaClass<JetBlockExpression>(),
@@ -218,7 +218,7 @@ public open class JetKeywordCompletionContributor() : CompletionContributor() {
         }
 
         private open class AfterClassInClassBodyFilter() : InClassBodyFilter() {
-            override fun isAcceptable(element : Any?, context : PsiElement?) : Boolean {
+            override fun isAcceptable(element: Any?, context: PsiElement?): Boolean {
                 if (super.isAcceptable(element, context)) {
                     fun isLeafAndClass(psiElement: PsiElement?) =
                             psiElement is LeafPsiElement && psiElement.getElementType() == JetTokens.CLASS_KEYWORD
@@ -240,7 +240,7 @@ public open class JetKeywordCompletionContributor() : CompletionContributor() {
                 return property != null && isAfterName(property, (element as PsiElement))
             }
 
-            private fun isAfterName(property : JetProperty, element : PsiElement) : Boolean {
+            private fun isAfterName(property: JetProperty, element: PsiElement): Boolean {
                 var iterableChild = property.getFirstChild()
                 while (iterableChild != null) {
                     val child = iterableChild!!
@@ -260,14 +260,14 @@ public open class JetKeywordCompletionContributor() : CompletionContributor() {
             }
         }
 
-        private open class SimplePrefixMatcher(prefix : String) : PrefixMatcher(prefix) {
-            override fun prefixMatches(name : String) : Boolean = StringUtil.startsWith(name, getPrefix())
-            override fun cloneWithPrefix(prefix : String) : PrefixMatcher = SimplePrefixMatcher(prefix)
+        private open class SimplePrefixMatcher(prefix: String) : PrefixMatcher(prefix) {
+            override fun prefixMatches(name: String): Boolean = StringUtil.startsWith(name, getPrefix())
+            override fun cloneWithPrefix(prefix: String): PrefixMatcher = SimplePrefixMatcher(prefix)
         }
 
-        private inner class KeywordsCompletionProvider(keywords : Collection<String>) : CompletionProvider<CompletionParameters>() {
-            private val elements : Collection<LookupElement>
-            private val debugName : String
+        private inner class KeywordsCompletionProvider(keywords: Collection<String>) : CompletionProvider<CompletionParameters>() {
+            private val elements: Collection<LookupElement>
+            private val debugName: String
 
             {
                 debugName = keywords.sort().makeString(separator = ", ")
@@ -288,7 +288,7 @@ public open class JetKeywordCompletionContributor() : CompletionContributor() {
                 result.addJetSorting(parameters).withPrefixMatcher(SimplePrefixMatcher(result.getPrefixMatcher().getPrefix())).addAllElements(elements)
             }
 
-            override fun toString() : String = debugName
+            override fun toString(): String = debugName
         }
     }
 }

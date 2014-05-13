@@ -19,14 +19,14 @@ enum class Family {
 }
 
 enum class PrimitiveType(val name: String) {
-    Boolean: PrimitiveType("Boolean")
-    Byte: PrimitiveType("Byte")
-    Char: PrimitiveType("Char")
-    Short: PrimitiveType("Short")
-    Int: PrimitiveType("Int")
-    Long: PrimitiveType("Long")
-    Float: PrimitiveType("Float")
-    Double: PrimitiveType("Double")
+    Boolean : PrimitiveType("Boolean")
+    Byte : PrimitiveType("Byte")
+    Char : PrimitiveType("Char")
+    Short : PrimitiveType("Short")
+    Int : PrimitiveType("Int")
+    Long : PrimitiveType("Long")
+    Float : PrimitiveType("Float")
+    Double : PrimitiveType("Double")
 }
 
 
@@ -134,7 +134,8 @@ class GenericFunction(val signature: String) : Comparable<GenericFunction> {
         if (f == ArraysOfPrimitives) {
             for (primitive in buildPrimitives.sortBy { it.name() })
                 build(builder, f, primitive)
-        } else {
+        }
+        else {
             build(builder, f, null)
         }
     }
@@ -208,7 +209,8 @@ class GenericFunction(val signature: String) : Comparable<GenericFunction> {
                 }
 
                 return types
-            } else {
+            }
+            else {
                 // primitive type arrays should drop constraints
                 return typeParams.filter { !it.startsWith("T") }
             }
@@ -238,14 +240,15 @@ class GenericFunction(val signature: String) : Comparable<GenericFunction> {
         }
 
         val receiverType = (
-        if (toNullableT) {
-            receiver.replace("T>", "T?>")
-        } else {
-            if (receiver == "Array<T>")
-                "Array<out T>"
-            else
-                receiver
-        }).renderType()
+                if (toNullableT) {
+                    receiver.replace("T>", "T?>")
+                }
+                else {
+                    if (receiver == "Array<T>")
+                        "Array<out T>"
+                    else
+                        receiver
+                }).renderType()
 
 
         builder.append(receiverType)
@@ -257,7 +260,7 @@ class GenericFunction(val signature: String) : Comparable<GenericFunction> {
         builder.append('\n')
         StringReader(body).forEachLine {
             var count = indent
-            val line = it.dropWhile { count-- > 0 && it == ' ' } .renderType()
+            val line = it.dropWhile { count-- > 0 && it == ' ' }.renderType()
             if (line.isNotEmpty()) {
                 builder.append("    ").append(line)
                 builder.append("\n")

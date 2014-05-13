@@ -62,7 +62,7 @@ public class IfThenToSafeAccessIntention : JetSelfTargetingIntention<JetIfExpres
         val receiverExpression = checkNotNull(condition.getNonNullExpression(), "The receiver expression cannot be null")
 
         val selectorExpression =
-                when(condition.getOperationToken()) {
+                when (condition.getOperationToken()) {
 
                     JetTokens.EQEQ -> {
                         val elseClause = checkNotNull(element.getElse(), "The else clause cannot be null")

@@ -153,7 +153,7 @@ private fun Project.createWhiteSpace(kind: AnnotationHostKind): PsiElement =
         else
             JetPsiFactory.createWhiteSpace(this)
 
-private class CaretBox<out E: JetExpression>(
+private class CaretBox<out E : JetExpression>(
         val expression: E,
         private val editor: Editor?
 ) {

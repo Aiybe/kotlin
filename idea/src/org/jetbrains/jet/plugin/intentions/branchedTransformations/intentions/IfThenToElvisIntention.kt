@@ -66,7 +66,7 @@ public class IfThenToElvisIntention : JetSelfTargetingIntention<JetIfExpression>
         val elseExpression = checkNotNull(elseClause.extractExpressionIfSingle(), "Else clause must contain expression")
 
         val (left, right) =
-                when(condition.getOperationToken()) {
+                when (condition.getOperationToken()) {
                     JetTokens.EQEQ -> Pair(elseExpression, thenExpression)
                     JetTokens.EXCLEQ -> Pair(thenExpression, elseExpression)
                     else -> throw IllegalStateException("Operation token must be either null or not null")

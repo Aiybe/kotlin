@@ -25,7 +25,7 @@ import com.intellij.spellchecker.tokenizer.PsiIdentifierOwnerTokenizer
 import com.intellij.psi.PsiNameIdentifierOwner
 import com.intellij.psi.PsiComment
 
-class KotlinSpellcheckingStrategy: SuppressibleSpellcheckingStrategy() {
+class KotlinSpellcheckingStrategy : SuppressibleSpellcheckingStrategy() {
     private val nameIdentifierTokenizer = PsiIdentifierOwnerTokenizer()
 
     [suppress("UNCHECKED_CAST")]
@@ -42,7 +42,7 @@ class KotlinSpellcheckingStrategy: SuppressibleSpellcheckingStrategy() {
         }
     }
 
-    public override fun isSuppressedFor(element : PsiElement, name : String) : Boolean = false
-    public override fun getSuppressActions(element : PsiElement, name : String) : Array<SuppressQuickFix> = SuppressQuickFix.EMPTY_ARRAY
+    public override fun isSuppressedFor(element: PsiElement, name: String): Boolean = false
+    public override fun getSuppressActions(element: PsiElement, name: String): Array<SuppressQuickFix> = SuppressQuickFix.EMPTY_ARRAY
 }
 

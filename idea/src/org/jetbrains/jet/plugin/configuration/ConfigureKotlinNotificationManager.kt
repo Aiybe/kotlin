@@ -24,19 +24,19 @@ import com.intellij.openapi.projectRoots.Sdk
 import org.jetbrains.jet.plugin.configuration.ui.notifications.AbsentSdkAnnotationsNotification
 import org.jetbrains.jet.plugin.configuration.ui.notifications.*
 
-object ConfigureKotlinNotificationManager: KotlinSingleNotificationManager<ConfigureKotlinNotification> {
+object ConfigureKotlinNotificationManager : KotlinSingleNotificationManager<ConfigureKotlinNotification> {
     fun notify(project: Project) {
         notify(project, ConfigureKotlinNotification(project, ConfigureKotlinNotification.getNotificationString(project)))
     }
 }
 
-object AbsentSdkAnnotationsNotificationManager: KotlinSingleNotificationManager<AbsentSdkAnnotationsNotification> {
+object AbsentSdkAnnotationsNotificationManager : KotlinSingleNotificationManager<AbsentSdkAnnotationsNotification> {
     fun notify(project: Project, sdks: Collection<Sdk>) {
         notify(project, AbsentSdkAnnotationsNotification(sdks, getNotificationTitle(sdks), getNotificationString(sdks)))
     }
 }
 
-trait KotlinSingleNotificationManager<T: Notification> {
+trait KotlinSingleNotificationManager<T : Notification> {
     fun notify(project: Project, notification: T) {
         val notificationsManager = NotificationsManager.getNotificationsManager()
         if (notificationsManager == null) {

@@ -7,13 +7,14 @@ import kotlin.test.*
 import org.h2.jdbcx.JdbcConnectionPool
 import org.junit.Test as test
 
-public val dataSource : DataSource = createDataSource()
+public val dataSource: DataSource = createDataSource()
 
-fun createDataSource() : DataSource {
+fun createDataSource(): DataSource {
     val dataSource = JdbcConnectionPool.create("jdbc:h2:mem:KotlinJdbcTest;DB_CLOSE_DELAY=-1", "user", "password")
     if (dataSource == null) {
         throw IllegalStateException("No DataSource created")
-    } else {
+    }
+    else {
         dataSource.update("create table foo (id int primary key, name varchar(100))")
         assertEquals(1, dataSource.update("insert into foo (id, name) values (1, 'James')"))
         assertEquals(1, dataSource.update("insert into foo (id, name) values (2, 'Andrey')"))
@@ -57,7 +58,7 @@ class JdbcTest {
     }
 
     test fun mapIterator() {
-        val mapper = { (rs : ResultSet) ->
+        val mapper = {(rs: ResultSet) ->
             "id: ${rs["id"]}"
         }
 

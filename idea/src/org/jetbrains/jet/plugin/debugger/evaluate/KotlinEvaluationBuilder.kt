@@ -71,7 +71,7 @@ import com.sun.jdi.request.EventRequest
 import com.sun.jdi.ObjectReference
 import com.intellij.debugger.engine.SuspendContext
 
-object KotlinEvaluationBuilder: EvaluatorBuilder {
+object KotlinEvaluationBuilder : EvaluatorBuilder {
     override fun build(codeFragment: PsiElement, position: SourcePosition?): ExpressionEvaluator {
         if (codeFragment !is JetCodeFragment || position == null) {
             return EvaluatorBuilderImpl.getInstance()!!.build(codeFragment, position)
@@ -193,7 +193,7 @@ class KotlinEvaluator(val codeFragment: JetCodeFragment,
     }
 
     private fun createClassFileFactory(extractedFunction: JetNamedFunction): ClassFileFactory {
-        return ApplicationManager.getApplication()?.runReadAction(object: Computable<ClassFileFactory> {
+        return ApplicationManager.getApplication()?.runReadAction(object : Computable<ClassFileFactory> {
             override fun compute(): ClassFileFactory? {
                 val file = createFileForDebugger(codeFragment, extractedFunction)
 

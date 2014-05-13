@@ -125,7 +125,7 @@ public class JetChangeSignature(val project: Project,
         }
 
         if (configuration.performSilently(affectedFunctions)
-        || ApplicationManager.getApplication()!!.isUnitTestMode()) {
+            || ApplicationManager.getApplication()!!.isUnitTestMode()) {
             performRefactoringSilently(dialog)
         }
         else {
@@ -158,7 +158,7 @@ public class JetChangeSignature(val project: Project,
         val unmodifiableFile = function.getContainingFile()?.getVirtualFile()?.getPresentableUrl()
         if (unmodifiableFile != null) {
             val message = RefactoringBundle.message("refactoring.cannot.be.performed") + "\n" +
-                IdeBundle.message("error.message.cannot.modify.file.0", unmodifiableFile)
+                          IdeBundle.message("error.message.cannot.modify.file.0", unmodifiableFile)
             Messages.showErrorDialog(project, message, CommonBundle.getErrorTitle()!!)
         }
         else {

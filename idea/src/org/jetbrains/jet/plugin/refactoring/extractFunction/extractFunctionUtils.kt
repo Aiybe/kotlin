@@ -110,7 +110,7 @@ private fun JetType.isDefault(): Boolean = KotlinBuiltIns.getInstance().isUnit(t
 
 private fun List<Instruction>.getModifiedVarDescriptors(bindingContext: BindingContext): Set<VariableDescriptor> {
     return this
-            .map {if (it is WriteValueInstruction) PseudocodeUtil.extractVariableDescriptorIfAny(it, true, bindingContext) else null}
+            .map { if (it is WriteValueInstruction) PseudocodeUtil.extractVariableDescriptorIfAny(it, true, bindingContext) else null }
             .filterNotNullTo(HashSet<VariableDescriptor>())
 }
 
@@ -170,8 +170,8 @@ private fun List<Instruction>.analyzeControlFlow(
             is AbstractJumpInstruction -> {
                 val element = it.getElement()
                 if (element is JetReturnExpression
-                || element is JetBreakExpression
-                || element is JetContinueExpression) {
+                    || element is JetBreakExpression
+                    || element is JetContinueExpression) {
                     jumpExits.add(it)
                 }
                 else if (element !is JetThrowExpression) {
@@ -244,11 +244,11 @@ private fun ExtractionData.createTemporaryCodeBlock(): JetBlockExpression {
 private fun JetType.collectReferencedTypes(): List<JetType> {
     return DFS.dfsFromNode(
             this,
-            object: Neighbors<JetType> {
+            object : Neighbors<JetType> {
                 override fun getNeighbors(current: JetType): Iterable<JetType> = current.getArguments().map { it.getType() }
             },
             VisitedWithSet(),
-            object: CollectingNodeHandler<JetType, JetType, ArrayList<JetType>>(ArrayList()) {
+            object : CollectingNodeHandler<JetType, JetType, ArrayList<JetType>>(ArrayList()) {
                 override fun afterChildren(current: JetType) {
                     result.add(current)
                 }
@@ -259,7 +259,7 @@ private fun JetType.collectReferencedTypes(): List<JetType> {
 fun JetTypeParameter.collectRelevantConstraints(): List<JetTypeConstraint> {
     val typeConstraints = getParentByType(javaClass<JetTypeParameterListOwner>())?.getTypeConstraints()
     if (typeConstraints == null) return Collections.emptyList()
-    return typeConstraints.filter { it.getSubjectTypeParameterName()?.getReference()?.resolve() == this}
+    return typeConstraints.filter { it.getSubjectTypeParameterName()?.getReference()?.resolve() == this }
 }
 
 fun TypeParameter.collectReferencedTypes(bindingContext: BindingContext): List<JetType> {
@@ -279,7 +279,7 @@ private fun JetType.processTypeIfExtractable(
         typeParameters: MutableSet<TypeParameter>,
         nonDenotableTypes: HashSet<JetType>
 ): Boolean {
-    return collectReferencedTypes().fold(true) { (extractable, typeToCheck) ->
+    return collectReferencedTypes().fold(true) {(extractable, typeToCheck) ->
         val parameterTypeDescriptor = typeToCheck.getConstructor().getDeclarationDescriptor() as? TypeParameterDescriptor
         val typeParameter = parameterTypeDescriptor?.let {
             BindingContextUtils.descriptorToDeclaration(bindingContext, it)
@@ -332,7 +332,7 @@ private fun ExtractionData.inferParametersInfo(
         }
 
         val receiverArgument = resolvedCall?.getReceiverArgument()
-        val receiver = when(receiverArgument) {
+        val receiver = when (receiverArgument) {
             ReceiverValue.NO_RECEIVER -> resolvedCall?.getThisObject()
             else -> receiverArgument
         } ?: ReceiverValue.NO_RECEIVER
@@ -474,7 +474,7 @@ private fun ExtractionData.checkDeclarationsMovingOutOfScope(controlFlow: Contro
     val declarationsOutOfScope = HashSet<JetNamedDeclaration>()
     if (controlFlow is JumpBasedControlFlow) {
         controlFlow.elementToInsertAfterCall.accept(
-                object: JetTreeVisitorVoid() {
+                object : JetTreeVisitorVoid() {
                     override fun visitSimpleNameExpression(expression: JetSimpleNameExpression) {
                         val target = expression.getReference()?.resolve()
                         if (target is JetNamedDeclaration && target.isInsideOf(originalElements)) {
@@ -584,12 +584,12 @@ fun ExtractionDescriptor.validate(): ExtractionDescriptorWithConflicts {
         } as? PsiNamedElement
         if (currentTarget is JetParameter && currentTarget.getParent() == function.getValueParameterList()) continue
         if (currentDescriptor is LocalVariableDescriptor
-        && parameters.any { it.mirrorVarName == currentDescriptor.getName().asString() }) continue
+            && parameters.any { it.mirrorVarName == currentDescriptor.getName().asString() }) continue
 
         if (diagnostics.any { it.getFactory() == Errors.UNRESOLVED_REFERENCE }
-        || (currentDescriptor != null
-        && !ErrorUtils.isError(currentDescriptor)
-        && !compareDescriptors(currentDescriptor, resolveResult.descriptor))) {
+            || (currentDescriptor != null
+                && !ErrorUtils.isError(currentDescriptor)
+                && !compareDescriptors(currentDescriptor, resolveResult.descriptor))) {
             conflicts.putValue(
                     currentRefExpr,
                     JetRefactoringBundle.message(
@@ -650,11 +650,11 @@ fun createNameCounterpartMap(from: JetElement, to: JetElement): Map<JetSimpleNam
 
     val fromOffset = from.getTextRange()!!.getStartOffset()
     from.accept(
-            object: JetTreeVisitorVoid() {
+            object : JetTreeVisitorVoid() {
                 override fun visitSimpleNameExpression(expression: JetSimpleNameExpression) {
                     val offset = expression.getTextRange()!!.getStartOffset() - fromOffset
                     val newExpression = to.findElementAt(offset)?.getParentByType(javaClass<JetSimpleNameExpression>())
-                    assert(newExpression!= null, "Couldn't find expression at $offset in '${to.getText()}'")
+                    assert(newExpression != null, "Couldn't find expression at $offset in '${to.getText()}'")
 
                     map[expression] = newExpression!!
                 }

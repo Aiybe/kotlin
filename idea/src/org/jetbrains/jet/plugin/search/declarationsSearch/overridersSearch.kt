@@ -50,7 +50,7 @@ public fun HierarchySearchRequest<PsiElement>.searchOverriders(): Query<PsiMetho
 
     return psiMethods
             .map { psiMethod -> KotlinPsiMethodOverridersSearch.search(copy(psiMethod)) }
-            .reduce {(query1, query2) -> MergeQuery(query1, query2)}
+            .reduce {(query1, query2) -> MergeQuery(query1, query2) }
 }
 
 public object KotlinPsiMethodOverridersSearch : HierarchySearch<PsiMethod>(PsiMethodOverridingHierarchyTraverser) {
@@ -100,7 +100,7 @@ public object KotlinPsiMethodOverridersSearch : HierarchySearch<PsiMethod>(PsiMe
     }
 }
 
-object PsiMethodOverridingHierarchyTraverser: HierarchyTraverser<PsiMethod> {
+object PsiMethodOverridingHierarchyTraverser : HierarchyTraverser<PsiMethod> {
     override fun nextElements(current: PsiMethod): Iterable<PsiMethod> = KotlinPsiMethodOverridersSearch.searchDirectOverriders(current)
     override fun shouldDescend(element: PsiMethod): Boolean = PsiUtil.canBeOverriden(element)
 }

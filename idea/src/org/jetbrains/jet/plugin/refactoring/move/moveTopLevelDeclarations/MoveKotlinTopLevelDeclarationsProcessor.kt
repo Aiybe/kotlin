@@ -183,7 +183,7 @@ public class MoveKotlinTopLevelDeclarationsProcessor(project: Project, val optio
                     }
                     if (refTarget == null || refTarget.isInsideOf(elementsToMove)) continue
 
-                    val packagePrivate = when(refTarget) {
+                    val packagePrivate = when (refTarget) {
                         is JetModifierListOwner ->
                             refTarget.isPrivate()
                         is PsiModifierListOwner ->

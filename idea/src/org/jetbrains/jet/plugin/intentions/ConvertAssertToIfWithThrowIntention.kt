@@ -33,7 +33,7 @@ import org.jetbrains.jet.lang.psi.JetDotQualifiedExpression
 public class ConvertAssertToIfWithThrowIntention : JetSelfTargetingIntention<JetCallExpression>(
         "convert.assert.to.if.with.throw", javaClass()) {
 
-    private var messageIsAFunction : Boolean by Delegates.notNull()
+    private var messageIsAFunction: Boolean by Delegates.notNull()
 
     override fun isApplicableTo(element: JetCallExpression): Boolean {
         if (element.getCalleeExpression()?.getText() != "assert") return false
@@ -49,7 +49,8 @@ public class ConvertAssertToIfWithThrowIntention : JetSelfTargetingIntention<Jet
         val valParameters = resolvedCall.getResultingDescriptor().getValueParameters()
         if (valParameters.size > 1) {
             messageIsAFunction = (valParameters[1].getType() != KotlinBuiltIns.getInstance().getAnyType())
-        } else {
+        }
+        else {
             messageIsAFunction = false
         }
 
@@ -102,7 +103,8 @@ public class ConvertAssertToIfWithThrowIntention : JetSelfTargetingIntention<Jet
         val parent = element.getParent()
         if (parent is JetDotQualifiedExpression) {
             parent.replace(ifExpression)
-        } else {
+        }
+        else {
             element.replace(ifExpression)
         }
     }

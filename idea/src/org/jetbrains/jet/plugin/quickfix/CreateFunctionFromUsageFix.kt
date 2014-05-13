@@ -493,9 +493,9 @@ private class JetTypeSubstitution(public val forType: JetType, public val byType
 
 private fun JetType.substitute(substitution: JetTypeSubstitution, variance: Variance): JetType {
     if (when (variance) {
-        Variance.INVARIANT      -> this == substitution.forType
-        Variance.IN_VARIANCE    -> JetTypeChecker.INSTANCE.isSubtypeOf(this, substitution.forType)
-        Variance.OUT_VARIANCE   -> JetTypeChecker.INSTANCE.isSubtypeOf(substitution.forType, this)
+        Variance.INVARIANT -> this == substitution.forType
+        Variance.IN_VARIANCE -> JetTypeChecker.INSTANCE.isSubtypeOf(this, substitution.forType)
+        Variance.OUT_VARIANCE -> JetTypeChecker.INSTANCE.isSubtypeOf(substitution.forType, this)
     }) {
         return substitution.byType
     }

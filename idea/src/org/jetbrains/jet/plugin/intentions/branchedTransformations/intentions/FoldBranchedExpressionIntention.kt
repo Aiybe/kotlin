@@ -25,7 +25,7 @@ import org.jetbrains.jet.lang.psi.JetFile
 import org.jetbrains.jet.lang.psi.JetIfExpression
 import org.jetbrains.jet.lang.psi.JetWhenExpression
 
-public open class FoldBranchedExpressionIntention<T: JetExpression>(
+public open class FoldBranchedExpressionIntention<T : JetExpression>(
         val kind: FoldableKind, elementType: Class<T>
 ) : JetSelfTargetingIntention<T>(kind.getKey(), elementType) {
     override fun isApplicableTo(element: T): Boolean = BranchedFoldingUtils.getFoldableExpressionKind(element) == kind
@@ -39,15 +39,15 @@ public open class FoldBranchedExpressionIntention<T: JetExpression>(
 }
 
 public class FoldIfToAssignmentIntention : FoldBranchedExpressionIntention<JetIfExpression>(FoldableKind.IF_TO_ASSIGNMENT, javaClass())
-        
+
 public class FoldIfToReturnAsymmetricallyIntention : FoldBranchedExpressionIntention<JetIfExpression>(
         FoldableKind.IF_TO_RETURN_ASYMMETRICALLY, javaClass()
 )
-        
+
 public class FoldIfToReturnIntention : FoldBranchedExpressionIntention<JetIfExpression>(FoldableKind.IF_TO_RETURN, javaClass())
-        
+
 public class FoldWhenToAssignmentIntention : FoldBranchedExpressionIntention<JetWhenExpression>(
         FoldableKind.WHEN_TO_ASSIGNMENT, javaClass()
 )
-        
+
 public class FoldWhenToReturnIntention : FoldBranchedExpressionIntention<JetWhenExpression>(FoldableKind.WHEN_TO_RETURN, javaClass())

@@ -86,7 +86,7 @@ public class KotlinFindClassUsagesHandler(
             val classUsages = kotlinOptions.toClassHelper().newRequest(target).search()
             val declarationUsages = kotlinOptions.toClassDeclarationsHelper().newRequest(target).search()
 
-            (classUsages + declarationUsages).all { ref -> KotlinFindUsagesHandler.processUsage(processor, ref)} && processInheritors()
+            (classUsages + declarationUsages).all { ref -> KotlinFindUsagesHandler.processUsage(processor, ref) } && processInheritors()
         }!!
     }
 

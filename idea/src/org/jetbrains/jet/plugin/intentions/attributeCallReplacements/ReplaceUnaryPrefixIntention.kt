@@ -21,7 +21,7 @@ import org.jetbrains.jet.lang.psi.JetPsiFactory
 
 public open class ReplaceUnaryPrefixIntention : AttributeCallReplacementIntention("replace.unary.operator.with.prefix") {
 
-    private fun lookup(name: String?) : String? {
+    private fun lookup(name: String?): String? {
         return when (name) {
             "plus" -> "+"
             "minus" -> "-"

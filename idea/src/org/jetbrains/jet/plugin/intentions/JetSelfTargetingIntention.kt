@@ -24,7 +24,7 @@ import org.jetbrains.jet.lang.psi.JetElement
 import org.jetbrains.jet.plugin.JetBundle
 import org.jetbrains.jet.lang.psi.psiUtil.getParentByTypesAndPredicate
 
-public abstract class JetSelfTargetingIntention<T: JetElement>(val key: String, val elementType: Class<T>) : BaseIntentionAction() {
+public abstract class JetSelfTargetingIntention<T : JetElement>(val key: String, val elementType: Class<T>) : BaseIntentionAction() {
     {
         setText(JetBundle.message(key))
     }

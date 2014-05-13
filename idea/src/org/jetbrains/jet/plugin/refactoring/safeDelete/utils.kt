@@ -42,10 +42,10 @@ public fun PsiElement.canDeleteElement(): Boolean {
     }
 
     return this is JetClassOrObject
-        || this is JetNamedFunction
-        || this is PsiMethod
-        || this is JetProperty
-        || this is JetTypeParameter
+           || this is JetNamedFunction
+           || this is PsiMethod
+           || this is JetProperty
+           || this is JetTypeParameter
 }
 
 fun PsiElement.removeOverrideModifier() {
@@ -55,7 +55,8 @@ fun PsiElement.removeOverrideModifier() {
         }
         is PsiMethod -> {
             getModifierList().getAnnotations().find {
-                annotation -> annotation.getQualifiedName() == "java.lang.Override"
+                annotation ->
+                annotation.getQualifiedName() == "java.lang.Override"
             }?.delete()
         }
     }

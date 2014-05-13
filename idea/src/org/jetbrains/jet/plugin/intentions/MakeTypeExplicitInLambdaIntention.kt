@@ -60,7 +60,8 @@ public class MakeTypeExplicitInLambdaIntention : JetSelfTargetingIntention<JetFu
 
         // Step 1: make the parameters types explicit
         val valueParameters = func.getValueParameters()
-        val parameterString = valueParameters.map({descriptor -> "" + descriptor.getName() +
+        val parameterString = valueParameters.map({ descriptor ->
+                                                      "" + descriptor.getName() +
                                                       ": " + DescriptorRenderer.SOURCE_CODE.renderType(descriptor.getType())
                                                   }).makeString(", ", "(", ")")
         val newParameterList = JetPsiFactory.createParameterList(element.getProject(), parameterString)

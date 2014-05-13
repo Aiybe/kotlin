@@ -4,23 +4,23 @@ import kotlin.test.Asserter
 import org.junit.Assert
 
 class JUnitAsserter : Asserter {
-    override fun assertEquals(message : String, expected : Any?, actual : Any?) {
+    override fun assertEquals(message: String, expected: Any?, actual: Any?) {
         Assert.assertEquals(message, expected, actual)
     }
 
-    override fun assertNotNull(message : String, actual : Any?) {
+    override fun assertNotNull(message: String, actual: Any?) {
         Assert.assertNotNull(message, actual)
     }
 
-    override fun assertNull(message : String, actual : Any?) {
+    override fun assertNull(message: String, actual: Any?) {
         Assert.assertNull(message, actual)
     }
 
-    override fun assertTrue(message : String, actual : Boolean) {
+    override fun assertTrue(message: String, actual: Boolean) {
         Assert.assertTrue(message, actual)
     }
 
-    override fun fail(message : String) {
+    override fun fail(message: String) {
         Assert.fail(message)
     }
 }

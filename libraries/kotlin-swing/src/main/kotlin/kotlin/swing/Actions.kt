@@ -10,11 +10,12 @@ import javax.swing.Icon
  * Helper method to create an action from a function
  */
 fun action(text: String, description: String? = null, mnemonic: Int? = null, icon: Icon? = null, fn: (ActionEvent) -> Unit): Action {
-    val answer = object: AbstractAction(text, icon) {
+    val answer = object : AbstractAction(text, icon) {
         public override fun actionPerformed(e: ActionEvent) {
             val event: ActionEvent = if (e != null) {
                 e
-            } else {
+            }
+            else {
                 // lets create a dummy event
                 ActionEvent(this, ActionEvent.ACTION_PERFORMED, text)
             }

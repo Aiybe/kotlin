@@ -52,7 +52,7 @@ public class KotlinFindUsagesHandlerFactory(project: Project) : FindUsagesHandle
             element is JetTypeParameter
 
     public override fun createFindUsagesHandler(element: PsiElement, forHighlightUsages: Boolean): FindUsagesHandler? {
-        when(element) {
+        when (element) {
             is JetClassOrObject ->
                 return KotlinFindClassUsagesHandler(element, this)
 

@@ -32,7 +32,7 @@ import org.jetbrains.jet.lang.psi.JetExpression
 import org.jetbrains.jet.lang.psi.JetBlockExpression
 import org.jetbrains.jet.lang.psi.JetBlockCodeFragment
 
-class KotlinCodeFragmentFactory: CodeFragmentFactory() {
+class KotlinCodeFragmentFactory : CodeFragmentFactory() {
     override fun createCodeFragment(item: TextWithImports, context: PsiElement?, project: Project): JavaCodeFragment {
         val codeFragment = if (item.getKind() == CodeFragmentKind.EXPRESSION) {
             JetExpressionCodeFragment(project, "fragment.kt", item.getText(), getContextElement(context))

@@ -345,7 +345,8 @@ public fun <T> Stream<T>.dropWhile(predicate: (T) -> Boolean): Stream<T> {
         else if (!predicate(it)) {
             yielding = true
             true
-        } else
+        }
+        else
             false
     }
 }

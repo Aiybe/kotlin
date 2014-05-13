@@ -20,17 +20,17 @@ import com.intellij.psi.PsiReference
 import com.intellij.psi.PsiNamedElement
 import org.jetbrains.jet.plugin.search.usagesSearch.UsagesSearchFilter.*
 
-class OrFilter(val filter1: UsagesSearchFilter, val filter2: UsagesSearchFilter): UsagesSearchFilter {
+class OrFilter(val filter1: UsagesSearchFilter, val filter2: UsagesSearchFilter) : UsagesSearchFilter {
     override fun accepts(ref: PsiReference, item: UsagesSearchRequestItem): Boolean =
             filter1.accepts(ref, item) || filter2.accepts(ref, item)
 }
 
-class AndFilter(val filter1: UsagesSearchFilter, val filter2: UsagesSearchFilter): UsagesSearchFilter {
+class AndFilter(val filter1: UsagesSearchFilter, val filter2: UsagesSearchFilter) : UsagesSearchFilter {
     override fun accepts(ref: PsiReference, item: UsagesSearchRequestItem): Boolean =
             filter1.accepts(ref, item) && filter2.accepts(ref, item)
 }
 
-class NotFilter(val filter: UsagesSearchFilter): UsagesSearchFilter {
+class NotFilter(val filter: UsagesSearchFilter) : UsagesSearchFilter {
     override fun accepts(ref: PsiReference, item: UsagesSearchRequestItem): Boolean =
             !filter.accepts(ref, item)
 }
@@ -63,12 +63,12 @@ fun UsagesSearchFilter.ifOrFalse(condition: Boolean): UsagesSearchFilter = ifEls
 fun UsagesSearchFilter.ifOrTrue(condition: Boolean): UsagesSearchFilter = ifElse(condition, True)
 
 val (PsiReference.() -> Boolean).searchFilter: UsagesSearchFilter
-    get() = object: UsagesSearchFilter {
+    get() = object : UsagesSearchFilter {
         override fun accepts(ref: PsiReference, item: UsagesSearchRequestItem): Boolean = ref.this@searchFilter()
     }
 
-val <T: PsiNamedElement> (PsiReference.(T) -> Boolean).searchFilter: UsagesSearchFilter
-    get() = object: UsagesSearchFilter {
+val <T : PsiNamedElement> (PsiReference.(T) -> Boolean).searchFilter: UsagesSearchFilter
+    get() = object : UsagesSearchFilter {
         [suppress("UNCHECKED_CAST")]
         override fun accepts(ref: PsiReference, item: UsagesSearchRequestItem): Boolean = ref.this@searchFilter(item.target.element as T)
     }

@@ -9,7 +9,8 @@ import java.sql.ResultSet
 fun PreparedStatement.update(): Int {
     try {
         return this.executeUpdate()
-    } finally {
+    }
+    finally {
         close()
     }
 }
@@ -18,7 +19,8 @@ fun <T> PreparedStatement.query(block: (ResultSet) -> T): T {
     try {
         val resultSet = this.executeQuery()
         return block(resultSet)
-    } finally {
+    }
+    finally {
         close()
     }
 }

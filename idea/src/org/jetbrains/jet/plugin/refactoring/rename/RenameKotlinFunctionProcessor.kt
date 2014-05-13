@@ -48,7 +48,7 @@ public class RenameKotlinFunctionProcessor : RenamePsiElementProcessor() {
         return element is JetNamedFunction || (element is KotlinLightMethod && element.origin is JetNamedFunction)
     }
 
-    override fun substituteElementToRename(element: PsiElement?, editor: Editor?): PsiElement?  {
+    override fun substituteElementToRename(element: PsiElement?, editor: Editor?): PsiElement? {
         val wrappedMethod = wrapPsiMethod(element)
         if (wrappedMethod == null) {
             // Cancel rename

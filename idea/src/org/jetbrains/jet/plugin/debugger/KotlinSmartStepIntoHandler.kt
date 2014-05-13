@@ -73,7 +73,7 @@ public class KotlinSmartStepIntoHandler : JvmSmartStepIntoHandler() {
         val result = OrderedSet<SmartStepTarget>()
 
         // TODO support class initializers, local functions, delegated properties with specified type, setter for properties
-        element.accept(object: JetTreeVisitorVoid() {
+        element.accept(object : JetTreeVisitorVoid() {
 
             override fun visitFunctionLiteralExpression(expression: JetFunctionLiteralExpression) {
                 // skip calls in function literals
@@ -191,7 +191,7 @@ public class KotlinSmartStepIntoHandler : JvmSmartStepIntoHandler() {
         return super.createMethodFilter(stepTarget)
     }
 
-    class KotlinBasicStepMethodFilter(val stepTarget: KotlinMethodSmartStepTarget): BasicStepMethodFilter(stepTarget.getMethod(), stepTarget.getCallingExpressionLines()) {
+    class KotlinBasicStepMethodFilter(val stepTarget: KotlinMethodSmartStepTarget) : BasicStepMethodFilter(stepTarget.getMethod(), stepTarget.getCallingExpressionLines()) {
         override fun locationMatches(process: DebugProcessImpl, location: Location): Boolean {
             if (super.locationMatches(process, location)) return true
 
@@ -205,15 +205,15 @@ public class KotlinSmartStepIntoHandler : JvmSmartStepIntoHandler() {
 
             val method = location.method()
             return stepTarget.getMethod().getName() == method.name() &&
-                myTargetMethodSignature?.getName(process) == method.signature() &&
-                classes.contains(location.declaringType())
+                   myTargetMethodSignature?.getName(process) == method.signature() &&
+                   classes.contains(location.declaringType())
         }
     }
 
     private fun getTopmostElementAtOffset(element: PsiElement, offset: Int): PsiElement? {
         var resultElement: PsiElement? = element
         while (resultElement?.getParent()?.getTextRange() != null &&
-                resultElement?.getParent()?.getTextRange()!!.getStartOffset() >= offset) {
+               resultElement?.getParent()?.getTextRange()!!.getStartOffset() >= offset) {
             resultElement = resultElement!!.getParent()
         }
 
@@ -226,5 +226,5 @@ public class KotlinSmartStepIntoHandler : JvmSmartStepIntoHandler() {
                                       highlightElement: PsiElement,
                                       needBreakpointRequest: Boolean,
                                       lines: Range<Int>
-    ): MethodSmartStepTarget(psiMethod, label, highlightElement, needBreakpointRequest, lines)
+    ) : MethodSmartStepTarget(psiMethod, label, highlightElement, needBreakpointRequest, lines)
 }

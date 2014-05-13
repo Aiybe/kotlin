@@ -117,9 +117,9 @@ private class KotlinResolveCache(
         val error = results.firstOrNull { it.isError() }
         val bindingContext = CompositeBindingContext.create(results.map { it.getBindingContext() })
         return if (error != null)
-                   AnalyzeExhaust.error(bindingContext, error.getError())
-               else
-                   AnalyzeExhaust.success(bindingContext, getLazyResolveSession().getModuleDescriptor())
+            AnalyzeExhaust.error(bindingContext, error.getError())
+        else
+            AnalyzeExhaust.success(bindingContext, getLazyResolveSession().getModuleDescriptor())
     }
 }
 
@@ -156,7 +156,7 @@ private class PerFileAnalysisCache(val file: JetFile, val resolveSession: Resolv
 
         val analyzableParent = KotlinResolveDataProvider.findAnalyzableParent(element)
 
-        return synchronized(this) { (): AnalyzeExhaust ->
+        return synchronized(this) {(): AnalyzeExhaust ->
 
             val cached = lookUp(analyzableParent)
             if (cached != null) return@synchronized cached
@@ -221,10 +221,10 @@ private object KotlinResolveDataProvider {
             else -> topmostElement
         }
         return analyzableElement
-                    // if none of the above worked, take the outermost declaration
-                    ?: PsiTreeUtil.getTopmostParentOfType(element, javaClass<JetDeclaration>())
-                    // if even that didn't work, take the whole file
-                    ?: element.getContainingJetFile()
+               // if none of the above worked, take the outermost declaration
+               ?: PsiTreeUtil.getTopmostParentOfType(element, javaClass<JetDeclaration>())
+               // if even that didn't work, take the whole file
+               ?: element.getContainingJetFile()
     }
 
     fun analyze(project: Project, resolveSession: ResolveSessionForBodies, analyzableElement: JetElement): AnalyzeExhaust {

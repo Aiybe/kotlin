@@ -239,20 +239,20 @@ fun createSpacingBuilder(settings: CodeStyleSettings): KotlinSpacingBuilder {
             inPosition(parent = FUNCTION_LITERAL,
                        left = LBRACE)
                     .customRule {
-                parent, left, right ->
-                val rightNode = right.getNode()!!
-                val rightType = rightNode.getElementType()
-                var numSpaces = spacesInSimpleFunction
-                if (rightType == VALUE_PARAMETER_LIST) {
-                    val firstParamListNode = rightNode.getFirstChildNode()
-                    if (firstParamListNode != null && firstParamListNode.getElementType() == LPAR) {
-                        // Don't put space for situation {<here>(a: Int) -> a }
-                        numSpaces = 0
-                    }
-                }
+                        parent, left, right ->
+                        val rightNode = right.getNode()!!
+                        val rightType = rightNode.getElementType()
+                        var numSpaces = spacesInSimpleFunction
+                        if (rightType == VALUE_PARAMETER_LIST) {
+                            val firstParamListNode = rightNode.getFirstChildNode()
+                            if (firstParamListNode != null && firstParamListNode.getElementType() == LPAR) {
+                                // Don't put space for situation {<here>(a: Int) -> a }
+                                numSpaces = 0
+                            }
+                        }
 
-                Spacing.createSpacing(numSpaces, numSpaces, 0, settings.KEEP_LINE_BREAKS, settings.KEEP_BLANK_LINES_IN_CODE)
-            }
+                        Spacing.createSpacing(numSpaces, numSpaces, 0, settings.KEEP_LINE_BREAKS, settings.KEEP_BLANK_LINES_IN_CODE)
+                    }
         }
 
         simple {

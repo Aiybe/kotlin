@@ -78,7 +78,7 @@ public class DeserializerForDecompiler(val packageDirectory: VirtualFile, val di
         return membersScope.getAllDescriptors()
     }
 
-    private val localClassFinder = object: KotlinClassFinder {
+    private val localClassFinder = object : KotlinClassFinder {
         override fun findKotlinClass(fqName: FqName) = findKotlinClass(fqName.toClassId())
         override fun findKotlinClass(javaClass: JavaClass) = findKotlinClass(javaClass.getFqName()!!)
 
@@ -207,7 +207,7 @@ public class DeserializerForDecompiler(val packageDirectory: VirtualFile, val di
     class object {
         private val LOG = Logger.getInstance(javaClass<DeserializerForDecompiler>())
 
-        private object LOGGING_REPORTER: ErrorReporter {
+        private object LOGGING_REPORTER : ErrorReporter {
             override fun reportLoadingError(message: String, exception: Exception?) {
                 LOG.error(message, exception)
             }

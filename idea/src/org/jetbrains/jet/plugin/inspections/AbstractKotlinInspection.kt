@@ -23,7 +23,7 @@ import com.intellij.codeInspection.SuppressIntentionAction
 import com.intellij.codeInspection.SuppressManager
 import com.intellij.codeInsight.daemon.HighlightDisplayKey
 
-public abstract class AbstractKotlinInspection: LocalInspectionTool(), CustomSuppressableInspectionTool {
+public abstract class AbstractKotlinInspection : LocalInspectionTool(), CustomSuppressableInspectionTool {
     public override fun getSuppressActions(element: PsiElement?): Array<SuppressIntentionAction>? {
         return SuppressManager.getInstance()!!.createSuppressActions(HighlightDisplayKey.find(getShortName())!!)
     }

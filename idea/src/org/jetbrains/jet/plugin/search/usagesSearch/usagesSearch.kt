@@ -81,11 +81,11 @@ public data class UsagesSearchTarget<out T : PsiElement>(
 
 public trait UsagesSearchFilter {
     class object {
-        object False: UsagesSearchFilter {
+        object False : UsagesSearchFilter {
             override fun accepts(ref: PsiReference, item: UsagesSearchRequestItem): Boolean = false
         }
 
-        object True: UsagesSearchFilter {
+        object True : UsagesSearchFilter {
             override fun accepts(ref: PsiReference, item: UsagesSearchRequestItem): Boolean = true
         }
     }
@@ -103,7 +103,7 @@ public data class UsagesSearchRequest(val project: Project, val items: List<Usag
     val collector: SearchRequestCollector = SearchRequestCollector(SearchSession())
 }
 
-public object UsagesSearch: QueryFactory<PsiReference, UsagesSearchRequest>() {
+public object UsagesSearch : QueryFactory<PsiReference, UsagesSearchRequest>() {
     {
         class ResultProcessorImpl(private val node: UsagesSearchRequestItem) : RequestResultProcessor() {
             private val referenceService = PsiReferenceService.getService()!!
@@ -121,7 +121,7 @@ public object UsagesSearch: QueryFactory<PsiReference, UsagesSearchRequest>() {
             }
         }
 
-        object ExecutorImpl: QueryExecutorBase<PsiReference, UsagesSearchRequest>() {
+        object ExecutorImpl : QueryExecutorBase<PsiReference, UsagesSearchRequest>() {
             override fun processQuery(request: UsagesSearchRequest, consumer: Processor<PsiReference>) {
                 for (item in request.items) {
                     with (item) {
@@ -149,10 +149,10 @@ public object UsagesSearch: QueryFactory<PsiReference, UsagesSearchRequest>() {
 
 fun UsagesSearchRequest.search(): Query<PsiReference> = UsagesSearch.search(this)
 
-fun <A: PsiElement, B: PsiElement> UsagesSearchTarget<A>.retarget(element: B) =
+fun <A : PsiElement, B : PsiElement> UsagesSearchTarget<A>.retarget(element: B) =
         UsagesSearchTarget<B>(element, scope, location, restrictByTargetScope)
 
-val <T: PsiElement> UsagesSearchTarget<T>.effectiveScope: SearchScope
+val <T : PsiElement> UsagesSearchTarget<T>.effectiveScope: SearchScope
     get() = if (restrictByTargetScope) scope and element.effectiveScope else scope
 
 val PsiElement.effectiveScope: SearchScope

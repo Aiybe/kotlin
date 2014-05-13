@@ -66,7 +66,7 @@ public class ConvertToExpressionBodyAction : PsiElementBaseIntentionAction() {
         val statements = body.getStatements()
         if (statements.size != 1) return null
         val statement = statements[0]
-        return when(statement) {
+        return when (statement) {
             is JetReturnExpression -> {
                 val value = statement.getReturnedExpression()
                 if (value != null) Data(declaration, value) else null
@@ -81,7 +81,7 @@ public class ConvertToExpressionBodyAction : PsiElementBaseIntentionAction() {
 
                 val expressionType = expressionType(statement)
                 if (expressionType != null &&
-                      (KotlinBuiltIns.getInstance().isUnit(expressionType) || KotlinBuiltIns.getInstance().isNothing(expressionType)))
+                    (KotlinBuiltIns.getInstance().isUnit(expressionType) || KotlinBuiltIns.getInstance().isNothing(expressionType)))
                     Data(declaration, statement)
                 else
                     null

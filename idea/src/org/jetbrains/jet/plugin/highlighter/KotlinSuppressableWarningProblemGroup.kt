@@ -108,5 +108,5 @@ private object DeclarationKindDetector : JetVisitor<AnnotationHostKind?, Unit?>(
     }
 
     private fun detect(declaration: JetDeclaration, kind: String, name: String = declaration.getName() ?: "<anonymous>", newLineNeeded: Boolean = true)
-        = AnnotationHostKind(kind, name, newLineNeeded)
+            = AnnotationHostKind(kind, name, newLineNeeded)
 }

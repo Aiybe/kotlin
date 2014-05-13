@@ -32,7 +32,7 @@ public trait KotlinMoveTarget {
     fun verify(file: PsiFile): String?
 }
 
-public class MoveDestinationKotlinMoveTarget(val moveDestination: MoveDestination): KotlinMoveTarget {
+public class MoveDestinationKotlinMoveTarget(val moveDestination: MoveDestination) : KotlinMoveTarget {
     override val packageWrapper: PackageWrapper? = moveDestination.getTargetPackage()
 
     override fun getOrCreateTargetPsi(originalPsi: PsiElement): PsiElement? =
@@ -44,7 +44,7 @@ public class MoveDestinationKotlinMoveTarget(val moveDestination: MoveDestinatio
     override fun verify(file: PsiFile): String? = moveDestination.verify(file)
 }
 
-public class JetFileKotlinMoveTarget(val targetFile: JetFile): KotlinMoveTarget {
+public class JetFileKotlinMoveTarget(val targetFile: JetFile) : KotlinMoveTarget {
     override val packageWrapper: PackageWrapper? = targetFile.getPackageName()?.let { packageName ->
         PackageWrapper(PsiManager.getInstance(targetFile.getProject()), packageName)
     }

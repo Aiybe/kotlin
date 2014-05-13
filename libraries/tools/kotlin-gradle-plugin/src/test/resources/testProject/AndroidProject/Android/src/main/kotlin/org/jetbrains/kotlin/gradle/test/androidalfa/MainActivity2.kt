@@ -8,14 +8,14 @@ import android.view.View
 import android.widget.Button
 import org.jetbrains.kotlin.gradle.test.androidalfa.R
 
-open class MainActivity2: Activity() {
+open class MainActivity2 : Activity() {
 
     protected override fun onCreate(savedInstanceState: Bundle?): Unit {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main2)
 
         var next: Button = findViewById(R.id.Button02) as Button
-        next.setOnClickListener(object: View.OnClickListener {
+        next.setOnClickListener(object : View.OnClickListener {
             public override fun onClick(view: View): Unit {
                 val intent: Intent = Intent()
                 setResult(Activity.RESULT_OK, intent)
@@ -29,7 +29,7 @@ open class MainActivity2: Activity() {
         getMenuInflater().inflate(R.menu.main_activity2, menu);
         return true
     }
-    
+
 }
 
 fun foo() {

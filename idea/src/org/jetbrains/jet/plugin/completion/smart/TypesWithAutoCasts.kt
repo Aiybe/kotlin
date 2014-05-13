@@ -40,7 +40,7 @@ class TypesWithAutoCasts(val bindingContext: BindingContext) {
     public fun calculate(expression: JetExpression, receiver: JetExpression?): (DeclarationDescriptor) -> Iterable<JetType> {
         val dataFlowInfo = bindingContext[BindingContext.EXPRESSION_DATA_FLOW_INFO, expression]
         val (variableToTypes: Map<VariableDescriptor, Collection<JetType>>, notNullVariables: Set<VariableDescriptor>)
-            = processDataFlowInfo(dataFlowInfo, receiver)
+                = processDataFlowInfo(dataFlowInfo, receiver)
 
         fun typesOf(descriptor: DeclarationDescriptor): Iterable<JetType> {
             if (descriptor is CallableDescriptor) {

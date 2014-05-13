@@ -25,7 +25,7 @@ import org.jetbrains.jet.lang.psi.JetBinaryExpression
 import org.jetbrains.jet.lang.psi.JetReturnExpression
 import org.jetbrains.jet.lang.psi.JetProperty
 
-public open class UnfoldBranchedExpressionIntention<T: JetExpression>(
+public open class UnfoldBranchedExpressionIntention<T : JetExpression>(
         val kind: UnfoldableKind, elementType: Class<T>
 ) : JetSelfTargetingIntention<T>(kind.getKey(), elementType) {
     override fun isApplicableTo(element: T): Boolean = BranchedUnfoldingUtils.getUnfoldableExpressionKind(element) == kind

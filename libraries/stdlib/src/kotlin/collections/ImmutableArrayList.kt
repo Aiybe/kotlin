@@ -34,9 +34,9 @@ private class ImmutableArrayList<T>(
 
     public override fun get(index: Int): T = array[indexInArray(index)]
 
-    public override fun size() : Int = length
+    public override fun size(): Int = length
 
-    public override fun subList(fromIndex: Int, toIndex: Int) : MutableList<T> {
+    public override fun subList(fromIndex: Int, toIndex: Int): MutableList<T> {
         if (fromIndex < 0) {
             throw IndexOutOfBoundsException("Negative from index ($fromIndex)")
         }

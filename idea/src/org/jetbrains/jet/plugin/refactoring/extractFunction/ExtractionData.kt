@@ -114,14 +114,14 @@ class ExtractionData(
 
             val parent = ref.getParent()
             if (parent is JetQualifiedExpression
-                    && parent.getSelectorExpression() == ref
-                    && parent.getReceiverExpression() !is JetSuperExpression) continue
+                && parent.getSelectorExpression() == ref
+                && parent.getReceiverExpression() !is JetSuperExpression) continue
 
             val offset = ref.getTextRange()!!.getStartOffset() - startOffset
             refOffsetToDeclaration[offset]?.let { originalResolveResult ->
                 val descriptor = context[BindingContext.REFERENCE_TARGET, ref]
                 if (!compareDescriptors(originalResolveResult.descriptor, descriptor)
-                        && !originalResolveResult.declaration.isInsideOf(originalElements)) {
+                    && !originalResolveResult.declaration.isInsideOf(originalElements)) {
                     referencesInfo.add(ResolvedReferenceInfo(ref, offset, originalResolveResult))
                 }
             }
@@ -136,8 +136,8 @@ class ExtractionData(
 
 private fun compareDescriptors(d1: DeclarationDescriptor?, d2: DeclarationDescriptor?): Boolean {
     return d1 == d2 ||
-            (d1 != null && d2 != null &&
-                    DescriptorRenderer.FQ_NAMES_IN_TYPES.render(d1) == DescriptorRenderer.FQ_NAMES_IN_TYPES.render(d2))
+           (d1 != null && d2 != null &&
+            DescriptorRenderer.FQ_NAMES_IN_TYPES.render(d1) == DescriptorRenderer.FQ_NAMES_IN_TYPES.render(d2))
 }
 
 // Hack:

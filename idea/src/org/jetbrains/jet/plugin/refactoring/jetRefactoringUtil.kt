@@ -75,7 +75,7 @@ fun JetSimpleNameExpression.changeQualifiedName(fqName: FqName): JetElement {
     } as JetElement
 }
 
-fun <T: Any> PsiElement.getAndRemoveCopyableUserData(key: Key<T>): T? {
+fun <T : Any> PsiElement.getAndRemoveCopyableUserData(key: Key<T>): T? {
     val data = getCopyableUserData(key)
     putCopyableUserData(key, null)
     return data

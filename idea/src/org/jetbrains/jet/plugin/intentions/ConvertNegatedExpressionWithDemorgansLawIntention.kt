@@ -54,7 +54,7 @@ public class ConvertNegatedExpressionWithDemorgansLawIntention : JetSelfTargetin
     override fun applyTo(element: JetPrefixExpression, editor: Editor) {
         val parenthesizedExpression = element.getBaseExpression() as JetParenthesizedExpression
         val baseExpression = parenthesizedExpression.getExpression() as JetBinaryExpression
-        val operatorText = when(baseExpression.getOperationToken()) {
+        val operatorText = when (baseExpression.getOperationToken()) {
             JetTokens.ANDAND -> JetTokens.OROR.getValue()
             JetTokens.OROR -> JetTokens.ANDAND.getValue()
             else -> throw IllegalArgumentException(
@@ -70,7 +70,7 @@ public class ConvertNegatedExpressionWithDemorgansLawIntention : JetSelfTargetin
     }
 
     fun handleSpecial(expression: JetExpression): String {
-        return when(expression) {
+        return when (expression) {
             is JetSimpleNameExpression, is JetConstantExpression, is JetPrefixExpression,
             is JetParenthesizedExpression -> "!${expression.getText()}"
             else -> "!(${expression.getText()})"

@@ -653,7 +653,8 @@ public fun <T> Array<out T>.indexOf(element: T): Int {
                 return index
             }
         }
-    } else {
+    }
+    else {
         for (index in indices) {
             if (element == this[index]) {
                 return index
@@ -1132,7 +1133,8 @@ public fun <T> Array<out T>.lastIndexOf(element: T): Int {
                 return index
             }
         }
-    } else {
+    }
+    else {
         for (index in indices.reverse()) {
             if (element == this[index]) {
                 return index
@@ -1262,7 +1264,8 @@ public fun <T> List<T>.lastIndexOf(element: T): Int {
                 return index
             }
         }
-    } else {
+    }
+    else {
         for (index in indices.reverse()) {
             if (element == this[index]) {
                 return index

@@ -66,8 +66,8 @@ public class DoubleBangToIfThenIntention : JetSelfTargetingIntention<JetPostfixE
         val kotlinNullPtrExceptionText = "$KOTLIN_NULL_PTR_EXCEPTION()"
 
         val exceptionLookupExpression =
-                object: JetTypeLookupExpression<String>(listOf(nullPtrExceptionText, kotlinNullPtrExceptionText),
-                                                        nullPtrExceptionText, JetBundle.message("double.bang.to.if.then.choose.exception")) {
+                object : JetTypeLookupExpression<String>(listOf(nullPtrExceptionText, kotlinNullPtrExceptionText),
+                                                         nullPtrExceptionText, JetBundle.message("double.bang.to.if.then.choose.exception")) {
 
                     override fun getLookupString(element: String?) = element
                     override fun getResult(element: String?) = element
@@ -81,7 +81,7 @@ public class DoubleBangToIfThenIntention : JetSelfTargetingIntention<JetPostfixE
         PsiDocumentManager.getInstance(project).doPostponedOperationsAndUnblockDocument(editor.getDocument());
         editor.getCaretModel().moveToOffset(thrownExpression.getNode()!!.getStartOffset());
 
-        manager.startTemplate(editor, builder.buildInlineTemplate()!!, object: TemplateEditingAdapter() {
+        manager.startTemplate(editor, builder.buildInlineTemplate()!!, object : TemplateEditingAdapter() {
             override fun templateFinished(template: Template?, brokenOff: Boolean) {
                 if (!isStable && !isStatement) {
                     ifStatement.introduceValueForCondition(ifStatement.getThen()!!, editor)

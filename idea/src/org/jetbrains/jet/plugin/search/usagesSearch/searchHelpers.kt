@@ -106,9 +106,9 @@ trait ImportAwareSearchHelper {
         get() = isNotImportUsage.ifOrTrue(skipImports)
 }
 
-open class DefaultSearchHelper<T: PsiNamedElement>(
+open class DefaultSearchHelper<T : PsiNamedElement>(
         public override val skipImports: Boolean = false
-): UsagesSearchHelper<T>(), ImportAwareSearchHelper {
+) : UsagesSearchHelper<T>(), ImportAwareSearchHelper {
     override fun makeFilter(target: UsagesSearchTarget<T>): UsagesSearchFilter = isTargetUsage and isFilteredImport
 }
 
@@ -169,8 +169,8 @@ class FunctionUsagesSearchHelper(
 ) : DefaultSearchHelper<JetNamedFunction>(skipImports), OverrideSearchHelper {
     override fun makeFilter(target: UsagesSearchTarget<JetNamedFunction>): UsagesSearchFilter {
         return (isTargetOrOverrideUsage
-        or isOverloadUsage.ifOrFalse(overloadUsages)
-        or isExtensionUsage.ifOrFalse(extensionUsages)) and isFilteredImport
+                or isOverloadUsage.ifOrFalse(overloadUsages)
+                or isExtensionUsage.ifOrFalse(extensionUsages)) and isFilteredImport
     }
 }
 

@@ -60,7 +60,7 @@ open class BaseGradleIT(resourcesRoot: String = "src/test/resources") {
 
         return if (isWindows())
             listOf("cmd", "/C", "gradlew.bat") + tailParameters
-         else
+        else
             listOf("/bin/bash", "./gradlew") + tailParameters
     }
 
@@ -94,7 +94,8 @@ open class BaseGradleIT(resourcesRoot: String = "src/test/resources") {
         if (source.isDirectory()) {
             targetFile.mkdir()
             source.listFiles()?.forEach { copyRecursively(it, targetFile) }
-        } else {
+        }
+        else {
             Files.copy(source, targetFile)
         }
     }
@@ -111,7 +112,8 @@ open class BaseGradleIT(resourcesRoot: String = "src/test/resources") {
             val fileList = f.listFiles()
             if (fileList != null) {
                 assertTrue(fileList.isEmpty())
-            } else {
+            }
+            else {
                 fail("Error listing directory content")
             }
         }

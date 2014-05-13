@@ -1,4 +1,4 @@
-package demo 
+package demo
 
 import com.google.common.primitives.Ints
 import com.google.common.base.Joiner
@@ -9,7 +9,7 @@ import org.testng.annotations.Test as test
 
 class TestSource() {
     test fun f() {
-        val example : KotlinGreetingJoiner = KotlinGreetingJoiner(Greeter("Hi"))
+        val example: KotlinGreetingJoiner = KotlinGreetingJoiner(Greeter("Hi"))
         example.addName("Harry")
         example.addName("Ron")
         example.addName(null)

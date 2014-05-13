@@ -28,7 +28,7 @@ public open class JetCompletionCharFilter() : CharFilter() {
         public val ACCEPT_OPENING_BRACE: Key<Boolean> = Key<Boolean>("JetCompletionCharFilter.ACCEPT_OPENNING_BRACE")
     }
 
-    public override fun acceptChar(c : Char, prefixLength : Int, lookup : Lookup) : Result? {
+    public override fun acceptChar(c: Char, prefixLength: Int, lookup: Lookup): Result? {
         if (lookup.getPsiFile() !is JetFile) return null
 
         if (c == '.' && prefixLength == 0 && !lookup.isSelectionTouched()) {

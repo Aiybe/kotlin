@@ -75,7 +75,7 @@ abstract class AbstractJetReference<T : JetElement>(element: T)
         val unwrappedElementToMatch = elementToMatch.namedUnwrappedElement
 
         return (unwrappedTarget == unwrappedElementToMatch) ||
-        (referenceTarget is PsiMethod && referenceTarget.isConstructor() && referenceTarget.getContainingClass() == elementToMatch)
+               (referenceTarget is PsiMethod && referenceTarget.isConstructor() && referenceTarget.getContainingClass() == elementToMatch)
     }
 
     [suppress("CAST_NEVER_SUCCEEDS")]

@@ -45,7 +45,7 @@ public enum class CaretPosition {
 
 public data class GenerateLambdaInfo(val lambdaType: JetType, val explicitParameters: Boolean)
 
-public class JetFunctionInsertHandler(val caretPosition : CaretPosition, val lambdaInfo: GenerateLambdaInfo?) : InsertHandler<LookupElement> {
+public class JetFunctionInsertHandler(val caretPosition: CaretPosition, val lambdaInfo: GenerateLambdaInfo?) : InsertHandler<LookupElement> {
     {
         if (caretPosition == CaretPosition.AFTER_BRACKETS && lambdaInfo != null) {
             throw IllegalArgumentException("CaretPosition.AFTER_BRACKETS with lambdaInfo != null combination is not supported")
@@ -70,7 +70,7 @@ public class JetFunctionInsertHandler(val caretPosition : CaretPosition, val lam
         addImports(context, item)
     }
 
-    private fun addBrackets(context : InsertionContext, offsetElement : PsiElement) {
+    private fun addBrackets(context: InsertionContext, offsetElement: PsiElement) {
         val offset = context.getTailOffset()
         val document = context.getDocument()
         val completionChar = context.getCompletionChar()
@@ -109,7 +109,7 @@ public class JetFunctionInsertHandler(val caretPosition : CaretPosition, val lam
         val closeBracketOffset = indexOfSkippingSpace(document, closingBracket, openingBracketOffset + 1)
         val editor = context.getEditor()
 
-        var forcePlaceCaretIntoParentheses : Boolean = completionChar == '('
+        var forcePlaceCaretIntoParentheses: Boolean = completionChar == '('
 
         if (caretPosition == CaretPosition.IN_BRACKETS || forcePlaceCaretIntoParentheses || closeBracketOffset == -1) {
             editor.getCaretModel().moveToOffset(openingBracketOffset + 1 + inBracketsShift)
@@ -130,11 +130,11 @@ public class JetFunctionInsertHandler(val caretPosition : CaretPosition, val lam
         public val NO_PARAMETERS_HANDLER: JetFunctionInsertHandler = JetFunctionInsertHandler(CaretPosition.AFTER_BRACKETS, null)
         public val WITH_PARAMETERS_HANDLER: JetFunctionInsertHandler = JetFunctionInsertHandler(CaretPosition.IN_BRACKETS, null)
 
-        private fun shouldAddBrackets(element : PsiElement) : Boolean {
+        private fun shouldAddBrackets(element: PsiElement): Boolean {
             return PsiTreeUtil.getParentOfType(element, javaClass<JetImportDirective>()) == null
         }
 
-        private fun indexOfSkippingSpace(document: Document, ch : Char, startIndex : Int) : Int {
+        private fun indexOfSkippingSpace(document: Document, ch: Char, startIndex: Int): Int {
             val text = document.getCharsSequence()
             for (i in startIndex..text.length() - 1) {
                 val currentChar = text.charAt(i)
@@ -144,12 +144,12 @@ public class JetFunctionInsertHandler(val caretPosition : CaretPosition, val lam
             return -1
         }
 
-        private open fun isInsertSpacesInOneLineFunctionEnabled(project : Project)
+        private open fun isInsertSpacesInOneLineFunctionEnabled(project: Project)
                 = CodeStyleSettingsManager.getSettings(project)
-                      .getCustomSettings(javaClass<JetCodeStyleSettings>())!!.INSERT_WHITESPACES_IN_SIMPLE_ONE_LINE_METHOD
+                .getCustomSettings(javaClass<JetCodeStyleSettings>())!!.INSERT_WHITESPACES_IN_SIMPLE_ONE_LINE_METHOD
 
-        private open fun addImports(context : InsertionContext, item : LookupElement) {
-            ApplicationManager.getApplication()?.runReadAction { () : Unit ->
+        private open fun addImports(context: InsertionContext, item: LookupElement) {
+            ApplicationManager.getApplication()?.runReadAction {(): Unit ->
                 val startOffset = context.getStartOffset()
                 val element = context.getFile().findElementAt(startOffset)
 
@@ -163,7 +163,7 @@ public class JetFunctionInsertHandler(val caretPosition : CaretPosition, val lam
                         val functionDescriptor = descriptor as SimpleFunctionDescriptor
 
                         if (PsiTreeUtil.getParentOfType(element, javaClass<JetQualifiedExpression>()) != null &&
-                                functionDescriptor.getReceiverParameter() == null) {
+                            functionDescriptor.getReceiverParameter() == null) {
                             return@runReadAction
                         }
 

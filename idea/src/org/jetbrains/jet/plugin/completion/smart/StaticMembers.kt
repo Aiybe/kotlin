@@ -67,11 +67,11 @@ class StaticMembers(val bindingContext: BindingContext, val resolveSession: Reso
                 if (returnType == null) return
                 classifier = {
                     expectedInfo ->
-                        when {
-                            returnType.isSubtypeOf(expectedInfo.`type`) -> ExpectedInfoClassification.MATCHES
-                            returnType.isNullable() && returnType.makeNotNullable().isSubtypeOf(expectedInfo.`type`) -> ExpectedInfoClassification.MAKE_NOT_NULLABLE
-                            else -> ExpectedInfoClassification.NOT_MATCHES
-                        }
+                    when {
+                        returnType.isSubtypeOf(expectedInfo.`type`) -> ExpectedInfoClassification.MATCHES
+                        returnType.isNullable() && returnType.makeNotNullable().isSubtypeOf(expectedInfo.`type`) -> ExpectedInfoClassification.MAKE_NOT_NULLABLE
+                        else -> ExpectedInfoClassification.NOT_MATCHES
+                    }
                 }
             }
             else if (DescriptorUtils.isEnumEntry(descriptor)) {
@@ -107,7 +107,7 @@ class StaticMembers(val bindingContext: BindingContext, val resolveSession: Reso
         val lookupString = qualifierPresentation + "." + lookupElement.getLookupString()
         val qualifierText = DescriptorUtils.getFqName(classDescriptor).asString() //TODO: escape keywords
 
-        return object: LookupElementDecorator<LookupElement>(lookupElement) {
+        return object : LookupElementDecorator<LookupElement>(lookupElement) {
             override fun getLookupString() = lookupString
 
             override fun renderElement(presentation: LookupElementPresentation) {

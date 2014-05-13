@@ -38,20 +38,20 @@ public class SimplifyNegatedBinaryExpressionIntention : JetSelfTargetingIntentio
     }
 
     public fun JetToken.negate(): JetSingleValueToken? = when (this) {
-        JetTokens.IN_KEYWORD    -> JetTokens.NOT_IN
-        JetTokens.NOT_IN        -> JetTokens.IN_KEYWORD
+        JetTokens.IN_KEYWORD -> JetTokens.NOT_IN
+        JetTokens.NOT_IN -> JetTokens.IN_KEYWORD
 
-        JetTokens.IS_KEYWORD    -> JetTokens.NOT_IS
-        JetTokens.NOT_IS        -> JetTokens.IS_KEYWORD
+        JetTokens.IS_KEYWORD -> JetTokens.NOT_IS
+        JetTokens.NOT_IS -> JetTokens.IS_KEYWORD
 
-        JetTokens.EQEQ          -> JetTokens.EXCLEQ
-        JetTokens.EXCLEQ        -> JetTokens.EQEQ
+        JetTokens.EQEQ -> JetTokens.EXCLEQ
+        JetTokens.EXCLEQ -> JetTokens.EQEQ
 
-        JetTokens.LT            -> JetTokens.GTEQ
-        JetTokens.GTEQ          -> JetTokens.LT
+        JetTokens.LT -> JetTokens.GTEQ
+        JetTokens.GTEQ -> JetTokens.LT
 
-        JetTokens.GT            -> JetTokens.LTEQ
-        JetTokens.LTEQ          -> JetTokens.GT
+        JetTokens.GT -> JetTokens.LTEQ
+        JetTokens.LTEQ -> JetTokens.GT
 
         else -> null
     }
@@ -87,7 +87,7 @@ public class SimplifyNegatedBinaryExpressionIntention : JetSelfTargetingIntentio
                             expression.getRight()
                     )
                     else -> throw IllegalStateException(
-                         "Expression is neither a JetIsExpression or JetBinaryExpression (checked by isApplicableTo): ${expression.getText()}"
+                            "Expression is neither a JetIsExpression or JetBinaryExpression (checked by isApplicableTo): ${expression.getText()}"
                     )
                 }
         )

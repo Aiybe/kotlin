@@ -18,7 +18,8 @@ public inline fun <T> Array<out T>.partition(predicate: (T) -> Boolean): Pair<Li
     for (element in this) {
         if (predicate(element)) {
             first.add(element)
-        } else {
+        }
+        else {
             second.add(element)
         }
     }
@@ -36,7 +37,8 @@ public inline fun BooleanArray.partition(predicate: (Boolean) -> Boolean): Pair<
     for (element in this) {
         if (predicate(element)) {
             first.add(element)
-        } else {
+        }
+        else {
             second.add(element)
         }
     }
@@ -54,7 +56,8 @@ public inline fun ByteArray.partition(predicate: (Byte) -> Boolean): Pair<List<B
     for (element in this) {
         if (predicate(element)) {
             first.add(element)
-        } else {
+        }
+        else {
             second.add(element)
         }
     }
@@ -72,7 +75,8 @@ public inline fun CharArray.partition(predicate: (Char) -> Boolean): Pair<List<C
     for (element in this) {
         if (predicate(element)) {
             first.add(element)
-        } else {
+        }
+        else {
             second.add(element)
         }
     }
@@ -90,7 +94,8 @@ public inline fun DoubleArray.partition(predicate: (Double) -> Boolean): Pair<Li
     for (element in this) {
         if (predicate(element)) {
             first.add(element)
-        } else {
+        }
+        else {
             second.add(element)
         }
     }
@@ -108,7 +113,8 @@ public inline fun FloatArray.partition(predicate: (Float) -> Boolean): Pair<List
     for (element in this) {
         if (predicate(element)) {
             first.add(element)
-        } else {
+        }
+        else {
             second.add(element)
         }
     }
@@ -126,7 +132,8 @@ public inline fun IntArray.partition(predicate: (Int) -> Boolean): Pair<List<Int
     for (element in this) {
         if (predicate(element)) {
             first.add(element)
-        } else {
+        }
+        else {
             second.add(element)
         }
     }
@@ -144,7 +151,8 @@ public inline fun LongArray.partition(predicate: (Long) -> Boolean): Pair<List<L
     for (element in this) {
         if (predicate(element)) {
             first.add(element)
-        } else {
+        }
+        else {
             second.add(element)
         }
     }
@@ -162,7 +170,8 @@ public inline fun ShortArray.partition(predicate: (Short) -> Boolean): Pair<List
     for (element in this) {
         if (predicate(element)) {
             first.add(element)
-        } else {
+        }
+        else {
             second.add(element)
         }
     }
@@ -180,7 +189,8 @@ public inline fun <T> Iterable<T>.partition(predicate: (T) -> Boolean): Pair<Lis
     for (element in this) {
         if (predicate(element)) {
             first.add(element)
-        } else {
+        }
+        else {
             second.add(element)
         }
     }
@@ -198,7 +208,8 @@ public inline fun <T> Stream<T>.partition(predicate: (T) -> Boolean): Pair<List<
     for (element in this) {
         if (predicate(element)) {
             first.add(element)
-        } else {
+        }
+        else {
             second.add(element)
         }
     }
@@ -216,7 +227,8 @@ public inline fun String.partition(predicate: (Char) -> Boolean): Pair<String, S
     for (element in this) {
         if (predicate(element)) {
             first.append(element)
-        } else {
+        }
+        else {
             second.append(element)
         }
     }

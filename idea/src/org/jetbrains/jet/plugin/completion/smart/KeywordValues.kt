@@ -23,7 +23,7 @@ import com.intellij.codeInsight.lookup.LookupElementBuilder
 
 object KeywordValues {
     public fun addToCollection(collection: MutableCollection<LookupElement>, expectedInfos: Collection<ExpectedInfo>) {
-        val booleanInfoClassifier = { (info: ExpectedInfo) ->
+        val booleanInfoClassifier = {(info: ExpectedInfo) ->
             if (info.`type` == KotlinBuiltIns.getInstance().getBooleanType()) ExpectedInfoClassification.MATCHES else ExpectedInfoClassification.NOT_MATCHES
         }
         collection.addLookupElements(expectedInfos, booleanInfoClassifier, { LookupElementBuilder.create("true").bold() })

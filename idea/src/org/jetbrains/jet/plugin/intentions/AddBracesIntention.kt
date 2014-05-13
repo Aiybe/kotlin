@@ -66,7 +66,8 @@ public class AddBracesIntention : JetSelfTargetingIntention<JetExpressionImpl>("
         //handles the case of the block statement being on a new line
         if (newElement.getPrevSibling() is PsiWhiteSpace) {
             newElement.getPrevSibling()!!.replace(JetPsiFactory.createWhiteSpace(element.getProject()))
-        } else {
+        }
+        else {
             //handles the case of no space between condition and statement
             newElement.addBefore(JetPsiFactory.createWhiteSpace(element.getProject()), newElement.getFirstChild())
         }

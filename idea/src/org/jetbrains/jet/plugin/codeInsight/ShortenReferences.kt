@@ -120,7 +120,7 @@ public object ShortenReferences {
     private class ShortenTypesVisitor(val file: JetFile,
                                       val elementFilter: (PsiElement) -> FilterResult,
                                       val resolveMap: Map<JetReferenceExpression, BindingContext>) : JetVisitorVoid() {
-        private val resolveSession : ResolveSessionForBodies
+        private val resolveSession: ResolveSessionForBodies
             get() = file.getLazyResolveSession()
 
         private val typesToShorten = ArrayList<JetUserType>()
@@ -148,7 +148,7 @@ public object ShortenReferences {
             if (filterResult == FilterResult.PROCESS && canShortenType(userType)) {
                 typesToShorten.add(userType)
             }
-            else{
+            else {
                 userType.getQualifier()?.accept(this)
             }
         }
@@ -195,7 +195,7 @@ public object ShortenReferences {
     private class ShortenQualifiedExpressionsVisitor(val file: JetFile,
                                                      val elementFilter: (PsiElement) -> FilterResult,
                                                      val resolveMap: Map<JetReferenceExpression, BindingContext>) : JetVisitorVoid() {
-        private val resolveSession : ResolveSessionForBodies
+        private val resolveSession: ResolveSessionForBodies
             get() = file.getLazyResolveSession()
 
         private fun bindingContext(expression: JetReferenceExpression): BindingContext
@@ -316,7 +316,7 @@ public object ShortenReferences {
             if (target != null) return target.asString()
 
             val targets = bindingContext[BindingContext.AMBIGUOUS_REFERENCE_TARGET, referenceExpression]
-            if (targets != null) return HashSet(targets.map{it.asString()})
+            if (targets != null) return HashSet(targets.map { it.asString() })
 
             return null
         }
@@ -324,7 +324,7 @@ public object ShortenReferences {
         // we do not use standard PsiElement.acceptChildren because it won't work correctly if the element is replaced by the visitor
         private fun acceptChildren(element: PsiElement) {
             var child = element.getFirstChild()
-            while(child != null) {
+            while (child != null) {
                 val nextChild = child!!.getNextSibling()
                 child!!.accept(this)
                 child = nextChild

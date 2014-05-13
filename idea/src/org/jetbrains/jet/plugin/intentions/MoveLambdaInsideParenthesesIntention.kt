@@ -38,17 +38,18 @@ public class MoveLambdaInsideParenthesesIntention : JetSelfTargetingIntention<Je
             if (value == null) continue
             if (value.getArgumentName() != null) {
                 sb.append("${value.getArgumentName()?.getText()} = ${value.getArgumentExpression()?.getText()},")
-            } else {
+            }
+            else {
                 sb.append("${value.getArgumentExpression()?.getText()},")
             }
         }
-        if (element.getValueArguments().any { it?.getArgumentName() != null}) {
+        if (element.getValueArguments().any { it?.getArgumentName() != null }) {
             val context = element.getBindingContext()
             val resolvedCall = context[BindingContext.RESOLVED_CALL, element.getCalleeExpression()]
             val literalName = resolvedCall?.getResultingDescriptor()?.getValueParameters()?.last?.getName().toString()
             sb.append("$literalName = ")
         }
         val newExpression = "$funName${sb.toString()}${element.getFunctionLiteralArguments()[0].getText()})"
-        element.replace(JetPsiFactory.createExpression(element.getProject(),newExpression))
+        element.replace(JetPsiFactory.createExpression(element.getProject(), newExpression))
     }
 }

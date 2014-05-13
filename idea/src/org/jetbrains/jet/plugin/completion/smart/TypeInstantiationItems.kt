@@ -120,7 +120,7 @@ class TypeInstantiationItems(val bindingContext: BindingContext,
             }
         }
 
-        lookupElement = object: LookupElementDecorator<LookupElement>(lookupElement) {
+        lookupElement = object : LookupElementDecorator<LookupElement>(lookupElement) {
             override fun getLookupString() = lookupString
 
             override fun renderElement(presentation: LookupElementPresentation) {

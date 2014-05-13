@@ -48,7 +48,7 @@ public class JetElementDescriptionProvider : ElementDescriptionProvider {
 
         val name = (targetElement as PsiNamedElement).getName()
 
-        return when(location) {
+        return when (location) {
             is UsageViewLongNameLocation ->
                 name
             is RefactoringDescriptionLocation -> {

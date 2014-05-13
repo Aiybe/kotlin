@@ -5,12 +5,12 @@ import kotlin.jvm.internal.ArrayIterator
 /**
  * Annotates a class used to implement extension functions
  */
-annotation class extension() 
+annotation class extension()
 
 /**
  * Defines the extension functions on a List<T>
  */
-extension open class ListExtensions<T>(private val that: List<T>): CollectionExtensions<T>(that), ListLike<T> {
+extension open class ListExtensions<T>(private val that: List<T>) : CollectionExtensions<T>(that), ListLike<T> {
     public override fun get(index: Int): T {
         return that.get(index)!!
     }
@@ -19,7 +19,7 @@ extension open class ListExtensions<T>(private val that: List<T>): CollectionExt
 /**
  * Defines the extension functions on a Collection<T>
  */
-extension open class CollectionExtensions<T>(private val that: Collection<T>): CollectionLike<T> {
+extension open class CollectionExtensions<T>(private val that: Collection<T>) : CollectionLike<T> {
     public override fun iterator(): Iterator<T> {
         // TODO adapt java.util.Iterator<T> to Iterator<T>
         throw UnsupportedOperationException()
@@ -35,7 +35,7 @@ extension open class CollectionExtensions<T>(private val that: Collection<T>): C
 /**
  * Defines the extension functions on a Collection<T>
  */
-extension open class IteratorExtensions<T>(private val that: Iterator<T>): LazyTraversable<T> {
+extension open class IteratorExtensions<T>(private val that: Iterator<T>) : LazyTraversable<T> {
     public override fun iterator(): Iterator<T> {
         // TODO adapt java.util.Iterator<T> to Iterator<T>
         throw UnsupportedOperationException()
@@ -45,7 +45,7 @@ extension open class IteratorExtensions<T>(private val that: Iterator<T>): LazyT
 /**
  * Defines the extension functions on an Array<T>
  */
-extension open class ArrayExtensions<T>(private val that: Array<T>): ListLike<T> {
+extension open class ArrayExtensions<T>(private val that: Array<T>) : ListLike<T> {
     public override fun get(index: Int): T {
         return that[index]
     }

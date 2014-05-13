@@ -28,7 +28,7 @@ class SiteGeneratorMain(projectRoot: File) {
 
         // now lets assert that the API docs generated everything
         assertFilesExist(outDir, "Expected generate API docs are missing - API doc generation failure",
-                "kotlin/package-frame.html", "kotlin/dom/package-frame.html", "kotlin/test/package-frame.html")
+                         "kotlin/package-frame.html", "kotlin/dom/package-frame.html", "kotlin/test/package-frame.html")
     }
 
     fun copyJSApiDocs(): Unit {
@@ -79,7 +79,7 @@ class SiteGeneratorMain(projectRoot: File) {
     }
 }
 
-fun main(args : Array<String>) {
+fun main(args: Array<String>) {
     val basedir = File(args.get(0))
     println("Basedir: $basedir")
 

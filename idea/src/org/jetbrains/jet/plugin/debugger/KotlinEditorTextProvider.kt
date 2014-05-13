@@ -70,14 +70,16 @@ class KotlinEditorTextProvider : EditorTextProvider {
                 is JetQualifiedExpression -> {
                     if (parent.getReceiverExpression() != jetElement) {
                         parent
-                    } else {
+                    }
+                    else {
                         null
                     }
                 }
                 is JetOperationExpression -> {
                     if (parent.getOperationReference() == jetElement) {
                         parent
-                    } else {
+                    }
+                    else {
                         null
                     }
                 }

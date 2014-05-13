@@ -21,7 +21,7 @@ Enter some text here!
             println("Show Properties window")
         }
 
-        jmenuBar = menuBar{
+        jmenuBar = menuBar {
             menu("File") {
                 add(aboutAction)
             }

@@ -119,7 +119,7 @@ public class ExtractKotlinFunctionHandler : RefactoringActionHandler {
     override fun invoke(project: Project, editor: Editor, file: PsiFile, dataContext: DataContext?) {
         if (file !is JetFile) return
 
-        selectElements(editor, file) { (elements, targetNextSibling) ->
+        selectElements(editor, file) {(elements, targetNextSibling) ->
             doInvoke(editor, file, elements, targetNextSibling)
         }
     }
@@ -169,7 +169,7 @@ fun selectElements(
 
     fun selectTargetContainer(elements: List<PsiElement>) {
         val parent = PsiTreeUtil.findCommonParent(elements)
-            ?: throw AssertionError("Should have at least one parent: ${elements.makeString("\n")}")
+                     ?: throw AssertionError("Should have at least one parent: ${elements.makeString("\n")}")
 
         val containers = parent.getAllExtractionContainers(elements.size == 1)
         if (containers.empty) {
@@ -185,7 +185,7 @@ fun selectElements(
         IntroduceTargetChooser.showChooser(
                 editor,
                 containers,
-                object: Pass<JetElement>() {
+                object : Pass<JetElement>() {
                     override fun pass(targetContainer: JetElement?) {
                         if (targetContainer == null) {
                             noContainerError()

@@ -45,7 +45,7 @@ class ThisItems(val bindingContext: BindingContext) {
         for (i in 0..receivers.size - 1) {
             val receiver = receivers[i]
             val thisType = receiver.getType()
-            val classifier = { (expectedInfo: ExpectedInfo) ->
+            val classifier = {(expectedInfo: ExpectedInfo) ->
                 when {
                     thisType.isSubtypeOf(expectedInfo.`type`) -> ExpectedInfoClassification.MATCHES
                     thisType.isNullable() && thisType.makeNotNullable().isSubtypeOf(expectedInfo.`type`) -> ExpectedInfoClassification.MAKE_NOT_NULLABLE
@@ -75,10 +75,10 @@ class ThisItems(val bindingContext: BindingContext) {
             else -> null
         }
         return ((((expression?.getParent() as? JetValueArgument)
-                       ?.getParent() as? JetValueArgumentList)
-                           ?.getParent() as? JetCallExpression)
-                               ?.getCalleeExpression() as? JetSimpleNameExpression)
-                                   ?.getReferencedName()
+                ?.getParent() as? JetValueArgumentList)
+                ?.getParent() as? JetCallExpression)
+                ?.getCalleeExpression() as? JetSimpleNameExpression)
+                ?.getReferencedName()
     }
 
 }

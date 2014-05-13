@@ -25,13 +25,12 @@ import javax.swing.event.HyperlinkEvent
 import org.jetbrains.jet.plugin.configuration.ui.AbsentJdkAnnotationsComponent
 
 public class AbsentSdkAnnotationsNotification(sdks: Collection<Sdk>, val title: String, val text: String) :
-    Notification(
-            AbsentJdkAnnotationsComponent.EXTERNAL_ANNOTATIONS_GROUP_ID,
-            title, text,
-            NotificationType.WARNING,
-            AbsentAnnotationsListener(sdks) // Workaround for KT-4086
-    )
-{
+        Notification(
+                AbsentJdkAnnotationsComponent.EXTERNAL_ANNOTATIONS_GROUP_ID,
+                title, text,
+                NotificationType.WARNING,
+                AbsentAnnotationsListener(sdks) // Workaround for KT-4086
+        ) {
     override fun equals(obj: Any?) = obj is AbsentSdkAnnotationsNotification && text == obj.text && title == obj.title
 
     override fun hashCode(): Int = 31 * title.hashCode() + text.hashCode()
@@ -43,7 +42,7 @@ fun getNotificationTitle(sdks: Collection<Sdk>) = "Kotlin external annotations f
 
 fun getNotificationString(sdks: Collection<Sdk>) = "<a href=\"configure\">Set up Kotlin ${getSdkKind(sdks)} annotations</a>"
 
-private class AbsentAnnotationsListener(val sdks: Collection<Sdk>): NotificationListener {
+private class AbsentAnnotationsListener(val sdks: Collection<Sdk>) : NotificationListener {
     override fun hyperlinkUpdate(notification: Notification, event: HyperlinkEvent) {
         if (event.getEventType() == HyperlinkEvent.EventType.ACTIVATED) {
             if (event.getDescription() == "configure") {

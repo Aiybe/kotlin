@@ -58,7 +58,7 @@ fun PsiReference.isTargetUsage(target: PsiElement): Boolean {
 
 fun PsiReference.checkUsageVsOriginalDescriptor(
         target: JetDeclaration,
-        declarationToDescriptor: (JetDeclaration) -> DeclarationDescriptor? = {it.descriptor},
+        declarationToDescriptor: (JetDeclaration) -> DeclarationDescriptor? = { it.descriptor },
         checker: (usageDescriptor: DeclarationDescriptor, targetDescriptor: DeclarationDescriptor) -> Boolean
 ): Boolean {
     val refTarget = unwrappedTarget
@@ -112,7 +112,7 @@ fun PsiReference.isConstructorUsage(jetClassOrObject: JetClassOrObject): Boolean
 // Check if reference resolves to extension function whose receiver is the same as declaration's parent (or its superclass)
 // Used in extension search
 fun PsiReference.isExtensionOfDeclarationClassUsage(declaration: JetNamedDeclaration): Boolean =
-        checkUsageVsOriginalDescriptor(declaration) { (usageDescriptor, targetDescriptor) ->
+        checkUsageVsOriginalDescriptor(declaration) {(usageDescriptor, targetDescriptor) ->
             when {
                 usageDescriptor == targetDescriptor -> false
                 usageDescriptor !is FunctionDescriptor -> false
@@ -132,9 +132,9 @@ fun PsiReference.isExtensionOfDeclarationClassUsage(declaration: JetNamedDeclara
 // Check if reference resolves to the declaration with the same parent
 // Used in overload search
 fun PsiReference.isUsageInContainingDeclaration(declaration: JetNamedDeclaration): Boolean =
-        checkUsageVsOriginalDescriptor(declaration) { (usageDescriptor, targetDescriptor) ->
+        checkUsageVsOriginalDescriptor(declaration) {(usageDescriptor, targetDescriptor) ->
             usageDescriptor != targetDescriptor
-                && usageDescriptor.getContainingDeclaration() == targetDescriptor.getContainingDeclaration()
+            && usageDescriptor.getContainingDeclaration() == targetDescriptor.getContainingDeclaration()
         }
 
 fun PsiReference.isCallableOverrideUsage(declaration: JetNamedDeclaration): Boolean {
@@ -142,9 +142,9 @@ fun PsiReference.isCallableOverrideUsage(declaration: JetNamedDeclaration): Bool
         if (declaration is JetParameter && declaration.hasValOrVarNode()) declaration.propertyDescriptor else declaration.descriptor
     }
 
-    return checkUsageVsOriginalDescriptor(declaration, decl2Desc) { (usageDescriptor, targetDescriptor) ->
+    return checkUsageVsOriginalDescriptor(declaration, decl2Desc) {(usageDescriptor, targetDescriptor) ->
         usageDescriptor is CallableDescriptor && targetDescriptor is CallableDescriptor
-            && OverrideResolver.overrides(usageDescriptor, targetDescriptor)
+        && OverrideResolver.overrides(usageDescriptor, targetDescriptor)
     }
 }
 

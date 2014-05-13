@@ -22,12 +22,12 @@ import com.intellij.openapi.editor.Editor
 import com.intellij.psi.PsiFile
 
 class MockSourcePosition(
-    val _file: PsiFile? = null,
-    val _elementAt: PsiElement? = null,
-    val _line: Int? = null,
-    val _offset: Int? = null,
-    val _editor: Editor? = null
-): SourcePosition() {
+        val _file: PsiFile? = null,
+        val _elementAt: PsiElement? = null,
+        val _line: Int? = null,
+        val _offset: Int? = null,
+        val _editor: Editor? = null
+) : SourcePosition() {
     override fun getFile() = _file ?: throw UnsupportedOperationException("Parameter file isn't set for MockSourcePosition")
     override fun getElementAt() = _elementAt ?: throw UnsupportedOperationException("Parameter elementAt isn't set for MockSourcePosition")
     override fun getLine() = _line ?: throw UnsupportedOperationException("Parameter line isn't set for MockSourcePosition")

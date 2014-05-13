@@ -52,7 +52,7 @@ public class KotlinTypeParameterFindUsagesHandler(
         return ApplicationManager.getApplication()!!.runReadAction<Boolean> {
             val target = options.toSearchTarget(element as JetNamedDeclaration, true)
             val request = DefaultSearchHelper<JetNamedDeclaration>().newRequest(target)
-            request.search().all {ref -> KotlinFindUsagesHandler.processUsage(processor, ref)}
+            request.search().all { ref -> KotlinFindUsagesHandler.processUsage(processor, ref) }
         }!!
     }
 

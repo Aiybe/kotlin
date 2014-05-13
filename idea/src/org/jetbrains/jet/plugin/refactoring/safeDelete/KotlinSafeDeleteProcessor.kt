@@ -242,7 +242,8 @@ public class KotlinSafeDeleteProcessor : JavaSafeDeleteProcessor() {
         for (usage in usages) {
             if (usage is KotlinSafeDeleteOverridingUsageInfo) {
                 overridingMethodUsages.add(usage)
-            } else {
+            }
+            else {
                 result.add(usage)
             }
         }
@@ -250,7 +251,8 @@ public class KotlinSafeDeleteProcessor : JavaSafeDeleteProcessor() {
         if (!overridingMethodUsages.isEmpty()) {
             if (ApplicationManager.getApplication()!!.isUnitTestMode()) {
                 result.addAll(overridingMethodUsages)
-            } else {
+            }
+            else {
                 val dialog = KotlinOverridingDialog(project, overridingMethodUsages)
                 dialog.show()
 

@@ -23,7 +23,8 @@ class SiteGenerator(val sourceDir: File, val outputDir: File) : Runnable {
                     val text = it.readText()
                     output = markdownProcessor.markdownToHtml(text, linkRendered) ?: ""
                     relativePath = relativePath.trimTrailing(it.extension) + "html"
-                } else if (it.extension == "html") {
+                }
+                else if (it.extension == "html") {
                     output = it.readText()
                 }
                 val outFile = File(outputDir, relativePath)
@@ -31,7 +32,8 @@ class SiteGenerator(val sourceDir: File, val outputDir: File) : Runnable {
                 if (output != null) {
                     val text = layout(relativePath, it, output!!)
                     outFile.writeText(text)
-                } else {
+                }
+                else {
                     it.copyTo(outFile)
                 }
             }

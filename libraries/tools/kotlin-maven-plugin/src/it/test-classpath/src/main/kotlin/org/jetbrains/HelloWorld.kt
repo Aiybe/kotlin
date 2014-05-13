@@ -9,8 +9,8 @@ import com.sun.crypto.provider.AESCipher
 fun box(): String {
     val a = SingleByte() // charsets.jar
     val c = DNSNameService() // dnsns.ajr
-    val e : Cipher? = null // jce.jar
-    val f : AESCipher? = null // sunjce_provider.jar
-    val j : DOM? = null // plugin.jar
+    val e: Cipher? = null // jce.jar
+    val f: AESCipher? = null // sunjce_provider.jar
+    val j: DOM? = null // plugin.jar
     return "OK"
 }

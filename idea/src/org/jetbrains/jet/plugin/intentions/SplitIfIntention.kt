@@ -61,12 +61,12 @@ public class SplitIfIntention : JetSelfTargetingIntention<JetExpression>("split.
 
         if (currentElement.getReferencedNameElementType() == JetTokens.ANDAND) {
             ifExpression.replace(JetPsiFactory.createIf(element.getProject(), leftExpression,
-                JetPsiFactory.wrapInABlock(JetPsiFactory.createIf(element.getProject(), rightExpression, thenExpression,
-                elseExpression)), elseExpression))
+                                                        JetPsiFactory.wrapInABlock(JetPsiFactory.createIf(element.getProject(), rightExpression, thenExpression,
+                                                                                                          elseExpression)), elseExpression))
         }
         else {
             ifExpression.replace(JetPsiFactory.createIf(element.getProject(), leftExpression, thenExpression,
-                JetPsiFactory.createIf(element.getProject(), rightExpression, thenExpression, elseExpression)))
+                                                        JetPsiFactory.createIf(element.getProject(), rightExpression, thenExpression, elseExpression)))
         }
     }
 

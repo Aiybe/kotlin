@@ -25,7 +25,7 @@ import org.jetbrains.jet.plugin.hierarchy.HierarchyUtils
 import com.intellij.ide.hierarchy.MethodHierarchyBrowserBase
 import com.intellij.ide.hierarchy.HierarchyBrowserBaseEx
 
-public class KotlinOverrideHierarchyProvider: HierarchyProvider {
+public class KotlinOverrideHierarchyProvider : HierarchyProvider {
     override fun getTarget(dataContext: DataContext): PsiElement? {
         return CommonDataKeys.PROJECT.getData(dataContext)?.let { project ->
             HierarchyUtils.getOverrideHierarchyElement(HierarchyUtils.getCurrentElement(dataContext, project))

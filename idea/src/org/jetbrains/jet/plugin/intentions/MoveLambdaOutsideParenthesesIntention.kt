@@ -37,7 +37,8 @@ public class MoveLambdaOutsideParenthesesIntention : JetSelfTargetingIntention<J
         val endIndex = callText.lastIndexOf(",")
         val newCall = if (endIndex > 0) {
             "${callText.substring(0, endIndex)}) $literal"
-        } else {
+        }
+        else {
             "${callText.substring(0, callText.indexOf("("))} $literal"
         }
         element.replace(JetPsiFactory.createExpression(element.getProject(), newCall))

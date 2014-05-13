@@ -89,7 +89,7 @@ class SmartCompletion(val expression: JetSimpleNameExpression,
 
             val types = typesWithAutoCasts(descriptor)
             val nonNullTypes = types.map { it.makeNotNullable() }
-            val classifier = { (expectedInfo: ExpectedInfo) ->
+            val classifier = {(expectedInfo: ExpectedInfo) ->
                 when {
                     types.any { it.isSubtypeOf(expectedInfo.`type`) } -> ExpectedInfoClassification.MATCHES
                     nonNullTypes.any { it.isSubtypeOf(expectedInfo.`type`) } -> ExpectedInfoClassification.MAKE_NOT_NULLABLE
@@ -120,7 +120,7 @@ class SmartCompletion(val expression: JetSimpleNameExpression,
 
     private fun calcItemsToSkip(expression: JetExpression): Collection<DeclarationDescriptor> {
         val parent = expression.getParent()
-        when(parent) {
+        when (parent) {
             is JetProperty -> {
                 //TODO: this can be filtered out by ordinary completion
                 if (expression == parent.getInitializer()) {
@@ -156,7 +156,7 @@ class SmartCompletion(val expression: JetSimpleNameExpression,
 
             var lookupElement = createLookupElement(descriptor, resolveSession, bindingContext)
             val text = "::" + (if (descriptor is ConstructorDescriptor) descriptor.getContainingDeclaration().getName() else descriptor.getName())
-            lookupElement = object: LookupElementDecorator<LookupElement>(lookupElement) {
+            lookupElement = object : LookupElementDecorator<LookupElement>(lookupElement) {
                 override fun getLookupString() = text
 
                 override fun renderElement(presentation: LookupElementPresentation) {

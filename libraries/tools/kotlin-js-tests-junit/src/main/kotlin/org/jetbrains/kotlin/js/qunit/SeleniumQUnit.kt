@@ -6,9 +6,9 @@ import org.openqa.selenium.WebDriver
 import org.openqa.selenium.WebElement
 
 /**
-* Waits up to a *maxMills* time for a predicate to be true, sleeping for *sleepMillis*
-* and retrying until the timeout fails
-*/
+ * Waits up to a *maxMills* time for a predicate to be true, sleeping for *sleepMillis*
+ * and retrying until the timeout fails
+ */
 public fun waitFor(maxMillis: Long, sleepMillis: Long = 100, predicate: () -> Boolean): Boolean {
     val end = System.currentTimeMillis() + maxMillis
     while (true) {
@@ -47,7 +47,8 @@ public class SeleniumQUnit(val driver: WebDriver) {
         try {
             val testNameElement = element.findElement(By.xpath("descendant::*[@class = 'test-name']"))
             return defaultName(testNameElement!!.getText())
-        } catch (e: Exception) {
+        }
+        catch (e: Exception) {
             return defaultName(element.getAttribute("id"))
         }
     }
@@ -63,13 +64,15 @@ public class SeleniumQUnit(val driver: WebDriver) {
             try {
                 val messageElement = element.findElement(By.xpath("descendant::*[@class = 'test-message']"))!!
                 message = messageElement.getText()
-            } catch (e: Exception) {
+            }
+            catch (e: Exception) {
                 // ignore
             }
             val testName = "${findTestName(element)} result: $result"
             val fullMessage = if (message != null) {
                 "$testName. $message"
-            } else {
+            }
+            else {
                 "test result for test case $testName"
             }
             println("FAILED: $fullMessage")

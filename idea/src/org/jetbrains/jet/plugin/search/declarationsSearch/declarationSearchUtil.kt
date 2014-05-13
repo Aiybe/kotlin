@@ -41,7 +41,7 @@ public trait SearchRequestWithElement<T : PsiElement> : DeclarationSearchRequest
     override val project: Project get() = originalElement.getProject()
 }
 
-abstract class DeclarationsSearch<T: PsiElement, R: DeclarationSearchRequest<T>>: QueryFactory<T, R>() {
+abstract class DeclarationsSearch<T : PsiElement, R : DeclarationSearchRequest<T>> : QueryFactory<T, R>() {
     {
         registerExecutor(
                 object : QueryExecutorBase<T, R>(true) {
@@ -58,12 +58,12 @@ abstract class DeclarationsSearch<T: PsiElement, R: DeclarationSearchRequest<T>>
     fun search(request: R): Query<T> = if (isApplicable(request)) createUniqueResultsQuery(request) else EmptyQuery.getEmptyQuery<T>()
 }
 
-public class HierarchySearchRequest<T: PsiElement> (
+public class HierarchySearchRequest<T : PsiElement> (
         override val originalElement: T,
         override val searchScope: SearchScope,
         val searchDeeply: Boolean = true
 ) : SearchRequestWithElement<T> {
-    fun copy<U: PsiElement>(newOriginalElement: U): HierarchySearchRequest<U> =
+    fun copy<U : PsiElement>(newOriginalElement: U): HierarchySearchRequest<U> =
             HierarchySearchRequest(newOriginalElement, searchScope, searchDeeply)
 }
 
@@ -95,7 +95,7 @@ trait HierarchyTraverser<T> {
     }
 }
 
-fun <T: PsiElement> Processor<T>.consumeHierarchy(request: SearchRequestWithElement<T>, traverser: HierarchyTraverser<T>) {
+fun <T : PsiElement> Processor<T>.consumeHierarchy(request: SearchRequestWithElement<T>, traverser: HierarchyTraverser<T>) {
     traverser.forEach(request.originalElement) { element ->
         if (element in request.searchScope) {
             process(element)
@@ -103,9 +103,9 @@ fun <T: PsiElement> Processor<T>.consumeHierarchy(request: SearchRequestWithElem
     }
 }
 
-abstract class HierarchySearch<T: PsiElement>(
+abstract class HierarchySearch<T : PsiElement>(
         protected val traverser: HierarchyTraverser<T>
-): DeclarationsSearch<T, HierarchySearchRequest<T>>() {
+) : DeclarationsSearch<T, HierarchySearchRequest<T>>() {
     protected open fun doSearchAll(request: HierarchySearchRequest<T>, consumer: Processor<T>) {
         consumer.consumeHierarchy(request, traverser)
     }

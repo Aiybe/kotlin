@@ -44,7 +44,7 @@ public class ConvertNegatedBooleanSequenceIntention : JetSelfTargetingIntention<
 
     override fun applyTo(element: JetBinaryExpression, editor: Editor) {
         val operator = element.getOperationToken()
-        val operatorText = when(operator) {
+        val operatorText = when (operator) {
             JetTokens.ANDAND -> JetTokens.OROR.getValue()
             JetTokens.OROR -> JetTokens.ANDAND.getValue()
             else -> throw IllegalArgumentException("Invalid operator: '$operator'. Only expressions using '&&' or '||' can be converted.")

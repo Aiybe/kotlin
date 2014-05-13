@@ -9,8 +9,8 @@ import java.util.concurrent.CountDownLatch
 /**
 Executes given calculation under lock
 Returns result of the calculation
-*/
-public inline fun <T> Lock.withLock(action: ()->T) : T {
+ */
+public inline fun <T> Lock.withLock(action: () -> T): T {
     lock()
     try {
         return action()
@@ -23,8 +23,8 @@ public inline fun <T> Lock.withLock(action: ()->T) : T {
 /**
 Executes given calculation under read lock
 Returns result of the calculation
-*/
-public inline fun <T> ReentrantReadWriteLock.read(action: ()->T) : T {
+ */
+public inline fun <T> ReentrantReadWriteLock.read(action: () -> T): T {
     val rl = readLock()
     rl.lock()
     try {
@@ -40,8 +40,8 @@ Executes given calculation under write lock.
 The method does upgrade from read to write lock if needed
 If such write has been initiated by checking some condition, the condition must be rechecked inside the action to avoid possible races
 Returns result of the calculation
-*/
-public inline fun <T> ReentrantReadWriteLock.write(action: ()->T) : T {
+ */
+public inline fun <T> ReentrantReadWriteLock.write(action: () -> T): T {
     val rl = readLock()
 
     val readCount = if (getWriteHoldCount() == 0) getReadHoldCount() else 0
@@ -61,8 +61,8 @@ public inline fun <T> ReentrantReadWriteLock.write(action: ()->T) : T {
 /**
 Execute given calculation and await for CountDownLatch
 Returns result of the calculation
-*/
-fun <T> Int.latch(op:  CountDownLatch.() -> T) : T {
+ */
+fun <T> Int.latch(op: CountDownLatch.() -> T): T {
     val cdl = CountDownLatch(this)
     val res = cdl.op()
     cdl.await()

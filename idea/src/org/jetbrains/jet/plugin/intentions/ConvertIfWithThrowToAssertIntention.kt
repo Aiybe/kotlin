@@ -73,12 +73,13 @@ public class ConvertIfWithThrowToAssertIntention :
 
         val args = thrownExpr.getValueArguments()
         val paramText =
-            if (args.isNotEmpty()) {
-                val param = args.first!!.getArgumentExpression()!!
-                if (param.isNullExpression()) "" else ", ${param.getText()}"
-            } else {
-                ""
-            }
+                if (args.isNotEmpty()) {
+                    val param = args.first!!.getArgumentExpression()!!
+                    if (param.isNullExpression()) "" else ", ${param.getText()}"
+                }
+                else {
+                    ""
+                }
 
         val negatedCondition = JetPsiFactory.createExpression(element.getProject(), "!true") as JetPrefixExpression
         negatedCondition.getBaseExpression()!!.replace(condition)

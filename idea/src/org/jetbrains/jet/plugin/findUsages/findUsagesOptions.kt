@@ -49,7 +49,7 @@ public trait KotlinCallableFindUsagesOptions {
     public var searchOverrides: Boolean
 }
 
-public class KotlinFunctionFindUsagesOptions(project: Project): KotlinCallableFindUsagesOptions, JavaMethodFindUsagesOptions(project) {
+public class KotlinFunctionFindUsagesOptions(project: Project) : KotlinCallableFindUsagesOptions, JavaMethodFindUsagesOptions(project) {
     override var searchOverrides: Boolean
         get() = isOverridingMethods
         set(value: Boolean) {
@@ -69,44 +69,44 @@ fun KotlinFunctionFindUsagesOptions.toJavaMethodOptions(project: Project): JavaM
     javaOptions.isSkipImportStatements = isSkipImportStatements
     javaOptions.isUsages = isUsages
     javaOptions.searchScope = searchScope
-    
+
     return javaOptions
 }
 
-public class KotlinPropertyFindUsagesOptions(project: Project): KotlinCallableFindUsagesOptions, JavaVariableFindUsagesOptions(project) {
+public class KotlinPropertyFindUsagesOptions(project: Project) : KotlinCallableFindUsagesOptions, JavaVariableFindUsagesOptions(project) {
     override var searchOverrides: Boolean = false
 }
 
 fun KotlinClassFindUsagesOptions.toClassHelper(): ClassUsagesSearchHelper =
         ClassUsagesSearchHelper(
-            constructorUsages = searchConstructorUsages,
-            nonConstructorUsages = isUsages,
-            skipImports = isSkipImportStatements
+                constructorUsages = searchConstructorUsages,
+                nonConstructorUsages = isUsages,
+                skipImports = isSkipImportStatements
         )
 
 fun KotlinClassFindUsagesOptions.toClassDeclarationsHelper(): ClassDeclarationsUsagesSearchHelper =
         ClassDeclarationsUsagesSearchHelper(
-            functionUsages = isMethodsUsages,
-            propertyUsages = isFieldsUsages,
-            skipImports = isSkipImportStatements
+                functionUsages = isMethodsUsages,
+                propertyUsages = isFieldsUsages,
+                skipImports = isSkipImportStatements
         )
 
 fun KotlinFunctionFindUsagesOptions.toHelper(): FunctionUsagesSearchHelper =
         FunctionUsagesSearchHelper(
-            selfUsages = isUsages,
-            overrideUsages = isUsages,
-            overloadUsages = isIncludeOverloadUsages,
-            extensionUsages = isIncludeOverloadUsages,
-            skipImports = isSkipImportStatements
+                selfUsages = isUsages,
+                overrideUsages = isUsages,
+                overloadUsages = isIncludeOverloadUsages,
+                extensionUsages = isIncludeOverloadUsages,
+                skipImports = isSkipImportStatements
         )
 
 fun KotlinPropertyFindUsagesOptions.toHelper(): PropertyUsagesSearchHelper =
         PropertyUsagesSearchHelper(
-            selfUsages = isUsages,
-            overrideUsages = isUsages,
-            readUsages = isReadAccess,
-            writeUsages = isWriteAccess,
-            skipImports = isSkipImportStatements
+                selfUsages = isUsages,
+                overrideUsages = isUsages,
+                readUsages = isReadAccess,
+                writeUsages = isWriteAccess,
+                skipImports = isSkipImportStatements
         )
 
 fun <T : PsiNamedElement> FindUsagesOptions.toSearchTarget(element: T, restrictByTarget: Boolean): UsagesSearchTarget<T> {

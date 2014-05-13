@@ -50,7 +50,7 @@ class ModuleTypeCacheManager private (project: Project) {
         return cachedValue?.getValue(module)
     }
 
-    private class VfsModificationTracker(project: Project): DefaultModificationTracker() {
+    private class VfsModificationTracker(project: Project) : DefaultModificationTracker() {
         {
             val connection = project.getMessageBus().connect();
             connection.subscribe(VirtualFileManager.VFS_CHANGES, BulkVirtualFileListenerAdapter(
@@ -95,7 +95,7 @@ private val DEFAULT_SCRIPT_NAME = "build.gradle"
 
 private fun isGradleModule(module: Module): Boolean {
     val moduleFile = module.getModuleFile()
-    if (moduleFile == null){
+    if (moduleFile == null) {
         return false
     }
 

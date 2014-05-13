@@ -107,7 +107,7 @@ public object JetUsageTypeProvider : UsageTypeProviderEx {
                     else if (getReceiverExpression() == simpleName) true
                     else
                         getSelectorExpression() == simpleName
-                            && getParentByTypeAndBranch(javaClass<JetDotQualifiedExpression>(), true) { getReceiverExpression() } != null
+                        && getParentByTypeAndBranch(javaClass<JetDotQualifiedExpression>(), true) { getReceiverExpression() } != null
                 } ->
                     JetUsageTypes.CLASS_OBJECT_ACCESS
 
@@ -178,7 +178,8 @@ public object JetUsageTypeProvider : UsageTypeProviderEx {
             is ClassifierDescriptor -> if (DescriptorUtils.isSingleton(descriptor)) {
                 // Treat object accesses as variables to simulate the old behaviour (when variables were created for objects)
                 getVariableUsageType()
-            } else {
+            }
+            else {
                 getClassUsageType()
             }
             is PackageViewDescriptor -> getClassUsageType()

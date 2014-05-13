@@ -39,7 +39,7 @@ import org.jetbrains.jet.lang.resolve.BindingContext
 import org.jetbrains.jet.plugin.completion.handlers.WithTailInsertHandler
 
 class ArtificialElementInsertHandler(
-        val textBeforeCaret: String, val textAfterCaret: String, val shortenRefs: Boolean) : InsertHandler<LookupElement>{
+        val textBeforeCaret: String, val textAfterCaret: String, val shortenRefs: Boolean) : InsertHandler<LookupElement> {
     override fun handleInsert(context: InsertionContext, item: LookupElement) {
         val offset = context.getEditor().getCaretModel().getOffset()
         val startOffset = offset - item.getLookupString().length
@@ -67,19 +67,19 @@ fun LookupElement.addTail(tail: Tail?): LookupElement {
     return when (tail) {
         null -> this
 
-        Tail.COMMA -> object: LookupElementDecorator<LookupElement>(this) {
+        Tail.COMMA -> object : LookupElementDecorator<LookupElement>(this) {
             override fun handleInsert(context: InsertionContext) {
                 WithTailInsertHandler(",", spaceBefore = false, spaceAfter = true /*TODO: use code style option*/).handleInsert(context, getDelegate())
             }
         }
 
-        Tail.RPARENTH -> object: LookupElementDecorator<LookupElement>(this) {
+        Tail.RPARENTH -> object : LookupElementDecorator<LookupElement>(this) {
             override fun handleInsert(context: InsertionContext) {
                 handlers.WithTailInsertHandler(")", spaceBefore = false, spaceAfter = false).handleInsert(context, getDelegate())
             }
         }
 
-        Tail.ELSE -> object: LookupElementDecorator<LookupElement>(this) {
+        Tail.ELSE -> object : LookupElementDecorator<LookupElement>(this) {
             override fun handleInsert(context: InsertionContext) {
                 handlers.WithTailInsertHandler("else", spaceBefore = true, spaceAfter = true).handleInsert(context, getDelegate())
             }
@@ -88,7 +88,7 @@ fun LookupElement.addTail(tail: Tail?): LookupElement {
 }
 
 fun LookupElement.addTail(matchedExpectedInfos: Collection<ExpectedInfo>): LookupElement
-    = addTail(mergeTails(matchedExpectedInfos.map { it.tail }))
+        = addTail(mergeTails(matchedExpectedInfos.map { it.tail }))
 
 fun LookupElement.suppressAutoInsertion() = AutoCompletionPolicy.NEVER_AUTOCOMPLETE.applyPolicy(this)
 
@@ -131,7 +131,7 @@ fun MutableCollection<LookupElement>.addLookupElements(expectedInfos: Collection
 fun MutableCollection<LookupElement>.addLookupElementsForNullable(factory: () -> LookupElement?, matchedInfos: Collection<ExpectedInfo>) {
     var lookupElement = factory()
     if (lookupElement != null) {
-        lookupElement = object: LookupElementDecorator<LookupElement>(lookupElement!!) {
+        lookupElement = object : LookupElementDecorator<LookupElement>(lookupElement!!) {
             override fun renderElement(presentation: LookupElementPresentation) {
                 super.renderElement(presentation)
                 presentation.setItemText("!! " + presentation.getItemText())
@@ -146,7 +146,7 @@ fun MutableCollection<LookupElement>.addLookupElementsForNullable(factory: () ->
 
     lookupElement = factory()
     if (lookupElement != null) {
-        lookupElement = object: LookupElementDecorator<LookupElement>(lookupElement!!) {
+        lookupElement = object : LookupElementDecorator<LookupElement>(lookupElement!!) {
             override fun renderElement(presentation: LookupElementPresentation) {
                 super.renderElement(presentation)
                 presentation.setItemText("?: " + presentation.getItemText())

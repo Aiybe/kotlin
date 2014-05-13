@@ -30,11 +30,11 @@ import com.intellij.openapi.fileEditor.FileDocumentManager
 import com.intellij.openapi.editor.EditorFactory
 import com.intellij.openapi.editor.Editor
 
-public abstract class IntentionBasedInspection<T: JetElement>(
+public abstract class IntentionBasedInspection<T : JetElement>(
         protected val intention: JetSelfTargetingIntention<T>
 ) : AbstractKotlinInspection() {
     override fun buildVisitor(holder: ProblemsHolder, isOnTheFly: Boolean, session: LocalInspectionToolSession): PsiElementVisitor {
-        return object: PsiElementVisitor() {
+        return object : PsiElementVisitor() {
             override fun visitElement(element: PsiElement) {
                 if (!intention.elementType.isInstance(element)) return
 
@@ -43,7 +43,7 @@ public abstract class IntentionBasedInspection<T: JetElement>(
 
                 if (!intention.isApplicableTo(targetElement)) return
 
-                val fix = object: LocalQuickFix {
+                val fix = object : LocalQuickFix {
                     override fun getFamilyName(): String {
                         return getName()
                     }

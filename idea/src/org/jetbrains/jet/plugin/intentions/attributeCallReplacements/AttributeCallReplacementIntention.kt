@@ -55,7 +55,7 @@ public class CallDescription internal (
     public fun getPositionalArguments(): Maybe<List<ValueArgument>, String> {
 
         val resolvedValueArguments = resolved.getValueArgumentsByIndex()
-            ?: return MaybeError("duplicate.or.missing.arguments")
+                                     ?: return MaybeError("duplicate.or.missing.arguments")
 
         // Check for mixed default and passed arguments and return the passed parameters (or fail)
         val indexOfFirstDefaultArgument = resolvedValueArguments.indexOf(DefaultValueArgument.DEFAULT)
@@ -64,7 +64,8 @@ public class CallDescription internal (
                 return MaybeError("skipped.defaults")
             }
             resolvedValueArguments.subList(0, indexOfFirstDefaultArgument)
-        } else {
+        }
+        else {
             resolvedValueArguments
         }
 
@@ -93,7 +94,7 @@ public fun JetQualifiedExpression.toCallDescription(): CallDescription? {
     val bindingContext = AnalyzerFacadeWithCache.getContextForElement(call)
     // This should work. Nothing that returns a CallableDescriptor returns null and (out T is T)
     val resolvedCall = bindingContext[BindingContext.RESOLVED_CALL, call.getCalleeExpression()] ?:
-        return null
+                       return null
 
     return CallDescription(this, call, resolvedCall)
 }
@@ -110,7 +111,8 @@ public abstract class AttributeCallReplacementIntention(name: String) : JetSelfT
         if (callDescription != null && isApplicableToCall(callDescription)) {
             setText(JetBundle.message(key, *formatArgumentsFor(callDescription)))
             return true
-        } else {
+        }
+        else {
             return false
         }
     }
@@ -125,7 +127,7 @@ public abstract class AttributeCallReplacementIntention(name: String) : JetSelfT
         HintManager.getInstance().showErrorHint(editor, message)
     }
 
-    protected fun handleErrors<V: Any>(editor: Editor, maybeValue: Maybe<V, String>): V? {
+    protected fun handleErrors<V : Any>(editor: Editor, maybeValue: Maybe<V, String>): V? {
         return when (maybeValue) {
             is MaybeValue -> maybeValue.value
             is MaybeError -> {

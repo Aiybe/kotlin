@@ -51,14 +51,14 @@ data class TypeParameter(
         val originalConstraints: List<JetTypeConstraint>
 )
 
-trait Replacement: Function1<JetElement, JetElement>
+trait Replacement : Function1<JetElement, JetElement>
 
 trait ParameterReplacement : Replacement {
     val parameter: Parameter
     fun copy(parameter: Parameter): ParameterReplacement
 }
 
-class RenameReplacement(override val parameter: Parameter): ParameterReplacement {
+class RenameReplacement(override val parameter: Parameter) : ParameterReplacement {
     override fun copy(parameter: Parameter) = RenameReplacement(parameter)
 
     [suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")]
@@ -68,7 +68,7 @@ class RenameReplacement(override val parameter: Parameter): ParameterReplacement
     }
 }
 
-class AddPrefixReplacement(override val parameter: Parameter): ParameterReplacement {
+class AddPrefixReplacement(override val parameter: Parameter) : ParameterReplacement {
     override fun copy(parameter: Parameter) = AddPrefixReplacement(parameter)
 
     [suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")]
@@ -82,7 +82,7 @@ class AddPrefixReplacement(override val parameter: Parameter): ParameterReplacem
     }
 }
 
-class FqNameReplacement(val fqName: FqName): Replacement {
+class FqNameReplacement(val fqName: FqName) : Replacement {
     [suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")]
     override fun invoke(e: JetElement): JetElement {
         val newExpr = (e.getReference() as? JetSimpleNameReference)?.bindToFqName(fqName, ShorteningMode.NO_SHORTENING) as JetElement
@@ -94,7 +94,7 @@ trait ControlFlow {
     val returnType: JetType
 }
 
-object DefaultControlFlow: ControlFlow {
+object DefaultControlFlow : ControlFlow {
     override val returnType: JetType get() = DEFAULT_RETURN_TYPE
 }
 
@@ -106,22 +106,22 @@ trait JumpBasedControlFlow : ControlFlow {
 class ConditionalJump(
         override val elementsToReplace: List<JetElement>,
         override val elementToInsertAfterCall: JetElement
-): JumpBasedControlFlow {
+) : JumpBasedControlFlow {
     override val returnType: JetType get() = KotlinBuiltIns.getInstance().getBooleanType()
 }
 
 class UnconditionalJump(
         override val elementsToReplace: List<JetElement>,
         override val elementToInsertAfterCall: JetElement
-): JumpBasedControlFlow {
+) : JumpBasedControlFlow {
     override val returnType: JetType get() = KotlinBuiltIns.getInstance().getUnitType()
 }
 
-class ExpressionEvaluation(override val returnType: JetType): ControlFlow
+class ExpressionEvaluation(override val returnType: JetType) : ControlFlow
 
-class ExpressionEvaluationWithCallSiteReturn(override val returnType: JetType): ControlFlow
+class ExpressionEvaluationWithCallSiteReturn(override val returnType: JetType) : ControlFlow
 
-class ParameterUpdate(val parameter: Parameter): ControlFlow {
+class ParameterUpdate(val parameter: Parameter) : ControlFlow {
     override val returnType: JetType get() = parameter.parameterType
 }
 

@@ -13,7 +13,7 @@ import kotlin.test.assertEquals
 import kotlin.test.fail
 import org.jetbrains.kotlin.gradle.BaseGradleIT.Project
 
-class BasicKotlinGradleIT: BaseGradleIT() {
+class BasicKotlinGradleIT : BaseGradleIT() {
 
     Test fun testCrossCompile() {
         val project = Project("kotlinJavaProject", "1.6")

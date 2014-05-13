@@ -13,7 +13,7 @@ import java.util.Properties
 import java.io.FileNotFoundException
 import org.gradle.api.initialization.dsl.ScriptHandler
 
-abstract class KotlinBasePluginWrapper: Plugin<Project> {
+abstract class KotlinBasePluginWrapper : Plugin<Project> {
 
     val log = Logging.getLogger(getClass())
 
@@ -24,8 +24,8 @@ abstract class KotlinBasePluginWrapper: Plugin<Project> {
                       "contains 'kotlin-gradle-plugin' in buildscript's classpath configuration.");
             return;
         }
-        val dependencyHandler : DependencyHandler = sourceBuildScript.getDependencies()
-        val configurationsContainer : ConfigurationContainer = sourceBuildScript.getConfigurations()
+        val dependencyHandler: DependencyHandler = sourceBuildScript.getDependencies()
+        val configurationsContainer: ConfigurationContainer = sourceBuildScript.getConfigurations()
 
         log.debug("Loading version information")
         val props = Properties()
@@ -48,7 +48,7 @@ abstract class KotlinBasePluginWrapper: Plugin<Project> {
         val configuration = configurationsContainer.detachedConfiguration(dependency)
 
         log.debug("Resolving [" + kotlinPluginCoreCoordinates + "]")
-        val kotlinPluginDependencies : List<URL> = configuration.getResolvedConfiguration().getFiles(KSpec({ dep -> true }))!!.map({(f: File):URL -> f.toURI().toURL() })
+        val kotlinPluginDependencies: List<URL> = configuration.getResolvedConfiguration().getFiles(KSpec({ dep -> true }))!!.map({(f: File): URL -> f.toURI().toURL() })
         log.debug("Resolved files: [" + kotlinPluginDependencies.toString() + "]")
         log.debug("Load plugin in parent-last URL classloader")
         val kotlinPluginClassloader = ParentLastURLClassLoader(kotlinPluginDependencies, getClass().getClassLoader())
@@ -65,7 +65,7 @@ abstract class KotlinBasePluginWrapper: Plugin<Project> {
         log.debug("'apply' method invoked successfully")
     }
 
-    public abstract fun getPluginClassName():String
+    public abstract fun getPluginClassName(): String
 
     private fun findSourceBuildScript(project: Project): ScriptHandler? {
         log.debug("Looking for proper script handler")
@@ -85,19 +85,19 @@ abstract class KotlinBasePluginWrapper: Plugin<Project> {
     }
 }
 
-open class KotlinPluginWrapper: KotlinBasePluginWrapper() {
-    public override fun getPluginClassName():String {
+open class KotlinPluginWrapper : KotlinBasePluginWrapper() {
+    public override fun getPluginClassName(): String {
         return "org.jetbrains.kotlin.gradle.plugin.KotlinPlugin"
     }
 }
 
-open class KotlinAndriodPluginWrapper: KotlinBasePluginWrapper() {
-    public override fun getPluginClassName():String {
+open class KotlinAndriodPluginWrapper : KotlinBasePluginWrapper() {
+    public override fun getPluginClassName(): String {
         return "org.jetbrains.kotlin.gradle.plugin.KotlinAndroidPlugin"
     }
 }
 
-open class KSpec<T: Any?>(val predicate: (T) -> Boolean): Spec<T> {
+open class KSpec<T : Any?>(val predicate: (T) -> Boolean) : Spec<T> {
     public override fun isSatisfiedBy(p0: T?): Boolean {
         return p0 != null && predicate(p0)
     }

@@ -17,20 +17,20 @@ public fun JPopupMenu.menu(text: String, init: JMenu.() -> Unit): JMenu {
 }
 
 var JMenu.mnemonic: Int
-get() {
-    return getMnemonic()
-}
-set(value) {
-    setMnemonic(value)
-}
+    get() {
+        return getMnemonic()
+    }
+    set(value) {
+        setMnemonic(value)
+    }
 
 var JMenu.accelerator: KeyStroke?
-get() {
-    return getAccelerator()
-}
-set(value) {
-    setAccelerator(value)
-}
+    get() {
+        return getAccelerator()
+    }
+    set(value) {
+        setAccelerator(value)
+    }
 
 fun JMenu.item(vararg actions: Action): Unit {
     for (action in actions) {
@@ -81,7 +81,7 @@ public fun radioButtonMenuItem(text: String, description: String? = null, mnemon
 /**
  * Helper method to create a new [JMenuItem]
  */
-fun <T: JMenuItem> configureMenuItem(answer: T, description: String?, mnemonic: Char?, accelerator: KeyStroke?): T {
+fun <T : JMenuItem> configureMenuItem(answer: T, description: String?, mnemonic: Char?, accelerator: KeyStroke?): T {
     if (description != null) {
         answer.getAccessibleContext()?.setAccessibleDescription(description)
     }
@@ -100,7 +100,8 @@ fun <T: JMenuItem> configureMenuItem(answer: T, description: String?, mnemonic: 
 public fun keyStroke(keyChar: Char, modifiers: Int?): KeyStroke? {
     return if (modifiers != null) {
         KeyStroke.getKeyStroke(keyChar, modifiers)
-    } else {
+    }
+    else {
         KeyStroke.getKeyStroke(keyChar)
     }
 }

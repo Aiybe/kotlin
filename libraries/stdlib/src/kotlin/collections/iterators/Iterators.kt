@@ -8,7 +8,7 @@ import kotlin.test.assertTrue
  * Returns an iterator which invokes the function to calculate the next value on each iteration until the function returns *null*
  */
 deprecated("Use streams for lazy collection operations.")
-public fun <T:Any> iterate(nextFunction: () -> T?) : Iterator<T> {
+public fun <T : Any> iterate(nextFunction: () -> T?): Iterator<T> {
     return FunctionIterator(nextFunction)
 }
 
@@ -17,7 +17,7 @@ public fun <T:Any> iterate(nextFunction: () -> T?) : Iterator<T> {
  * until the function returns *null*
  */
 deprecated("Use streams for lazy collection operations.")
-public /*inline*/ fun <T: Any> iterate(initialValue: T, nextFunction: (T) -> T?): Iterator<T> =
+public /*inline*/ fun <T : Any> iterate(initialValue: T, nextFunction: (T) -> T?): Iterator<T> =
         iterate(nextFunction.toGenerator(initialValue))
 
 /**
@@ -33,7 +33,7 @@ deprecated("Use streams for lazy collection operations.")
 public fun <T> Iterator<T>.skip(n: Int): Iterator<T> = SkippingIterator(this, n)
 
 deprecated("Use streams for lazy collection operations.")
-class FilterIterator<T>(val iterator : Iterator<T>, val predicate: (T)-> Boolean) : AbstractIterator<T>() {
+class FilterIterator<T>(val iterator: Iterator<T>, val predicate: (T) -> Boolean) : AbstractIterator<T>() {
     override protected fun computeNext(): Unit {
         while (iterator.hasNext()) {
             val next = iterator.next()
@@ -47,7 +47,7 @@ class FilterIterator<T>(val iterator : Iterator<T>, val predicate: (T)-> Boolean
 }
 
 deprecated("Use streams for lazy collection operations.")
-class FilterNotNullIterator<T:Any>(val iterator : Iterator<T?>?) : AbstractIterator<T>() {
+class FilterNotNullIterator<T : Any>(val iterator: Iterator<T?>?) : AbstractIterator<T>() {
     override protected fun computeNext(): Unit {
         if (iterator != null) {
             while (iterator.hasNext()) {
@@ -63,21 +63,22 @@ class FilterNotNullIterator<T:Any>(val iterator : Iterator<T?>?) : AbstractItera
 }
 
 deprecated("Use streams for lazy collection operations.")
-class MapIterator<T, R>(val iterator : Iterator<T>, val transform: (T) -> R) : AbstractIterator<R>() {
-    override protected fun computeNext() : Unit {
+class MapIterator<T, R>(val iterator: Iterator<T>, val transform: (T) -> R) : AbstractIterator<R>() {
+    override protected fun computeNext(): Unit {
         if (iterator.hasNext()) {
             setNext((transform)(iterator.next()))
-        } else {
+        }
+        else {
             done()
         }
     }
 }
 
 deprecated("Use streams for lazy collection operations.")
-class FlatMapIterator<T, R>(val iterator : Iterator<T>, val transform: (T) -> Iterator<R>) : AbstractIterator<R>() {
+class FlatMapIterator<T, R>(val iterator: Iterator<T>, val transform: (T) -> Iterator<R>) : AbstractIterator<R>() {
     var transformed: Iterator<R> = iterate<R> { null }
 
-    override protected fun computeNext() : Unit {
+    override protected fun computeNext(): Unit {
         while (true) {
             if (transformed.hasNext()) {
                 setNext(transformed.next())
@@ -85,7 +86,8 @@ class FlatMapIterator<T, R>(val iterator : Iterator<T>, val transform: (T) -> It
             }
             if (iterator.hasNext()) {
                 transformed = (transform)(iterator.next())
-            } else {
+            }
+            else {
                 done()
                 return
             }
@@ -95,7 +97,7 @@ class FlatMapIterator<T, R>(val iterator : Iterator<T>, val transform: (T) -> It
 
 deprecated("Use streams for lazy collection operations.")
 class TakeWhileIterator<T>(val iterator: Iterator<T>, val predicate: (T) -> Boolean) : AbstractIterator<T>() {
-    override protected fun computeNext() : Unit {
+    override protected fun computeNext(): Unit {
         if (iterator.hasNext()) {
             val item = iterator.next()
             if ((predicate)(item)) {
@@ -109,13 +111,14 @@ class TakeWhileIterator<T>(val iterator: Iterator<T>, val predicate: (T) -> Bool
 
 /** An [[Iterator]] which invokes a function to calculate the next value in the iteration until the function returns *null* */
 deprecated("Use streams for lazy collection operations.")
-class FunctionIterator<T:Any>(val nextFunction: () -> T?): AbstractIterator<T>() {
+class FunctionIterator<T : Any>(val nextFunction: () -> T?) : AbstractIterator<T>() {
 
     override protected fun computeNext(): Unit {
         val next = (nextFunction)()
         if (next == null) {
             done()
-        } else {
+        }
+        else {
             setNext(next)
         }
     }
@@ -126,7 +129,7 @@ deprecated("Use streams for lazy collection operations.")
 fun CompositeIterator<T>(vararg iterators: Iterator<T>): CompositeIterator<T> = CompositeIterator(iterators.iterator())
 
 deprecated("Use streams for lazy collection operations.")
-class CompositeIterator<T>(val iterators: Iterator<Iterator<T>>): AbstractIterator<T>() {
+class CompositeIterator<T>(val iterators: Iterator<Iterator<T>>) : AbstractIterator<T>() {
 
     var currentIter: Iterator<T>? = null
 
@@ -135,7 +138,8 @@ class CompositeIterator<T>(val iterators: Iterator<Iterator<T>>): AbstractIterat
             if (currentIter == null) {
                 if (iterators.hasNext()) {
                     currentIter = iterators.next()
-                } else {
+                }
+                else {
                     done()
                     return
                 }
@@ -145,7 +149,8 @@ class CompositeIterator<T>(val iterators: Iterator<Iterator<T>>): AbstractIterat
                 if (iter.hasNext()) {
                     setNext(iter.next())
                     return
-                } else {
+                }
+                else {
                     currentIter = null
                 }
             }
@@ -155,22 +160,23 @@ class CompositeIterator<T>(val iterators: Iterator<Iterator<T>>): AbstractIterat
 
 /** A singleton [[Iterator]] which invokes once over a value */
 deprecated("Use streams for lazy collection operations.")
-class SingleIterator<T>(val value: T): AbstractIterator<T>() {
+class SingleIterator<T>(val value: T) : AbstractIterator<T>() {
     var first = true
 
     override protected fun computeNext(): Unit {
         if (first) {
             first = false
             setNext(value)
-        } else {
+        }
+        else {
             done()
         }
     }
 }
 
 deprecated("Use streams for lazy collection operations.")
-class IndexIterator<T>(val iterator : Iterator<T>): Iterator<Pair<Int, T>> {
-    private var index : Int = 0
+class IndexIterator<T>(val iterator: Iterator<T>) : Iterator<Pair<Int, T>> {
+    private var index: Int = 0
 
     override fun next(): Pair<Int, T> {
         return Pair(index++, iterator.next())
@@ -183,8 +189,8 @@ class IndexIterator<T>(val iterator : Iterator<T>): Iterator<Pair<Int, T>> {
 
 deprecated("Use streams for lazy collection operations.")
 public class PairIterator<T, S>(
-        val iterator1 : Iterator<T>, val iterator2 : Iterator<S>
-): AbstractIterator<Pair<T, S>>() {
+        val iterator1: Iterator<T>, val iterator2: Iterator<S>
+) : AbstractIterator<Pair<T, S>>() {
     protected override fun computeNext() {
         if (iterator1.hasNext() && iterator2.hasNext()) {
             setNext(Pair(iterator1.next(), iterator2.next()))
@@ -196,7 +202,7 @@ public class PairIterator<T, S>(
 }
 
 deprecated("Use streams for lazy collection operations.")
-class SkippingIterator<T>(val iterator: Iterator<T>, val n: Int): Iterator<T> {
+class SkippingIterator<T>(val iterator: Iterator<T>, val n: Int) : Iterator<T> {
     private var firstTime: Boolean = true
 
     private fun skip() {

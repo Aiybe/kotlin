@@ -29,7 +29,7 @@ public class ReplaceWithTraditionalAssignmentIntention : JetSelfTargetingIntenti
 
         fun checkValidity(element: JetBinaryExpression): Boolean {
             return element.getLeft() is JetSimpleNameExpression &&
-                    JetTokens.AUGMENTED_ASSIGNMENTS.contains(element.getOperationToken())
+                   JetTokens.AUGMENTED_ASSIGNMENTS.contains(element.getOperationToken())
         }
 
         return checkForNullSafety(element) && checkValidity(element)

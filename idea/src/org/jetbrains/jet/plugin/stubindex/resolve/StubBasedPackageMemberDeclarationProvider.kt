@@ -62,7 +62,7 @@ public class StubBasedPackageMemberDeclarationProvider(
     }
 
     override fun getPackageFiles(): Collection<JetFile> {
-       return PackageIndexUtil.findFilesWithExactPackage(fqName, searchScope, project)
+        return PackageIndexUtil.findFilesWithExactPackage(fqName, searchScope, project)
     }
 
     private fun childName(name: Name): String {

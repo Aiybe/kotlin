@@ -30,7 +30,7 @@ import org.jetbrains.jet.lang.psi.JetElement
 import org.jetbrains.jet.lang.psi.JetQualifiedExpression
 import org.jetbrains.jet.lang.psi.JetUserType
 
-public class KotlinShortenReferencesRefactoringHelper: RefactoringHelper<Any> {
+public class KotlinShortenReferencesRefactoringHelper : RefactoringHelper<Any> {
     private val LOG = Logger.getInstance(javaClass<KotlinShortenReferencesRefactoringHelper>().getCanonicalName())!!
 
     override fun prepareOperation(usages: Array<out UsageInfo>?): Any? {

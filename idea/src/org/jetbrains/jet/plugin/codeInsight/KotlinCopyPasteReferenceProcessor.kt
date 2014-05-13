@@ -179,7 +179,7 @@ public class KotlinCopyPasteReferenceProcessor() : CopyPastePostProcessor<Refere
             val lengthenReference: Boolean = false
     )
 
-    override fun processTransferableData (
+    override fun processTransferableData(
             project: Project,
             editor: Editor,
             bounds: RangeMarker,
@@ -256,7 +256,7 @@ public class KotlinCopyPasteReferenceProcessor() : CopyPastePostProcessor<Refere
             LOG.error("Failed to analyze reference (${expression.getText()}) after copy paste", e)
             return null
         }
-        val referencedFqNames = referencedDescriptors.filterNot { ErrorUtils.isError(it) } .map { it.importableFqName }
+        val referencedFqNames = referencedDescriptors.filterNot { ErrorUtils.isError(it) }.map { it.importableFqName }
         val referencesSame = referencedFqNames any { it == originalReferencedFqName }
         val conflict = referencedFqNames any { it != originalReferencedFqName && (it?.shortName() == originalReferencedFqName.shortName()) }
         when {
@@ -293,7 +293,7 @@ public class KotlinCopyPasteReferenceProcessor() : CopyPastePostProcessor<Refere
         if (!shouldShowDialog || referencesToRestore.isEmpty()) {
             return referencesToRestore
         }
-        val fqNames = referencesToRestore. map { it.fqName.asString() }.toSortedSet()
+        val fqNames = referencesToRestore.map { it.fqName.asString() }.toSortedSet()
         val dialog = RestoreReferencesDialog(project, fqNames.copyToArray())
         dialog.show()
         val selectedFqNames = dialog.getSelectedElements()!!.toSet()
@@ -334,7 +334,7 @@ public class KotlinCopyPasteReferenceProcessor() : CopyPastePostProcessor<Refere
             else if (parent is JetUserType) {
                 val typeReference = PsiTreeUtil.getParentOfType(expression, javaClass<JetTypeReference>())
                 LOG.assertTrue(typeReference != null, "JetUserType is expected to have parent of type JetTypeReference:\n" +
-                    "At: ${DiagnosticUtils.atLocation(expression)}\nFILE:\n${expression.getContainingFile()!!.getText()}")
+                                                      "At: ${DiagnosticUtils.atLocation(expression)}\nFILE:\n${expression.getContainingFile()!!.getText()}")
                 typeReference!!.replace(JetPsiFactory.createType(project, "$prefixToInsert.${typeReference.getText()}"))
             }
             else {

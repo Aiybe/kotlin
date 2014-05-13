@@ -31,7 +31,8 @@ public class TransformingStream<T, R>(val stream: Stream<T>, val transformer: (T
         override fun computeNext() {
             if (iterator.hasNext()) {
                 setNext(transformer(iterator.next()))
-            } else {
+            }
+            else {
                 done()
             }
         }
@@ -45,7 +46,8 @@ class ZippingStream<T1, T2>(val stream1: Stream<T1>, val stream2: Stream<T2>) : 
         override fun computeNext() {
             if (iterator1.hasNext() && iterator2.hasNext()) {
                 setNext(iterator1.next() to iterator2.next())
-            } else {
+            }
+            else {
                 done()
             }
         }
@@ -61,7 +63,8 @@ public class FlatteningStream<T, R>(val stream: Stream<T>, val transformer: (T) 
                 if (!iterator.hasNext()) {
                     done()
                     break;
-                } else {
+                }
+                else {
                     val element = iterator.next()
                     val nextItemIterator = transformer(element).iterator()
                     if (nextItemIterator.hasNext())
@@ -72,7 +75,8 @@ public class FlatteningStream<T, R>(val stream: Stream<T>, val transformer: (T) 
             val currentItemIterator = itemIterator
             if (currentItemIterator == null) {
                 done()
-            } else {
+            }
+            else {
                 setNext(currentItemIterator.next())
                 if (!currentItemIterator.hasNext())
                     itemIterator = null
@@ -90,7 +94,8 @@ public class Multistream<T>(val streams: Stream<Stream<T>>) : Stream<T> {
                 if (!iterator.hasNext()) {
                     done()
                     break;
-                } else {
+                }
+                else {
                     val stream = iterator.next()
                     val nextStreamIterator = stream.iterator()
                     if (nextStreamIterator.hasNext())
@@ -101,7 +106,8 @@ public class Multistream<T>(val streams: Stream<Stream<T>>) : Stream<T> {
             val currentStreamIterator = streamIterator
             if (currentStreamIterator == null) {
                 done()
-            } else {
+            }
+            else {
                 setNext(currentStreamIterator.next())
                 if (!currentStreamIterator.hasNext())
                     streamIterator = null
@@ -116,11 +122,13 @@ public class LimitedStream<T>(val stream: Stream<T>, val stopWhen: Boolean = tru
         override fun computeNext() {
             if (!iterator.hasNext()) {
                 done()
-            } else {
+            }
+            else {
                 val item = iterator.next()
                 if (predicate(item) == stopWhen) {
                     done()
-                } else {
+                }
+                else {
                     setNext(item)
                 }
             }
@@ -135,7 +143,8 @@ public class FunctionStream<T : Any>(val producer: () -> T?) : Stream<T> {
             val item = producer()
             if (item == null) {
                 done()
-            } else {
+            }
+            else {
                 setNext(item)
             }
         }

@@ -39,15 +39,15 @@ public class ReplaceWithOperatorAssignIntention : JetSelfTargetingIntention<JetB
     }
 
     override fun isApplicableTo(element: JetBinaryExpression): Boolean {
-        fun isWellFormedAssignment(element : JetBinaryExpression): Boolean {
+        fun isWellFormedAssignment(element: JetBinaryExpression): Boolean {
             val leftExpression = element.getLeft()
             val rightExpression = element.getRight()
 
             return leftExpression is JetSimpleNameExpression &&
-                    element.getOperationToken() == JetTokens.EQ &&
-                    rightExpression is JetBinaryExpression &&
-                    rightExpression.getLeft() != null &&
-                    rightExpression.getRight() != null
+                   element.getOperationToken() == JetTokens.EQ &&
+                   rightExpression is JetBinaryExpression &&
+                   rightExpression.getLeft() != null &&
+                   rightExpression.getRight() != null
         }
 
         fun checkExpressionRepeat(variableExpression: JetSimpleNameExpression, expression: JetBinaryExpression): Boolean {
@@ -58,10 +58,10 @@ public class ReplaceWithOperatorAssignIntention : JetSelfTargetingIntention<JetB
             when {
                 JetPsiMatcher.checkElementMatch(variableExpression, expression.getLeft()) -> {
                     val validity = expression.getOperationToken() == JetTokens.PLUS ||
-                    expression.getOperationToken() == JetTokens.MINUS ||
-                    expression.getOperationToken() == JetTokens.MUL ||
-                    expression.getOperationToken() == JetTokens.DIV ||
-                    expression.getOperationToken() == JetTokens.PERC
+                                   expression.getOperationToken() == JetTokens.MINUS ||
+                                   expression.getOperationToken() == JetTokens.MUL ||
+                                   expression.getOperationToken() == JetTokens.DIV ||
+                                   expression.getOperationToken() == JetTokens.PERC
 
                     if (validity) {
                         setText("Replace with ${expression.getOperationReference().getText()}= Expression")
@@ -71,8 +71,8 @@ public class ReplaceWithOperatorAssignIntention : JetSelfTargetingIntention<JetB
                 }
                 JetPsiMatcher.checkElementMatch(variableExpression, expression.getRight()) -> {
                     val validity = (expression.getOperationToken() == JetTokens.PLUS ||
-                    expression.getOperationToken() == JetTokens.MUL) &&
-                    isPrimitiveOperation
+                                    expression.getOperationToken() == JetTokens.MUL) &&
+                                   isPrimitiveOperation
 
                     if (validity) {
                         setText("Replace with ${expression.getOperationReference().getText()}= Expression")
@@ -87,7 +87,8 @@ public class ReplaceWithOperatorAssignIntention : JetSelfTargetingIntention<JetB
 
         if (isWellFormedAssignment(element)) {
             return checkExpressionRepeat(element.getLeft() as JetSimpleNameExpression, element.getRight() as JetBinaryExpression)
-        } else {
+        }
+        else {
             return false
         }
     }

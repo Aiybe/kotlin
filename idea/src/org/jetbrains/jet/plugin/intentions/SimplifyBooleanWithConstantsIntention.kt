@@ -31,22 +31,22 @@ import com.intellij.psi.util.PsiTreeUtil
 public class SimplifyBooleanWithConstantsIntention : JetSelfTargetingIntention<JetBinaryExpression>(
         "simplify.boolean.with.constants", javaClass()) {
 
-    private var topParent : JetBinaryExpression? = null
+    private var topParent: JetBinaryExpression? = null
 
     override fun isApplicableTo(element: JetBinaryExpression): Boolean {
         topParent = PsiTreeUtil.getTopmostParentOfType(element, javaClass<JetBinaryExpression>()) ?: element
         return areThereExpressionsToBeSimplified(topParent)
     }
 
-    private fun areThereExpressionsToBeSimplified(element: JetExpression?) : Boolean {
+    private fun areThereExpressionsToBeSimplified(element: JetExpression?): Boolean {
         if (element == null) return false
         when (element) {
             is JetParenthesizedExpression -> return areThereExpressionsToBeSimplified(element.getExpression())
             is JetBinaryExpression -> {
                 val op = element.getOperationToken()
                 if ((op == JetTokens.ANDAND || op == JetTokens.OROR) &&
-                       (areThereExpressionsToBeSimplified(element.getLeft()) ||
-                       areThereExpressionsToBeSimplified(element.getRight()))) return true
+                    (areThereExpressionsToBeSimplified(element.getLeft()) ||
+                     areThereExpressionsToBeSimplified(element.getRight()))) return true
             }
         }
         return element.canBeReducedToBooleanConstant(null)
@@ -66,7 +66,7 @@ public class SimplifyBooleanWithConstantsIntention : JetSelfTargetingIntention<J
         topParent!!.replace(simplified)
     }
 
-    private fun simplifyBoolean(element: JetExpression) : JetExpression {
+    private fun simplifyBoolean(element: JetExpression): JetExpression {
         if (element.canBeReducedToTrue())
             return JetPsiFactory.createExpression(element.getProject(), "true")
         if (element.canBeReducedToFalse())

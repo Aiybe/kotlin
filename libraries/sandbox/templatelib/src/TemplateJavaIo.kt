@@ -14,21 +14,21 @@ import java.io.StringWriter
  */
 class WriterPrinter(val writer: Writer) : Printer {
 
-  override fun print(value: Any) {
-    // TODO should be using a formatter to do the conversion
-    writer.write(value.toString())
-  }
+    override fun print(value: Any) {
+        // TODO should be using a formatter to do the conversion
+        writer.write(value.toString())
+    }
 }
 
 fun Template.renderToText(): String {
-  val buffer = StringWriter()
-  renderTo(buffer)
-  return buffer.toString()!!
+    val buffer = StringWriter()
+    renderTo(buffer)
+    return buffer.toString()!!
 }
 
 fun Template.renderTo(writer: Writer): Unit {
-  this.printer = WriterPrinter(writer)
-  this.render()
+    this.printer = WriterPrinter(writer)
+    this.render()
 }
 
 fun Template.renderTo(os: OutputStream): Unit = renderTo(OutputStreamWriter(os))

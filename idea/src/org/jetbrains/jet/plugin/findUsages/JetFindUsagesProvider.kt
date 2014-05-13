@@ -39,7 +39,7 @@ public class JetFindUsagesProvider : FindUsagesProvider {
     public override fun getHelpId(psiElement: PsiElement): String? = null
 
     public override fun getType(element: PsiElement): String {
-        return when(element) {
+        return when (element) {
             is JetNamedFunction -> "function"
             is JetClass -> "class"
             is JetParameter -> "parameter"

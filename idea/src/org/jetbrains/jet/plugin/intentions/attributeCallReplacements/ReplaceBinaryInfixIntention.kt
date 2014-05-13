@@ -53,7 +53,7 @@ public open class ReplaceBinaryInfixIntention : AttributeCallReplacementIntentio
                 JetPsiFactory.createBinaryExpression(
                         call.element.getProject(),
                         call.element.getReceiverExpression(),
-                        lookup(call.functionName)!!,  // Lookup must succeed
+                        lookup(call.functionName)!!, // Lookup must succeed
                         argument
                 )
         )
