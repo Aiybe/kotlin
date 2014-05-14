@@ -11,7 +11,7 @@ import org.junit.Test
 import com.intellij.openapi.util.text.StringUtil
 
 /**
-*/
+ */
 class KDocTest {
     Test fun generateKDocForStandardLibrary() {
         var moduleName = "ApiDocsModule.kt"
@@ -28,8 +28,8 @@ class KDocTest {
         //args.module = moduleName
         args.kotlinHome = "../../../dist/kotlinc"
         val sourceDirs = listOf("../../stdlib/src",
-                               "../../kunit/src/main/kotlin",
-                               "../../kotlin-jdbc/src/main/kotlin")
+                                "../../kunit/src/main/kotlin",
+                                "../../kotlin-jdbc/src/main/kotlin")
         args.src = sourceDirs.makeString(File.pathSeparator)
         args.outputDir = "target/classes-stdlib"
         args.noStdlib = true

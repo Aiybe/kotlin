@@ -4,8 +4,8 @@ import kotlin.util.*
 import kotlin.test.*
 import junit.framework.TestCase
 
-private fun listDifference<T>(first : List<T>, second : List<T>) : List<T> {
-    return first.filter{ !second.contains(it) }.toList()
+private fun listDifference<T>(first: List<T>, second: List<T>): List<T> {
+    return first.filter { !second.contains(it) }.toList()
 }
 
 class StdLibIssuesTest() : TestCase() {

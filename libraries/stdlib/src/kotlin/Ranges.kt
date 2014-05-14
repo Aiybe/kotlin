@@ -1,18 +1,17 @@
 package kotlin
 
-public data class ComparableRange<T: Comparable<T>> (
+public data class ComparableRange<T : Comparable<T>> (
         public override val start: T,
         public override val end: T
-): Range<T> {
+) : Range<T> {
     public override fun contains(item: T): Boolean {
         return start <= item && item <= end
     }
 }
 
-public fun <T: Comparable<T>> T.rangeTo(that: T): ComparableRange<T> {
+public fun <T : Comparable<T>> T.rangeTo(that: T): ComparableRange<T> {
     return ComparableRange(this, that)
 }
-
 
 
 public fun CharProgression.reversed(): CharProgression {
@@ -67,7 +66,7 @@ public fun FloatRange.reversed(): FloatProgression {
 public fun LongRange.reversed(): LongProgression {
     return LongProgression(end, start, -1.toLong())
 }
-    
+
 public fun DoubleRange.reversed(): DoubleProgression {
     return DoubleProgression(end, start, -1.0)
 }

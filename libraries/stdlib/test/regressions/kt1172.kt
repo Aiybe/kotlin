@@ -4,12 +4,12 @@ import kotlin.concurrent.*
 import junit.framework.*
 import java.util.*
 
-public fun scheduleRefresh(vararg files : Object) {
+public fun scheduleRefresh(vararg files: Object) {
     // TODO
     // java.util.ArrayList<Object>(files.map{ it })
 }
 
-fun main(args : Array<String?>?) {
+fun main(args: Array<String?>?) {
 }
 
 class Kt1172Test() : TestCase() {

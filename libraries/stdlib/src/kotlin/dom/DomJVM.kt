@@ -21,95 +21,95 @@ import org.xml.sax.InputSource
 
 // JavaScript style properties - TODO could auto-generate these
 val Node.nodeName: String
-get() = getNodeName() ?: ""
+    get() = getNodeName() ?: ""
 
 val Node.nodeValue: String
-get() = getNodeValue() ?: ""
+    get() = getNodeValue() ?: ""
 
 val Node.nodeType: Short
-get() = getNodeType()
+    get() = getNodeType()
 
 val Node.parentNode: Node?
-get() = getParentNode()
+    get() = getParentNode()
 
 val Node.childNodes: NodeList
-get() = getChildNodes()!!
+    get() = getChildNodes()!!
 
 val Node.firstChild: Node?
-get() = getFirstChild()
+    get() = getFirstChild()
 
 val Node.lastChild: Node?
-get() = getLastChild()
+    get() = getLastChild()
 
 val Node.nextSibling: Node?
-get() = getNextSibling()
+    get() = getNextSibling()
 
 val Node.previousSibling: Node?
-get() = getPreviousSibling()
+    get() = getPreviousSibling()
 
 val Node.attributes: NamedNodeMap?
-get() = getAttributes()
+    get() = getAttributes()
 
 val Node.ownerDocument: Document?
-get() = getOwnerDocument()
+    get() = getOwnerDocument()
 
 val Document.documentElement: Element?
-get() = this.getDocumentElement()
+    get() = this.getDocumentElement()
 
 val Node.namespaceURI: String
-get() = getNamespaceURI() ?: ""
+    get() = getNamespaceURI() ?: ""
 
 val Node.prefix: String
-get() = getPrefix() ?: ""
+    get() = getPrefix() ?: ""
 
 val Node.localName: String
-get() = getLocalName() ?: ""
+    get() = getLocalName() ?: ""
 
 val Node.baseURI: String
-get() = getBaseURI() ?: ""
+    get() = getBaseURI() ?: ""
 
 var Node.textContent: String
-get() = getTextContent() ?: ""
-set(value) {
-    setTextContent(value)
-}
+    get() = getTextContent() ?: ""
+    set(value) {
+        setTextContent(value)
+    }
 
 val DOMStringList.length: Int
-get() = this.getLength()
+    get() = this.getLength()
 
 val NameList.length: Int
-get() = this.getLength()
+    get() = this.getLength()
 
 val DOMImplementationList.length: Int
-get() = this.getLength()
+    get() = this.getLength()
 
 val NodeList.length: Int
-get() = this.getLength()
+    get() = this.getLength()
 
 val CharacterData.length: Int
-get() = this.getLength()
+    get() = this.getLength()
 
 val NamedNodeMap.length: Int
-get() = this.getLength()
+    get() = this.getLength()
 
 
 /**
  * Returns the HTML representation of the node
  */
 public val Node.outerHTML: String
-get() = toXmlString()
+    get() = toXmlString()
 
 /**
  * Returns the HTML representation of the node
  */
 public val Node.innerHTML: String
-get() = childNodes.outerHTML
+    get() = childNodes.outerHTML
 
 /**
  * Returns the HTML representation of the nodes
  */
 public val NodeList.outerHTML: String
-get() = toList().map { it.innerHTML }.makeString("")
+    get() = toList().map { it.innerHTML }.makeString("")
 
 /** Returns an [[Iterator]] of all the next [[Element]] siblings */
 fun Node.nextElements(): List<Element> = nextSiblings().filterIsInstance<Node, Element>(javaClass<Element>())
@@ -118,20 +118,20 @@ fun Node.nextElements(): List<Element> = nextSiblings().filterIsInstance<Node, E
 fun Node.previousElements(): List<Element> = previousSiblings().filterIsInstance<Node, Element>(javaClass<Element>())
 
 
-var Element.classSet : MutableSet<String>
-get() {
-    val answer = LinkedHashSet<String>()
-    val array = this.classes.split("""\s""")
-    for (s in array) {
-        if (s.size > 0) {
-            answer.add(s)
+var Element.classSet: MutableSet<String>
+    get() {
+        val answer = LinkedHashSet<String>()
+        val array = this.classes.split("""\s""")
+        for (s in array) {
+            if (s.size > 0) {
+                answer.add(s)
+            }
         }
+        return answer
     }
-    return answer
-}
-set(value) {
-    this.classes = value.makeString(" ")
-}
+    set(value) {
+        this.classes = value.makeString(" ")
+    }
 
 /** Adds the given CSS class to this element's 'class' attribute */
 fun Element.addClass(cssClass: String): Boolean {
@@ -152,7 +152,6 @@ fun Element.removeClass(cssClass: String): Boolean {
     }
     return answer
 }
-
 
 
 /** Creates a new document with the given document builder*/
@@ -212,7 +211,8 @@ public fun parseXml(inputSource: InputSource, builder: DocumentBuilder = default
 public fun createTransformer(source: Source? = null, factory: TransformerFactory = TransformerFactory.newInstance()!!): Transformer {
     val transformer = if (source != null) {
         factory.newTransformer(source)
-    } else {
+    }
+    else {
         factory.newTransformer()
     }
     return transformer!!

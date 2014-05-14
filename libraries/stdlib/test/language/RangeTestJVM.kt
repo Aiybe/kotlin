@@ -34,7 +34,7 @@ public class RangeTestJVM {
 
         failsWith(javaClass<IllegalArgumentException>()) { 0..5 step 0 }
         failsWith(javaClass<IllegalArgumentException>()) { 0.toByte()..5.toByte() step 0 }
-        failsWith(javaClass<IllegalArgumentException>()) { 0.toShort()..5.toShort() step 0  }
+        failsWith(javaClass<IllegalArgumentException>()) { 0.toShort()..5.toShort() step 0 }
         failsWith(javaClass<IllegalArgumentException>()) { 0.toLong()..5.toLong() step 0.toLong() }
         failsWith(javaClass<IllegalArgumentException>()) { 'a'..'z' step 0 }
         failsWith(javaClass<IllegalArgumentException>()) { 0.0..5.0 step 0.0 }
@@ -42,7 +42,7 @@ public class RangeTestJVM {
 
         failsWith(javaClass<IllegalArgumentException>()) { 0 downTo -5 step 0 }
         failsWith(javaClass<IllegalArgumentException>()) { 0.toByte() downTo -5.toByte() step 0 }
-        failsWith(javaClass<IllegalArgumentException>()) { 0.toShort() downTo -5.toShort() step 0  }
+        failsWith(javaClass<IllegalArgumentException>()) { 0.toShort() downTo -5.toShort() step 0 }
         failsWith(javaClass<IllegalArgumentException>()) { 0.toLong() downTo -5.toLong() step 0.toLong() }
         failsWith(javaClass<IllegalArgumentException>()) { 'z' downTo 'a' step 0 }
         failsWith(javaClass<IllegalArgumentException>()) { 0.0 downTo -5.0 step 0.0 }
@@ -50,7 +50,7 @@ public class RangeTestJVM {
 
         failsWith(javaClass<IllegalArgumentException>()) { 0..5 step -2 }
         failsWith(javaClass<IllegalArgumentException>()) { 0.toByte()..5.toByte() step -2 }
-        failsWith(javaClass<IllegalArgumentException>()) { 0.toShort()..5.toShort() step -2  }
+        failsWith(javaClass<IllegalArgumentException>()) { 0.toShort()..5.toShort() step -2 }
         failsWith(javaClass<IllegalArgumentException>()) { 0.toLong()..5.toLong() step -2.toLong() }
         failsWith(javaClass<IllegalArgumentException>()) { 'a'..'z' step -2 }
         failsWith(javaClass<IllegalArgumentException>()) { 0.0..5.0 step -0.5 }
@@ -58,7 +58,7 @@ public class RangeTestJVM {
 
         failsWith(javaClass<IllegalArgumentException>()) { 0 downTo -5 step -2 }
         failsWith(javaClass<IllegalArgumentException>()) { 0.toByte() downTo -5.toByte() step -2 }
-        failsWith(javaClass<IllegalArgumentException>()) { 0.toShort() downTo -5.toShort() step -2  }
+        failsWith(javaClass<IllegalArgumentException>()) { 0.toShort() downTo -5.toShort() step -2 }
         failsWith(javaClass<IllegalArgumentException>()) { 0.toLong() downTo -5.toLong() step -2.toLong() }
         failsWith(javaClass<IllegalArgumentException>()) { 'z' downTo 'a' step -2 }
         failsWith(javaClass<IllegalArgumentException>()) { 0.0 downTo -5.0 step -0.5 }

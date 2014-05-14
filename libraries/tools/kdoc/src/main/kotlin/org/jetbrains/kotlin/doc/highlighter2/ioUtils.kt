@@ -4,4 +4,4 @@ import java.io.File
 import java.io.FileOutputStream
 
 fun File.write(callback: (FileOutputStream) -> Unit) =
-    FileOutputStream(this).use<FileOutputStream, Unit>(callback)
+        FileOutputStream(this).use<FileOutputStream, Unit>(callback)

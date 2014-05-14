@@ -25,15 +25,15 @@ class DomBuilderTest() {
                     id = "id3"
                     classes = " bar tiny"
                     addText("Hello World!")
-                // TODO support neater syntax sugar for adding text?
-                // += "Hello World!"
+                    // TODO support neater syntax sugar for adding text?
+                    // += "Hello World!"
                 }
                 addElement("grandChild2") {
                     id = "id3"
                     classes = "tiny thing bar "
                     addText("Hello World!")
-                // TODO support neater syntax sugar for adding text?
-                // += "Hello World!"
+                    // TODO support neater syntax sugar for adding text?
+                    // += "Hello World!"
                 }
             }
         }
@@ -60,7 +60,8 @@ class DomBuilderTest() {
         val root = doc.documentElement
         if (root == null) {
             fail("No root!")
-        } else {
+        }
+        else {
             assertTrue {
                 root.hasClass("bar")
             }
@@ -99,7 +100,7 @@ class DomBuilderTest() {
 
             assertTrue(classSet.contains("bar"))
             assertTrue(classSet.contains("tiny"))
-            assertTrue(classSet.size == 2 )
+            assertTrue(classSet.size == 2)
             assertFalse(classSet.contains("doesNotExist"))
 
             // lets add a new class and some existing classes
@@ -114,7 +115,8 @@ class DomBuilderTest() {
             grandChild.removeClass("tiny")
             assertEquals("newThingy", grandChild.classes)
 
-        } else {
+        }
+        else {
             fail("Not an Element $grandChild")
         }
         val child = doc["child"].first
@@ -123,7 +125,8 @@ class DomBuilderTest() {
             assertEquals(1, gc1.size, "Expected a single child but found $gc1")
             val gc2 = child.childElements("grandChild2")
             assertEquals(1, gc2.size, "Expected a single child but found $gc2")
-        } else {
+        }
+        else {
             fail("No child found!")
         }
         val children = doc.documentElement.children()

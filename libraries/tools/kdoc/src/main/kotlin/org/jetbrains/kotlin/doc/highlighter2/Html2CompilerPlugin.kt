@@ -26,11 +26,11 @@ class Html2CompilerPlugin(private val compilerArguments: KDocArguments) : Doclet
     private val srcOutputRoot = File(docOutputRoot, names.htmlSourceDirName)
 
     private val sourceDirs: List<File> =
-        compilerArguments
-                .src
-                .orEmpty()
-                .split(File.pathSeparatorChar)
-                .map { path -> File(path).getCanonicalFile() }
+            compilerArguments
+                    .src
+                    .orEmpty()
+                    .split(File.pathSeparatorChar)
+                    .map { path -> File(path).getCanonicalFile() }
 
     private val sourceDirPaths: List<String> = sourceDirs.map { d -> d.getPath() }
 
@@ -85,7 +85,7 @@ class Html2CompilerPlugin(private val compilerArguments: KDocArguments) : Doclet
                                 td(style = "margin-right: 1.5em; text-align: right") {
                                     val text = psiFile.getText()!!
                                     val lineCount =
-                                        text.count { c -> c == '\n' } + (if (text.endsWith('\n')) 0 else 1)
+                                            text.count { c -> c == '\n' } + (if (text.endsWith('\n')) 0 else 1)
 
                                     for (i in 1..lineCount) {
                                         val label = "$i"

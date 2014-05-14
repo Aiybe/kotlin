@@ -8,13 +8,13 @@ trait WithBox {
     fun box(): String
 }
 
-abstract class DelegationTestBase: TestCase() {
+abstract class DelegationTestBase : TestCase() {
     fun doTest(klass: WithBox) {
         assertEquals("OK", klass.box())
     }
 }
 
-class DelegationTest(): DelegationTestBase() {
+class DelegationTest() : DelegationTestBase() {
     fun testNotNullVar() {
         doTest(TestNotNullVar("a", "b"))
     }
@@ -32,7 +32,7 @@ class DelegationTest(): DelegationTestBase() {
     }
 }
 
-public class TestNotNullVar<T>(val a1: String, val b1: T): WithBox {
+public class TestNotNullVar<T>(val a1: String, val b1: T) : WithBox {
     var a: String by Delegates.notNull()
     var b by Delegates.notNull<T>()
 
@@ -45,19 +45,19 @@ public class TestNotNullVar<T>(val a1: String, val b1: T): WithBox {
     }
 }
 
-class TestObservablePropertyInChangeSupport: WithBox, ChangeSupport() {
+class TestObservablePropertyInChangeSupport : WithBox, ChangeSupport() {
 
     var b by property(init = 2)
     var c by property(3)
 
     override fun box(): String {
         var result = false
-        addChangeListener("b", object: ChangeListener {
+        addChangeListener("b", object : ChangeListener {
             public override fun onPropertyChange(event: ChangeEvent) {
                 result = true
             }
         })
-        addChangeListener("c", object: ChangeListener {
+        addChangeListener("c", object : ChangeListener {
             public override fun onPropertyChange(event: ChangeEvent) {
                 result = false
             }
@@ -69,10 +69,10 @@ class TestObservablePropertyInChangeSupport: WithBox, ChangeSupport() {
     }
 }
 
-class TestObservableProperty: WithBox {
+class TestObservableProperty : WithBox {
     var result = false
 
-    var b by Delegates.observable(1, {(pd, o, n) -> result = true})
+    var b by Delegates.observable(1, {(pd, o, n) -> result = true })
 
     override fun box(): String {
         b = 4
@@ -82,9 +82,9 @@ class TestObservableProperty: WithBox {
     }
 }
 
-class TestVetoableProperty: WithBox {
+class TestVetoableProperty : WithBox {
     var result = false
-    var b by Delegates.vetoable(A(true), {(pd, o, n) -> result = n.p == true; result})
+    var b by Delegates.vetoable(A(true), {(pd, o, n) -> result = n.p == true; result })
 
     override fun box(): String {
         val firstValue = A(true)
@@ -96,6 +96,6 @@ class TestVetoableProperty: WithBox {
         if (result) return "fail4: result should be false"
         return "OK"
     }
-    
+
     class A(val p: Boolean)
 }

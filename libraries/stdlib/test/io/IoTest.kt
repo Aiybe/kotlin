@@ -8,13 +8,14 @@ import java.io.*
 import java.util.*
 import org.junit.Test as test
 
-class IoTest(){
+class IoTest() {
     test fun testLineIteratorWithManualClose() {
         val reader = sample().buffered()
         try {
             val list = reader.lines().toArrayList()
             assertEquals(arrayListOf("Hello", "World"), list)
-        } finally {
+        }
+        finally {
             reader.close()
         }
     }
@@ -26,7 +27,7 @@ class IoTest(){
     test fun testLineIterator() {
         // TODO we should maybe zap the useLines approach as it encourages
         // use of iterators which don't close the underlying stream
-        val list1 = sample().useLines{ it.toArrayList() }
+        val list1 = sample().useLines { it.toArrayList() }
         val list2 = sample().useLines<ArrayList<String>>{ it.toArrayList() }
 
         assertEquals(arrayListOf("Hello", "World"), list1)
@@ -37,7 +38,7 @@ class IoTest(){
         val list = ArrayList<String>()
         val reader = sample().buffered()
 
-        reader.use{
+        reader.use {
             while (true) {
                 val line = it.readLine()
                 if (line != null)
@@ -84,7 +85,7 @@ class IoTest(){
 
 
         val list = ArrayList<String>()
-        file.forEachLine{
+        file.forEachLine {
             list.add(it)
         }
 

@@ -6,7 +6,7 @@ import com.intellij.psi.PsiFile
 import com.intellij.psi.PsiWhiteSpace
 import org.jetbrains.jet.lang.psi.*
 
-class HtmlKotlinVisitor: JetTreeVisitor<StringBuilder>() {
+class HtmlKotlinVisitor : JetTreeVisitor<StringBuilder>() {
 
     override fun visitFile(file: PsiFile?) {
         if (file is JetFile) {
@@ -42,16 +42,18 @@ class HtmlKotlinVisitor: JetTreeVisitor<StringBuilder>() {
     }
 
     protected fun accept(child: PsiElement?, data: StringBuilder?): Unit {
-            if (child is JetElement) {
-                child.accept(this, data)
-            } else {
-                if (child is PsiComment || child is PsiWhiteSpace) {
-                    // ignore
-                } else {
-                    println("------- Child $child of type ${child.javaClass}")
-                }
-                child?.accept(this)
+        if (child is JetElement) {
+            child.accept(this, data)
+        }
+        else {
+            if (child is PsiComment || child is PsiWhiteSpace) {
+                // ignore
             }
+            else {
+                println("------- Child $child of type ${child.javaClass}")
+            }
+            child?.accept(this)
+        }
     }
 
     protected fun acceptChildren(element: PsiElement, data: StringBuilder?): Unit {

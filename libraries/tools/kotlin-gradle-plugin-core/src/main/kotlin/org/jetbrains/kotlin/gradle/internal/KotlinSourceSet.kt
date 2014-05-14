@@ -14,7 +14,7 @@ trait KotlinSourceSet {
 }
 
 
-open class KotlinSourceSetImpl(displayName: String?, resolver: FileResolver?): KotlinSourceSet {
+open class KotlinSourceSetImpl(displayName: String?, resolver: FileResolver?) : KotlinSourceSet {
 
     private val kotlin: DefaultSourceDirectorySet = DefaultSourceDirectorySet(displayName + " Kotlin source", resolver);
     {

@@ -9,7 +9,7 @@ import java.util.HashMap
 import junit.framework.TestCase
 import junit.framework.Assert
 
-class Serial(val a : String) : java.lang.Object(), Serializable {
+class Serial(val a: String) : java.lang.Object(), Serializable {
     override fun toString() = a
 }
 
@@ -32,9 +32,9 @@ class SerialTest() : TestCase() {
 
     fun testComplex() {
         val y = 12
-        val op = { (x:Int) -> (x + y).toString() }
+        val op = {(x: Int) -> (x + y).toString() }
 
-        val op2 : Int.(Int) -> String = { op(this + it) }
+        val op2: Int.(Int) -> String = { op(this + it) }
 
         val baos = ByteArrayOutputStream()
         val oos = ObjectOutputStream(baos)

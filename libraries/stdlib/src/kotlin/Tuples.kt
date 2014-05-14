@@ -2,7 +2,7 @@ package kotlin
 
 import java.io.Serializable
 
-private fun Any?.safeHashCode() : Int = if (this == null) 0 else this.hashCode()
+private fun Any?.safeHashCode(): Int = if (this == null) 0 else this.hashCode()
 
 // TODO: make it a data class
 public class Pair<out A, out B> (

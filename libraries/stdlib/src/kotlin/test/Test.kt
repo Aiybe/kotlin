@@ -7,21 +7,21 @@ package kotlin.test
 import java.lang.IllegalStateException
 
 /** Asserts that the given block returns true */
-public inline fun assertTrue(message: String, block: ()-> Boolean) {
+public inline fun assertTrue(message: String, block: () -> Boolean) {
     val actual = block()
     asserter.assertTrue(message, actual)
 }
 
 /** Asserts that the given block returns true */
-public inline fun assertTrue(block: ()-> Boolean) : Unit = assertTrue("exprected true", block)
+public inline fun assertTrue(block: () -> Boolean): Unit = assertTrue("exprected true", block)
 
 /** Asserts that the given block returns false */
-public inline fun assertNot(message: String, block: ()-> Boolean) {
-    assertTrue(message){ !block() }
+public inline fun assertNot(message: String, block: () -> Boolean) {
+    assertTrue(message) { !block() }
 }
 
 /** Asserts that the given block returns false */
-public fun assertNot(block: ()-> Boolean) : Unit = assertNot("expected false", block)
+public fun assertNot(block: () -> Boolean): Unit = assertNot("expected false", block)
 
 /** Asserts that the expression is true with an optional message */
 public fun assertTrue(actual: Boolean, message: String = "") {
@@ -69,23 +69,24 @@ public fun fail(message: String = "") {
 }
 
 /** Asserts that given function block returns the given expected value */
-public inline fun <T> expect(expected: T, block: ()-> T) {
+public inline fun <T> expect(expected: T, block: () -> T) {
     expect(expected, "expected " + expected, block)
 }
 
 /** Asserts that given function block returns the given expected value and use the given message if it fails */
-public inline fun <T> expect(expected: T, message: String, block: ()-> T) {
+public inline fun <T> expect(expected: T, message: String, block: () -> T) {
     val actual = block()
     assertEquals(expected, actual, message)
 }
 
 /** Asserts that given function block fails by throwing an exception */
-public fun fails(block: ()-> Unit): Throwable? {
+public fun fails(block: () -> Unit): Throwable? {
     try {
         block()
         asserter.fail("Expected an exception to be thrown")
         return null
-    } catch (e: Throwable) {
+    }
+    catch (e: Throwable) {
         //println("Caught expected exception: $e")
         return e
     }

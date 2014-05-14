@@ -3,12 +3,13 @@ package kotlin.test
 import java.util.ServiceLoader
 
 /** Asserts that a block fails with a specific exception being thrown */
-public fun <T: Throwable> failsWith(exceptionClass: Class<T>, block: ()-> Any): T {
+public fun <T : Throwable> failsWith(exceptionClass: Class<T>, block: () -> Any): T {
     try {
         block()
         asserter.fail("Expected an exception to be thrown")
         throw IllegalStateException("Should have failed")
-    } catch (e: T) {
+    }
+    catch (e: T) {
         if (exceptionClass.isInstance(e)) {
             return e
         }
@@ -20,7 +21,7 @@ public fun <T: Throwable> failsWith(exceptionClass: Class<T>, block: ()-> Any): 
  * Comments out a block of test code until it is implemented while keeping a link to the code
  * to implement in your unit test output
  */
-public inline fun todo(block: ()-> Any) {
+public inline fun todo(block: () -> Any) {
     println("TODO at " + (Exception() as java.lang.Throwable).getStackTrace()?.get(1))
 }
 
@@ -55,30 +56,30 @@ public var asserter: Asserter
  */
 class DefaultAsserter() : Asserter {
 
-    public override fun assertTrue(message : String, actual : Boolean) {
+    public override fun assertTrue(message: String, actual: Boolean) {
         if (!actual) {
             fail(message)
         }
     }
 
-    public override fun assertEquals(message : String, expected : Any?, actual : Any?) {
+    public override fun assertEquals(message: String, expected: Any?, actual: Any?) {
         if (expected != actual) {
             fail("$message. Expected <$expected> actual <$actual>")
         }
     }
 
-    public override fun assertNotNull(message : String, actual : Any?) {
+    public override fun assertNotNull(message: String, actual: Any?) {
         if (actual == null) {
             fail(message)
         }
     }
 
-    public override fun assertNull(message : String, actual : Any?) {
+    public override fun assertNull(message: String, actual: Any?) {
         if (actual != null) {
             fail(message)
         }
     }
-    public override fun fail(message : String) {
+    public override fun fail(message: String) {
         throw AssertionError(message)
     }
 }

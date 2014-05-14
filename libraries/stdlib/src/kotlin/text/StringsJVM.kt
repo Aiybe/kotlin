@@ -38,7 +38,7 @@ public fun String.toCharArray(): CharArray = (this as java.lang.String).toCharAr
 
 public fun String.format(vararg args: Any?): String = java.lang.String.format(this, *args)
 
-public fun String.format(locale: Locale, vararg args : Any?) : String = java.lang.String.format(locale, this, *args)
+public fun String.format(locale: Locale, vararg args: Any?): String = java.lang.String.format(locale, this, *args)
 
 public fun String.split(regex: String): Array<String> = (this as java.lang.String).split(regex)
 
@@ -244,7 +244,8 @@ public inline fun <T : Appendable> String.dropWhileTo(result: T, predicate: (Cha
     for (element in this) {
         if (start && predicate(element)) {
             // ignore
-        } else {
+        }
+        else {
             start = false
             result.append(element)
         }

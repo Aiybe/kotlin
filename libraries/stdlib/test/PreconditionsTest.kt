@@ -112,7 +112,8 @@ class PreconditionsTest() {
         }
         if (error is AssertionError) {
             assertEquals("Assertion failed", error.getMessage())
-        } else {
+        }
+        else {
             fail("Invalid exception type: " + error)
         }
     }
@@ -127,7 +128,8 @@ class PreconditionsTest() {
         }
         if (error is AssertionError) {
             assertEquals("Hello", error.getMessage())
-        } else {
+        }
+        else {
             fail("Invalid exception type: " + error)
         }
     }
@@ -138,7 +140,8 @@ class PreconditionsTest() {
         }
         if (error is AssertionError) {
             assertEquals("Hello", error.getMessage())
-        } else {
+        }
+        else {
             fail("Invalid exception type: " + error)
         }
     }

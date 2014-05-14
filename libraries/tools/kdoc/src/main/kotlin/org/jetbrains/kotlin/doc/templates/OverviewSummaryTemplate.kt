@@ -104,7 +104,7 @@ ${model.title}
 <TD>${p.description(this)}</TD>
 </TR>""")
         }
-println("""</TABLE>
+        println("""</TABLE>
 
 <P>
 &nbsp;<HR>

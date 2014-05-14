@@ -8,7 +8,7 @@ import org.jetbrains.kotlin.doc.model.KPackage
 import org.jetbrains.kotlin.doc.model.KProperty
 
 class ClassExtensionsTemplate(m: KModel, p: KPackage, k: KClass,
-        val functions: Collection<KFunction>, val properties: Collection<KProperty>) : ClassTemplate(m, p, k) {
+                              val functions: Collection<KFunction>, val properties: Collection<KProperty>) : ClassTemplate(m, p, k) {
 
     protected override fun relativePrefix(): String = "${pkg.nameAsRelativePath}${klass.pkg.nameAsRelativePath}"
 

@@ -50,7 +50,7 @@ public val CharSequence.size: Int
 public val String.size: Int
     get() = length()
 
-public val String.indices : IntRange
+public val String.indices: IntRange
     get() = 0..size
 
 /**

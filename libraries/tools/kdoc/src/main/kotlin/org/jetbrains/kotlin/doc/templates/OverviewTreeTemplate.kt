@@ -98,7 +98,8 @@ Hierarchy For All Packages</H2>
         for (p in model.packages) {
             if (first) {
                 first = false
-            } else {
+            }
+            else {
                 print(""",
 <A HREF="${p.nameAsPath}/package-tree.html">${p.nameAsPath}</A>""")
             }

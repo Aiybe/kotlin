@@ -65,7 +65,7 @@ public class RangeIterationTest {
 
         doTest(3.0..9.0, 3.0, 9.0, 1.0, listOf(3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0))
         doTest(3.0.toFloat()..9.0.toFloat(), 3.0.toFloat(), 9.0.toFloat(), 1.toFloat(),
-                listOf<Float>(3.0.toFloat(), 4.0.toFloat(), 5.0.toFloat(), 6.0.toFloat(), 7.0.toFloat(), 8.0.toFloat(), 9.0.toFloat()))
+               listOf<Float>(3.0.toFloat(), 4.0.toFloat(), 5.0.toFloat(), 6.0.toFloat(), 7.0.toFloat(), 8.0.toFloat(), 9.0.toFloat()))
     }
 
 
@@ -79,7 +79,7 @@ public class RangeIterationTest {
 
         doTest((1.5 * 2)..(3.0 * 3.0), 3.0, 9.0, 1.0, listOf(3.0, 4.0, 5.0, 6.0, 7.0, 8.0, 9.0))
         doTest((1.5.toFloat() * 2.toFloat())..(3.0.toFloat() * 3.0.toFloat()), 3.0.toFloat(), 9.0.toFloat(), 1.toFloat(),
-                listOf<Float>(3.0.toFloat(), 4.0.toFloat(), 5.0.toFloat(), 6.0.toFloat(), 7.0.toFloat(), 8.0.toFloat(), 9.0.toFloat()))
+               listOf<Float>(3.0.toFloat(), 4.0.toFloat(), 5.0.toFloat(), 6.0.toFloat(), 7.0.toFloat(), 8.0.toFloat(), 9.0.toFloat()))
     }
 
 
@@ -117,7 +117,7 @@ public class RangeIterationTest {
 
         doTest(9.0 downTo 3.0, 9.0, 3.0, -1.0, listOf(9.0, 8.0, 7.0, 6.0, 5.0, 4.0, 3.0))
         doTest(9.0.toFloat() downTo 3.0.toFloat(), 9.0.toFloat(), 3.0.toFloat(), -1.0.toFloat(),
-                listOf<Float>(9.0.toFloat(), 8.0.toFloat(), 7.0.toFloat(), 6.0.toFloat(), 5.0.toFloat(), 4.0.toFloat(), 3.0.toFloat()))
+               listOf<Float>(9.0.toFloat(), 8.0.toFloat(), 7.0.toFloat(), 6.0.toFloat(), 5.0.toFloat(), 4.0.toFloat(), 3.0.toFloat()))
     }
 
 
@@ -131,7 +131,7 @@ public class RangeIterationTest {
 
         doTest(4.0..6.0 step 0.5, 4.0, 6.0, 0.5, listOf(4.0, 4.5, 5.0, 5.5, 6.0))
         doTest(4.0.toFloat()..6.0.toFloat() step 0.5.toFloat(), 4.0.toFloat(), 6.0.toFloat(), 0.5.toFloat(),
-                listOf<Float>(4.0.toFloat(), 4.5.toFloat(), 5.0.toFloat(), 5.5.toFloat(), 6.0.toFloat()))
+               listOf<Float>(4.0.toFloat(), 4.5.toFloat(), 5.0.toFloat(), 5.5.toFloat(), 6.0.toFloat()))
     }
 
     test fun simpleSteppedDownTo() {
@@ -144,7 +144,7 @@ public class RangeIterationTest {
 
         doTest(6.0 downTo 4.0 step 0.5, 6.0, 4.0, -0.5, listOf(6.0, 5.5, 5.0, 4.5, 4.0))
         doTest(6.0.toFloat() downTo 4.0.toFloat() step 0.5.toFloat(), 6.0.toFloat(), 4.0.toFloat(), -0.5.toFloat(),
-                listOf<Float>(6.0.toFloat(), 5.5.toFloat(), 5.0.toFloat(), 4.5.toFloat(), 4.0.toFloat()))
+               listOf<Float>(6.0.toFloat(), 5.5.toFloat(), 5.0.toFloat(), 4.5.toFloat(), 4.0.toFloat()))
     }
 
 
@@ -159,7 +159,7 @@ public class RangeIterationTest {
 
         doTest(4.0..5.8 step 0.5, 4.0, 5.8, 0.5, listOf(4.0, 4.5, 5.0, 5.5))
         doTest(4.0.toFloat()..5.8.toFloat() step 0.5.toFloat(), 4.0.toFloat(), 5.8.toFloat(), 0.5.toFloat(),
-                listOf<Float>(4.0.toFloat(), 4.5.toFloat(), 5.0.toFloat(), 5.5.toFloat()))
+               listOf<Float>(4.0.toFloat(), 4.5.toFloat(), 5.0.toFloat(), 5.5.toFloat()))
     }
 
     // 'inexact' means last element is not equal to sequence end
@@ -173,7 +173,7 @@ public class RangeIterationTest {
 
         doTest(5.5 downTo 3.7 step 0.5, 5.5, 3.7, -0.5, listOf(5.5, 5.0, 4.5, 4.0))
         doTest(5.5.toFloat() downTo 3.7.toFloat() step 0.5.toFloat(), 5.5.toFloat(), 3.7.toFloat(), -0.5.toFloat(),
-                listOf<Float>(5.5.toFloat(), 5.0.toFloat(), 4.5.toFloat(), 4.0.toFloat()))
+               listOf<Float>(5.5.toFloat(), 5.0.toFloat(), 4.5.toFloat(), 4.0.toFloat()))
     }
 
 
@@ -211,7 +211,7 @@ public class RangeIterationTest {
 
         doTest((3.0..5.0).reversed(), 5.0, 3.0, -1.0, listOf(5.0, 4.0, 3.0))
         doTest((3.0.toFloat()..5.0.toFloat()).reversed(), 5.0.toFloat(), 3.0.toFloat(), -1.toFloat(),
-                listOf<Float>(5.0.toFloat(), 4.0.toFloat(), 3.0.toFloat()))
+               listOf<Float>(5.0.toFloat(), 4.0.toFloat(), 3.0.toFloat()))
     }
 
     test fun reversedBackSequence() {
@@ -224,7 +224,7 @@ public class RangeIterationTest {
 
         doTest((5.0 downTo 3.0).reversed(), 3.0, 5.0, 1.0, listOf(3.0, 4.0, 5.0))
         doTest((5.0.toFloat() downTo 3.0.toFloat()).reversed(), 3.0.toFloat(), 5.0.toFloat(), 1.toFloat(),
-                listOf<Float>(3.0.toFloat(), 4.0.toFloat(), 5.0.toFloat()))
+               listOf<Float>(3.0.toFloat(), 4.0.toFloat(), 5.0.toFloat()))
     }
 
     test fun reversedSimpleSteppedRange() {
@@ -237,7 +237,7 @@ public class RangeIterationTest {
 
         doTest((4.0..6.0 step 0.5).reversed(), 6.0, 4.0, -0.5, listOf(6.0, 5.5, 5.0, 4.5, 4.0))
         doTest((4.0.toFloat()..6.0.toFloat() step 0.5.toFloat()).reversed(), 6.0.toFloat(), 4.0.toFloat(), -0.5.toFloat(),
-                listOf<Float>(6.0.toFloat(), 5.5.toFloat(), 5.0.toFloat(), 4.5.toFloat(), 4.0.toFloat()))
+               listOf<Float>(6.0.toFloat(), 5.5.toFloat(), 5.0.toFloat(), 4.5.toFloat(), 4.0.toFloat()))
     }
 
     // 'inexact' means last element is not equal to sequence end
@@ -251,6 +251,6 @@ public class RangeIterationTest {
 
         doTest((5.8 downTo 4.0 step 0.5).reversed(), 4.0, 5.8, 0.5, listOf(4.0, 4.5, 5.0, 5.5))
         doTest((5.8.toFloat() downTo 4.0.toFloat() step 0.5.toFloat()).reversed(), 4.0.toFloat(), 5.8.toFloat(), 0.5.toFloat(),
-                listOf<Float>(4.0.toFloat(), 4.5.toFloat(), 5.0.toFloat(), 5.5.toFloat()))
+               listOf<Float>(4.0.toFloat(), 4.5.toFloat(), 5.0.toFloat(), 5.5.toFloat()))
     }
 }

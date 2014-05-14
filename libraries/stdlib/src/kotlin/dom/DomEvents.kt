@@ -5,13 +5,13 @@ import org.w3c.dom.Node
 import org.w3c.dom.events.*
 
 /**
-* Turns an event handler function into an [EventListener]
-*/
+ * Turns an event handler function into an [EventListener]
+ */
 fun eventHandler(handler: (Event) -> Unit): EventListener {
     return EventListenerHandler(handler)
 }
 
-private class EventListenerHandler(val handler: (Event) -> Unit): EventListener {
+private class EventListenerHandler(val handler: (Event) -> Unit) : EventListener {
     public override fun handleEvent(e: Event) {
         if (e != null) {
             handler(e)
@@ -46,12 +46,13 @@ public fun Node?.on(name: String, capture: Boolean, listener: EventListener): Cl
     return if (this is EventTarget) {
         addEventListener(name, listener, capture)
         CloseableEventListener(this, listener, name, capture)
-    } else {
+    }
+    else {
         null
     }
 }
 
-private class CloseableEventListener(val target: EventTarget, val listener: EventListener, val name: String, val capture: Boolean): Closeable {
+private class CloseableEventListener(val target: EventTarget, val listener: EventListener, val name: String, val capture: Boolean) : Closeable {
     public override fun close() {
         target.removeEventListener(name, listener, capture)
     }

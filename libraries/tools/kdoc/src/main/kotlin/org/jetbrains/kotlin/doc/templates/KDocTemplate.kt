@@ -21,7 +21,7 @@ abstract class KDocTemplate() : TextTemplate() {
     }
 
     open fun href(p: KPackage): String
-    = "${rootHref(p)}${p.nameAsPath}/package-summary.html"
+            = "${rootHref(p)}${p.nameAsPath}/package-summary.html"
 
     open fun href(c: KClass): String {
         val postfix = if (!c.pkg.useExternalLink) "" else "?is-external=true"
@@ -31,14 +31,15 @@ abstract class KDocTemplate() : TextTemplate() {
     open fun href(f: KFunction): String {
         return if (f.owner is KClass) {
             "${href(f.owner)}#${f.link}"
-        } else {
+        }
+        else {
             "package-summary.html#${f.link}"
         }
     }
 
     /**
      * Generates a link to a package level property
-      */
+     */
     open fun href(pkg: KPackage, p: KProperty): String {
         return "${href(pkg)}#${p.link}"
     }
@@ -46,7 +47,8 @@ abstract class KDocTemplate() : TextTemplate() {
     open fun href(f: KProperty): String {
         return if (f.owner is KClass) {
             "${href(f.owner)}#${f.link}"
-        } else {
+        }
+        else {
             "package-summary.html#${f.link}"
         }
     }
@@ -67,11 +69,13 @@ abstract class KDocTemplate() : TextTemplate() {
     open fun sourceHref(klass: KClass): String {
         if (klass.isLinkToSourceRepo()) {
             return klass.sourceLink()
-        } else {
+        }
+        else {
             val pkg = klass.pkg
             return if (klass.sourceInfo != null) {
                 "${pkg.nameAsRelativePath}${names.htmlSourceDirName}/${klass.sourceInfo.htmlPath}.html#${names.lineNumberLinkHref(klass.sourceLine)}"
-            } else {
+            }
+            else {
                 href(klass)
             }
         }
@@ -79,46 +83,56 @@ abstract class KDocTemplate() : TextTemplate() {
     open fun sourceHref(f: KFunction): String {
         if (f.isLinkToSourceRepo()) {
             return f.sourceLink()
-        } else {
+        }
+        else {
             val owner = f.owner
             return if (owner is KClass) {
                 val pkg = owner.pkg
                 if (owner.sourceInfo != null) {
                     "${rootHref(pkg)}${names.htmlSourceDirName}/${owner.sourceInfo.htmlPath}.html#${names.lineNumberLinkHref(f.sourceLine)}"
-                } else {
+                }
+                else {
                     href(f)
                 }
-            } else if (owner is KPackage) {
+            }
+            else if (owner is KPackage) {
                 if (!owner.useExternalLink) {
                     // TODO how to find the function in a package???
                     "${rootHref(owner)}${names.htmlSourceDirName}/package.html#${names.lineNumberLinkHref(f.sourceLine)}"
-                } else {
+                }
+                else {
                     href(owner)
                 }
-            } else href(f)
+            }
+            else href(f)
         }
     }
 
     open fun sourceHref(f: KProperty): String {
         if (f.isLinkToSourceRepo()) {
             return f.sourceLink()
-        } else {
+        }
+        else {
             val owner = f.owner
             return if (owner is KClass) {
                 val pkg = owner.pkg
                 if (owner.sourceInfo != null) {
                     "${rootHref(pkg)}${names.htmlSourceDirName}/${owner.sourceInfo.htmlPath}#${names.lineNumberLinkHref(f.sourceLine)}"
-                } else {
+                }
+                else {
                     href(f)
                 }
-            } else if (owner is KPackage) {
+            }
+            else if (owner is KPackage) {
                 if (!owner.useExternalLink) {
                     // TODO how to find the function in a package???
                     "${rootHref(owner)}${names.htmlSourceDirName}/package.html#${names.lineNumberLinkHref(f.sourceLine)}"
-                } else {
+                }
+                else {
                     href(owner)
                 }
-            } else href(f)
+            }
+            else href(f)
         }
     }
 
@@ -139,11 +153,13 @@ abstract class KDocTemplate() : TextTemplate() {
                 // TODO use drop()
                 val rest = arguments.subList(0, arguments.size - 1).orEmpty()
                 "${typeArguments(rest, "(", ")", "()")}&nbsp;<A HREF=\"${href(c)}\" title=\"${c.kind} in ${c.packageName}\">-&gt;</a>&nbsp;${link(rt)}"
-            } else {
+            }
+            else {
                 val name = if (fullName) cname else c.simpleName
                 "<A HREF=\"${href(c)}\" title=\"${c.kind} in ${c.packageName}\">$prefix$name</A>${typeArguments(arguments)}"
             }
-        } else {
+        }
+        else {
             "${t.name}${typeArguments(arguments)}"
         }
     }
@@ -163,7 +179,7 @@ abstract class KDocTemplate() : TextTemplate() {
     }
 
     fun searchBox(): String =
-"""  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" ALIGN="right">
+            """  <TD BGCOLOR="#EEEEFF" CLASS="NavBarCell1" ALIGN="right">
   <label for="searchBox">Search: </label>
   <input id="searchBox" class="ui-autocomplete-input" autocomplete="off" role="textbox" aria-autocomplete="list" aria-haspopup="true" size="50" data-url="${relativePrefix()}search.xml">
   </TD>"""

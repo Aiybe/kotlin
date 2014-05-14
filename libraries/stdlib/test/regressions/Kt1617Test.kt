@@ -7,11 +7,11 @@ import java.io.File
 
 import junit.framework.TestCase
 
-class Kt1617Test: TestCase() {
+class Kt1617Test : TestCase() {
     fun testMapFunction() {
         val coll: Collection<String> = arrayListOf("foo", "bar")
 
-        val files =  coll.map{ File(it) }
+        val files = coll.map { File(it) }
 
         println("Found files: $files")
     }

@@ -3,7 +3,7 @@ package test.properties.delegation
 import java.util.HashMap
 import kotlin.properties.*
 
-class MapDelegationTest(): DelegationTestBase() {
+class MapDelegationTest() : DelegationTestBase() {
 
     fun testMapPropertyString() {
         doTest(TestMapPropertyString())
@@ -46,7 +46,7 @@ class MapDelegationTest(): DelegationTestBase() {
     }
 }
 
-class TestMapValWithDifferentTypes(): WithBox {
+class TestMapValWithDifferentTypes() : WithBox {
     val map = hashMapOf("a" to "a", "b" to 1, "c" to A(1), "d" to null)
     val a by Delegates.mapVal<String>(map)
     val b by Delegates.mapVal<Int>(map)
@@ -64,7 +64,7 @@ class TestMapValWithDifferentTypes(): WithBox {
     data class A(val a: Int)
 }
 
-class TestMapVarWithDifferentTypes(): WithBox {
+class TestMapVarWithDifferentTypes() : WithBox {
     val map: HashMap<String, Any?> = hashMapOf("a" to "a", "b" to 1, "c" to A(1), "d" to "d")
     var a: String by Delegates.mapVar(map)
     var b: Int by Delegates.mapVar(map)
@@ -86,9 +86,9 @@ class TestMapVarWithDifferentTypes(): WithBox {
     data class A(val a: Int)
 }
 
-class TestNullableKey: WithBox {
+class TestNullableKey : WithBox {
     val map = hashMapOf(null:Any? to "null": Any?)
-    var a by FixedMapVar<Any?, Any?, Any?>(map, key = { desc -> null }, default = {ref, desc -> null})
+    var a by FixedMapVar<Any?, Any?, Any?>(map, key = { desc -> null }, default = { ref, desc -> null })
 
     override fun box(): String {
         if (a != "null") return "fail at 'a'"
@@ -98,7 +98,7 @@ class TestNullableKey: WithBox {
     }
 }
 
-class TestMapPropertyString(): WithBox {
+class TestMapPropertyString() : WithBox {
     val map = hashMapOf("a" to "a", "b" to "b", "c" to "c":Any?)
     val a: String by Delegates.mapVal(map)
     var b by Delegates.mapVar<String>(map)
@@ -113,11 +113,11 @@ class TestMapPropertyString(): WithBox {
     }
 }
 
-class TestMapValWithDefault(): WithBox {
+class TestMapValWithDefault() : WithBox {
     val map = hashMapOf<String, String>()
     val a: String by Delegates.mapVal(map, default = { ref, desc -> "aDefault" })
-    val b: String by FixedMapVal(map, default = { (ref: TestMapValWithDefault, desc: String) -> "bDefault" }, key = {"b"})
-    val c: String by FixedMapVal(map, default = { (ref: TestMapValWithDefault, desc: String) -> "cDefault" }, key = { desc -> desc.name })
+    val b: String by FixedMapVal(map, default = {(ref: TestMapValWithDefault, desc: String) -> "bDefault" }, key = { "b" })
+    val c: String by FixedMapVal(map, default = {(ref: TestMapValWithDefault, desc: String) -> "cDefault" }, key = { desc -> desc.name })
 
     override fun box(): String {
         if (a != "aDefault") return "fail at 'a'"
@@ -127,10 +127,10 @@ class TestMapValWithDefault(): WithBox {
     }
 }
 
-class TestMapVarWithDefault(): WithBox {
+class TestMapVarWithDefault() : WithBox {
     val map = hashMapOf<String, Any?>()
-    var a: String by Delegates.mapVar(map, default = {ref, desc -> "aDefault" })
-    var b: String by FixedMapVar(map, default = {(ref: Any?, desc: String) -> "bDefault" }, key = {"b"})
+    var a: String by Delegates.mapVar(map, default = { ref, desc -> "aDefault" })
+    var b: String by FixedMapVar(map, default = {(ref: Any?, desc: String) -> "bDefault" }, key = { "b" })
     var c: String by FixedMapVar(map, default = {(ref: Any?, desc: String) -> "cDefault" }, key = { desc -> desc.name })
 
     override fun box(): String {
@@ -147,10 +147,10 @@ class TestMapVarWithDefault(): WithBox {
     }
 }
 
-class TestMapPropertyKey(): WithBox {
+class TestMapPropertyKey() : WithBox {
     val map = hashMapOf("a" to "a", "b" to "b" : Any?)
-    val a by FixedMapVal<Any?, String, String>(map, key = {"a"})
-    var b by FixedMapVar<Any?, String, String>(map, key = {"b"})
+    val a by FixedMapVal<Any?, String, String>(map, key = { "a" })
+    var b by FixedMapVar<Any?, String, String>(map, key = { "b" })
 
     override fun box(): String {
         b = "c"
@@ -160,7 +160,7 @@ class TestMapPropertyKey(): WithBox {
     }
 }
 
-class TestMapPropertyFunction(): WithBox {
+class TestMapPropertyFunction() : WithBox {
     val map = hashMapOf("aDesc" to "a", "bDesc" to "b": Any?)
     val a by FixedMapVal<Any?, String, String>(map, { desc -> "${desc.name}Desc" })
     var b by FixedMapVar<Any?, String, String>(map, { desc -> "${desc.name}Desc" })
@@ -173,7 +173,7 @@ class TestMapPropertyFunction(): WithBox {
     }
 }
 
-val mapVal = object: MapVal<TestMapPropertyCustom, String, String>() {
+val mapVal = object : MapVal<TestMapPropertyCustom, String, String>() {
     override fun map(ref: TestMapPropertyCustom) = ref.map
     override fun key(desc: PropertyMetadata) = "${desc.name}Desc"
 }
@@ -183,7 +183,7 @@ val mapVar = object : MapVar<TestMapPropertyCustom, String, String>() {
     override fun key(desc: PropertyMetadata) = "${desc.name}Desc"
 }
 
-class TestMapPropertyCustom(): WithBox {
+class TestMapPropertyCustom() : WithBox {
     val map = hashMapOf("aDesc" to "a", "bDesc" to "b":Any?)
     val a by mapVal
     var b by mapVar
@@ -210,7 +210,7 @@ val mapVarWithDefault = object : MapVar<TestMapPropertyCustomWithDefault, String
     override fun default(ref: TestMapPropertyCustomWithDefault, key: PropertyMetadata) = "default"
 }
 
-class TestMapPropertyCustomWithDefault(): WithBox {
+class TestMapPropertyCustomWithDefault() : WithBox {
     val map = hashMapOf<String, Any?>()
     val a by mapValWithDefault
     var b by mapVarWithDefault

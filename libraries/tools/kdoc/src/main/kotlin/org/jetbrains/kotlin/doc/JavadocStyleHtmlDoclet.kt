@@ -27,7 +27,7 @@ class JavadocStyleHtmlDoclet() : Doclet {
                 val functions = map.get(c).orEmpty()
                 val properties = pmap.get(c).orEmpty()
                 run("${p.nameAsPath}/${c.nameAsPath}-extensions.html",
-                ClassExtensionsTemplate(model, p, c, functions, properties))
+                    ClassExtensionsTemplate(model, p, c, functions, properties))
             }
         }
 

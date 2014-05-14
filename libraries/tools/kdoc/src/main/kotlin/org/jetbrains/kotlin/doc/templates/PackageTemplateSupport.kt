@@ -54,7 +54,8 @@ abstract class PackageTemplateSupport(open val pkg: KPackage) : KDocTemplate() {
             println("""</CODE></FONT></TD>
 </TR>
 </TABLE>""")
-        } else {
+        }
+        else {
             print(funKeyword)
             printReceiverType(function)
         }
@@ -69,7 +70,8 @@ abstract class PackageTemplateSupport(open val pkg: KPackage) : KDocTemplate() {
         if (true) {
             println("""<BR>""")
             println("""${function.description(this)}""")
-        } else {
+        }
+        else {
             println("""<BR>""")
             println("""&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;${deprecated}&nbsp;${function.detailedDescription(this)}</TD>""")
         }
@@ -84,7 +86,8 @@ abstract class PackageTemplateSupport(open val pkg: KPackage) : KDocTemplate() {
             print(prefix)
             print(link(receiverType))
             print(postfix)
-        } else {
+        }
+        else {
             print(none)
         }
     }
@@ -258,7 +261,8 @@ abstract class PackageTemplateSupport(open val pkg: KPackage) : KDocTemplate() {
             val pType = if (p.isVarArg()) {
                 print("vararg ")
                 p.varArgType()!!
-            } else {
+            }
+            else {
                 p.aType
             }
             print("${p.name}:&nbsp;")

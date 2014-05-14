@@ -4,7 +4,7 @@ import org.junit.Test
 import kotlin.test.*
 import java.util.*
 
-fun <T> iterableOf(vararg items : T) : Iterable<T> = IterableWrapper(items.toList())
+fun <T> iterableOf(vararg items: T): Iterable<T> = IterableWrapper(items.toList())
 
 class IterableWrapper<T>(collection: Iterable<T>) : Iterable<T> {
     private val collection = collection

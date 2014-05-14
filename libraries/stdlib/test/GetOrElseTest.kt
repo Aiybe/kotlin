@@ -10,18 +10,18 @@ class GetOrElseTest {
     var counter = 0
 
     test fun defaultValue() {
-        assertEquals("hello", v1?: "bar")
+        assertEquals("hello", v1 ?: "bar")
 
         expect("hello") {
-            v1?: "bar"
+            v1 ?: "bar"
         }
     }
 
     test fun defaultValueOnNull() {
-        assertEquals("bar", v2?: "bar")
+        assertEquals("bar", v2 ?: "bar")
 
         expect("bar") {
-            v2?: "bar"
+            v2 ?: "bar"
         }
     }
 
@@ -33,10 +33,10 @@ class GetOrElseTest {
     test fun lazyDefaultValue() {
         counter = 0
 
-        assertEquals("hello", v1?: calculateBar())
+        assertEquals("hello", v1 ?: calculateBar())
         assertEquals(counter, 0, "counter should not be incremented yet")
 
-        assertEquals("bar", v2?: calculateBar())
+        assertEquals("bar", v2 ?: calculateBar())
         assertEquals(counter, 1, "counter should be incremented in the default function")
     }
 }

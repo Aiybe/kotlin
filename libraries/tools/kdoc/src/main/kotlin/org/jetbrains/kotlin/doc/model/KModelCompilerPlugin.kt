@@ -10,8 +10,7 @@ import org.jetbrains.kotlin.doc.KDocArguments
 abstract class KModelCompilerPlugin(
         // TODO: fix compiler and make protected
         val arguments: KDocArguments)
-    : CompilerPlugin
-{
+: CompilerPlugin {
 
 
     public override fun processFiles(context: CompilerPluginContext) {

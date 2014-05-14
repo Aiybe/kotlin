@@ -4,7 +4,7 @@ import test.properties.delegation.WithBox
 import test.properties.delegation.DelegationTestBase
 import kotlin.properties.*
 
-class LazyValuesTest(): DelegationTestBase() {
+class LazyValuesTest() : DelegationTestBase() {
 
     fun testLazyVal() {
         doTest(TestLazyVal())
@@ -31,7 +31,7 @@ class LazyValuesTest(): DelegationTestBase() {
     }
 }
 
-class TestLazyVal: WithBox {
+class TestLazyVal : WithBox {
     var result = 0
     val a by Delegates.lazy {
         ++result
@@ -44,11 +44,11 @@ class TestLazyVal: WithBox {
     }
 }
 
-class TestNullableLazyVal: WithBox {
+class TestNullableLazyVal : WithBox {
     var resultA = 0
     var resultB = 0
 
-    val a: Int? by Delegates.lazy { resultA++; null}
+    val a: Int? by Delegates.lazy { resultA++; null }
     val b by Delegates.lazy { foo() }
 
     override fun box(): String {
@@ -68,7 +68,7 @@ class TestNullableLazyVal: WithBox {
     }
 }
 
-class TestAtomicLazyVal: WithBox {
+class TestAtomicLazyVal : WithBox {
     var result = 0
     val a by Delegates.blockingLazy {
         ++result
@@ -81,11 +81,11 @@ class TestAtomicLazyVal: WithBox {
     }
 }
 
-class TestVolatileNullableLazyVal: WithBox {
+class TestVolatileNullableLazyVal : WithBox {
     var resultA = 0
     var resultB = 0
 
-    val a: Int? by Delegates.blockingLazy { resultA++; null}
+    val a: Int? by Delegates.blockingLazy { resultA++; null }
     val b by Delegates.blockingLazy { foo() }
 
     override fun box(): String {
@@ -105,7 +105,7 @@ class TestVolatileNullableLazyVal: WithBox {
     }
 }
 
-class TestVolatileLazyVal: WithBox {
+class TestVolatileLazyVal : WithBox {
     var result = 0
     val a by Delegates.blockingLazy {
         ++result
@@ -118,11 +118,11 @@ class TestVolatileLazyVal: WithBox {
     }
 }
 
-class TestAtomicNullableLazyVal: WithBox {
+class TestAtomicNullableLazyVal : WithBox {
     var resultA = 0
     var resultB = 0
 
-    val a: Int? by Delegates.blockingLazy { resultA++; null}
+    val a: Int? by Delegates.blockingLazy { resultA++; null }
     val b by Delegates.blockingLazy { foo() }
 
     override fun box(): String {

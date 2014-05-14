@@ -26,36 +26,34 @@ class BorderPanel(layout: BorderLayout = BorderLayout(), init: BorderPanel.() ->
         set(comp) {
             add(comp, BorderLayout.SOUTH)
         }
-    
+
     var north: JComponent
         get() = throw UnsupportedOperationException()
         set(comp) {
             add(comp, BorderLayout.NORTH)
         }
-    
+
     var east: JComponent
         get() = throw UnsupportedOperationException()
         set(comp) {
             add(comp, BorderLayout.EAST)
         }
-    
+
     var west: JComponent
         get() = throw UnsupportedOperationException()
         set(comp) {
             add(comp, BorderLayout.WEST)
         }
-    
+
     var center: JComponent
         get() = throw UnsupportedOperationException()
         set(comp) {
             add(comp, BorderLayout.CENTER)
         }
-    
+
 }
 
-*/
-
-
+ */
 
 
 // TODO remove these properties when we can zap

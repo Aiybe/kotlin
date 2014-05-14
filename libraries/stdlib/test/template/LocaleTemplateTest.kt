@@ -8,15 +8,15 @@ import java.util.Date
 import java.util.Locale
 
 class LocaleTemplateTest : TestCase() {
-    fun testDefaultLocale() : Unit {
+    fun testDefaultLocale(): Unit {
         format(LocaleFormatter())
     }
 
-    fun testFrance() : Unit {
+    fun testFrance(): Unit {
         format(LocaleFormatter(Locale.FRANCE))
     }
 
-    fun testGermany() : Unit {
+    fun testGermany(): Unit {
         format(LocaleFormatter(Locale.GERMANY))
     }
 
@@ -33,8 +33,8 @@ class LocaleTemplateTest : TestCase() {
         // TODO will use a tuple soon
         //val actual = formatter.format(StringTemplate(Tuple2<String,String>("hello ", name))
         val actual = StringTemplate(array("hello ", name,
-            " price ", price,
-            " data ", now)).toString(formatter)
+                                          " price ", price,
+                                          " data ", now)).toString(formatter)
 
         println("Got text: $actual")
     }

@@ -9,51 +9,51 @@ class MapTest {
 
     test fun getOrElse() {
         val data = hashMapOf<String, Int>()
-        val a = data.getOrElse("foo"){2}
+        val a = data.getOrElse("foo") { 2 }
         assertEquals(2, a)
 
-        val b = data.getOrElse("foo"){3}
+        val b = data.getOrElse("foo") { 3 }
         assertEquals(3, b)
         assertEquals(0, data.size())
 
         val empty = hashMapOf<String, Int?>()
-        val c = empty.getOrElse("") {null}
+        val c = empty.getOrElse("") { null }
         assertEquals(null, c)
     }
 
     test fun getOrPut() {
         val data = hashMapOf<String, Int>()
-        val a = data.getOrPut("foo"){2}
+        val a = data.getOrPut("foo") { 2 }
         assertEquals(2, a)
 
-        val b = data.getOrPut("foo"){3}
+        val b = data.getOrPut("foo") { 3 }
         assertEquals(2, b)
 
         assertEquals(1, data.size())
 
         val empty = hashMapOf<String, Int?>()
-        val c = empty.getOrPut("") {null}
+        val c = empty.getOrPut("") { null }
         assertEquals(null, c)
     }
 
     test fun sizeAndEmpty() {
         val data = hashMapOf<String, Int>()
-        assertTrue{ data.empty }
+        assertTrue { data.empty }
         assertEquals(data.size, 0)
     }
 
     test fun setViaIndexOperators() {
         val map = hashMapOf<String, String>()
-        assertTrue{ map.empty }
+        assertTrue { map.empty }
         assertEquals(map.size, 0)
 
         map["name"] = "James"
 
-        assertTrue{ !map.empty }
+        assertTrue { !map.empty }
         assertEquals(map.size(), 1)
         assertEquals("James", map["name"])
     }
-    
+
     test fun iterate() {
         val map = TreeMap<String, String>()
         map["beverage"] = "beer"
@@ -110,7 +110,7 @@ class MapTest {
         m1["beverage"] = "beer"
         m1["location"] = "Mells"
 
-        val list = m1.map{ it.value + " rocks" }
+        val list = m1.map { it.value + " rocks" }
 
         println("Got new list $list")
         assertEquals(arrayListOf("beer rocks", "Mells rocks"), list)
@@ -121,7 +121,7 @@ class MapTest {
         m1["beverage"] = "beer"
         m1["location"] = "Mells"
 
-        val m2 = m1.mapValues{ it.value + "2" }
+        val m2 = m1.mapValues { it.value + "2" }
 
         assertEquals("beer2", m2["beverage"])
         assertEquals("Mells2", m2["location"])
@@ -158,8 +158,8 @@ class MapTest {
     }
 
     test fun toSortedMap() {
-        val map = hashMapOf<String,Int>(Pair("c", 3), Pair("b", 2), Pair("a", 1))
-        val sorted = map.toSortedMap<String,Int>()
+        val map = hashMapOf<String, Int>(Pair("c", 3), Pair("b", 2), Pair("a", 1))
+        val sorted = map.toSortedMap<String, Int>()
         assertEquals(1, sorted.get("a"))
         assertEquals(2, sorted.get("b"))
         assertEquals(3, sorted.get("c"))
@@ -200,7 +200,7 @@ class MapTest {
         assertEquals("beverage,beer,location,Mells,name,James", list.makeString(","))
         println("==== worked! $list")
     }
-    */
+     */
 
     test fun toProperties() {
         val map = hashMapOf("a" to "A", "b" to "B")

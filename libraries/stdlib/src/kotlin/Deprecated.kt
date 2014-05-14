@@ -38,7 +38,7 @@ public fun <K, V> linkedMap(vararg values: Pair<K, V>): LinkedHashMap<K, V> = li
  */
 deprecated("Use SAM constructor: Callable(...)")
 public /*inline*/ fun <T> callable(action: () -> T): Callable<T> {
-    return object: Callable<T> {
+    return object : Callable<T> {
         public override fun call() = action()
     }
 }
@@ -48,7 +48,7 @@ public /*inline*/ fun <T> callable(action: () -> T): Callable<T> {
  */
 deprecated("Use SAM constructor: Runnable(...)")
 public /*inline*/ fun runnable(action: () -> Unit): Runnable {
-    return object: Runnable {
+    return object : Runnable {
         public override fun run() {
             action()
         }
@@ -56,7 +56,7 @@ public /*inline*/ fun runnable(action: () -> Unit): Runnable {
 }
 
 deprecated("Use withIndices() followed by forEach {}")
-public inline fun <T> List<T>.forEachWithIndex(operation : (Int, T) -> Unit): Unit =  withIndices().forEach {
+public inline fun <T> List<T>.forEachWithIndex(operation: (Int, T) -> Unit): Unit = withIndices().forEach {
     operation(it.first, it.second)
 }
 
@@ -67,7 +67,7 @@ public fun <T> countTo(n: Int): (T) -> Boolean {
 }
 
 deprecated("Use contains() function instead")
-public fun <T> Iterable<T>.containsItem(item : T) : Boolean = contains(item)
+public fun <T> Iterable<T>.containsItem(item: T): Boolean = contains(item)
 
 deprecated("Use sortBy() instead")
-public fun <T> Iterable<T>.sort(comparator: java.util.Comparator<T>) : List<T> = sortBy(comparator)
+public fun <T> Iterable<T>.sort(comparator: java.util.Comparator<T>): List<T> = sortBy(comparator)

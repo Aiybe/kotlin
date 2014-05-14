@@ -21,15 +21,15 @@ class NextSiblingTest {
                     id = "id3"
                     classes = " bar tiny"
                     addText("Hello World!")
-                // TODO support neater syntax sugar for adding text?
-                // += "Hello World!"
+                    // TODO support neater syntax sugar for adding text?
+                    // += "Hello World!"
                 }
                 addElement("grandChild2") {
                     id = "id4"
                     classes = "tiny thing bar "
                     addText("Hello World!")
-                // TODO support neater syntax sugar for adding text?
-                // += "Hello World!"
+                    // TODO support neater syntax sugar for adding text?
+                    // += "Hello World!"
                 }
             }
         }

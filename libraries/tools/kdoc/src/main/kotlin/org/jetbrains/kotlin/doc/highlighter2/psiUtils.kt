@@ -3,7 +3,7 @@ package org.jetbrains.kotlin.doc.highlighter2
 import com.intellij.psi.PsiElement
 
 private fun PsiElement.getTextChildRelativeOffset() =
-    getTextRange()!!.getStartOffset() - getParent()!!.getTextRange()!!.getStartOffset()
+        getTextRange()!!.getStartOffset() - getParent()!!.getTextRange()!!.getStartOffset()
 
 private fun PsiElement.getAllChildren(): List<PsiElement> {
     val r = listBuilder<PsiElement>()

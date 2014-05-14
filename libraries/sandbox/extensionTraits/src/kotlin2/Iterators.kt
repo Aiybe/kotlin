@@ -10,7 +10,7 @@ object State {
     val Failed = 3
 }
 
-private class FilterIterator<T>(val iterator: Iterator<T>, val predicate: (T)-> Boolean): AbstractIterator<T>() {
+private class FilterIterator<T>(val iterator: Iterator<T>, val predicate: (T) -> Boolean) : AbstractIterator<T>() {
     override protected fun computeNext(): Unit {
         while (iterator.hasNext) {
             val next = iterator.next()
@@ -23,7 +23,7 @@ private class FilterIterator<T>(val iterator: Iterator<T>, val predicate: (T)-> 
     }
 }
 
-private class FilterNotNullIterator<T>(val iterator: Iterator<T?>?): AbstractIterator<T>() {
+private class FilterNotNullIterator<T>(val iterator: Iterator<T?>?) : AbstractIterator<T>() {
     override protected fun computeNext(): Unit {
         if (iterator != null) {
             while (iterator.hasNext) {
@@ -38,17 +38,18 @@ private class FilterNotNullIterator<T>(val iterator: Iterator<T?>?): AbstractIte
     }
 }
 
-private class MapIterator<T, R>(val iterator: Iterator<T>, val transform: (T) -> R): AbstractIterator<R>() {
+private class MapIterator<T, R>(val iterator: Iterator<T>, val transform: (T) -> R) : AbstractIterator<R>() {
     override protected fun computeNext(): Unit {
         if (iterator.hasNext) {
             setNext((transform)(iterator.next()))
-        } else {
+        }
+        else {
             done()
         }
     }
 }
 
-private class FlatMapIterator<T, R>(val iterator: Iterator<T>, val transform: (T) -> Iterator<R>): AbstractIterator<R>() {
+private class FlatMapIterator<T, R>(val iterator: Iterator<T>, val transform: (T) -> Iterator<R>) : AbstractIterator<R>() {
     var transformed: Iterator<R> = iterate2<R> { null }
 
     override protected fun computeNext(): Unit {
@@ -59,7 +60,8 @@ private class FlatMapIterator<T, R>(val iterator: Iterator<T>, val transform: (T
             }
             if (iterator.hasNext) {
                 transformed = (transform)(iterator.next())
-            } else {
+            }
+            else {
                 done()
                 return
             }
@@ -67,7 +69,7 @@ private class FlatMapIterator<T, R>(val iterator: Iterator<T>, val transform: (T
     }
 }
 
-private class TakeWhileIterator<T>(val iterator: Iterator<T>, val predicate: (T) -> Boolean): AbstractIterator<T>() {
+private class TakeWhileIterator<T>(val iterator: Iterator<T>, val predicate: (T) -> Boolean) : AbstractIterator<T>() {
     override protected fun computeNext(): Unit {
         if (iterator.hasNext) {
             val item = iterator.next()
@@ -85,7 +87,7 @@ private class TakeWhileIterator<T>(val iterator: Iterator<T>, val predicate: (T)
  * A base class to simplify implementing iterators so that implementations only have to implement [[computeNext()]]
  * to implement the iterator, calling [[done()]] when the iteration is complete.
  */
-public abstract class AbstractIterator<T>: Iterator<T> {
+public abstract class AbstractIterator<T> : Iterator<T> {
     private var state = State.NotReady
     private var next: T? = null
 
@@ -147,13 +149,14 @@ public abstract class AbstractIterator<T>: Iterator<T> {
 }
 
 /** An [[Iterator]] which invokes a function to calculate the next value in the iteration until the function returns *null* */
-class FunctionIterator<T>(val nextFunction: () -> T?): AbstractIterator<T>() {
+class FunctionIterator<T>(val nextFunction: () -> T?) : AbstractIterator<T>() {
 
     override protected fun computeNext(): Unit {
         val next = (nextFunction)()
         if (next == null) {
             done()
-        } else {
+        }
+        else {
             setNext(next)
         }
     }
@@ -162,7 +165,7 @@ class FunctionIterator<T>(val nextFunction: () -> T?): AbstractIterator<T>() {
 /** An [[Iterator]] which iterates over a number of iterators in sequence */
 fun CompositeIterator<T>(vararg iterators: Iterator<T>) = CompositeIterator(iterators.iterator())
 
-class CompositeIterator<T>(val iterators: Iterator<Iterator<T>>): AbstractIterator<T>() {
+class CompositeIterator<T>(val iterators: Iterator<Iterator<T>>) : AbstractIterator<T>() {
 
     var currentIter: Iterator<T>? = null
 
@@ -171,7 +174,8 @@ class CompositeIterator<T>(val iterators: Iterator<Iterator<T>>): AbstractIterat
             if (currentIter == null) {
                 if (iteratorsIter.hasNext) {
                     currentIter = iteratorsIter.next()
-                } else {
+                }
+                else {
                     done()
                     return
                 }
@@ -181,7 +185,8 @@ class CompositeIterator<T>(val iterators: Iterator<Iterator<T>>): AbstractIterat
                 if (iter.hasNext) {
                     setNext(iter.next()!!)
                     return
-                } else {
+                }
+                else {
                     currentIter = null
                 }
             }
@@ -190,14 +195,15 @@ class CompositeIterator<T>(val iterators: Iterator<Iterator<T>>): AbstractIterat
 }
 
 /** A singleton [[Iterator]] which invokes once over a value */
-class SingleIterator<T>(val value: T): AbstractIterator<T>() {
+class SingleIterator<T>(val value: T) : AbstractIterator<T>() {
     var first = true
 
     override protected fun computeNext(): Unit {
         if (first) {
             first = false
             setNext(value)
-        } else {
+        }
+        else {
             done()
         }
     }
@@ -209,4 +215,4 @@ private fun <T> countTo(n: Int): (T) -> Boolean {
 }
 
 // TODO called iterate2 for now to avoid clash with kotlin method
-public inline fun <T> iterate2(nextFunction: () -> T?) : Iterator<T> = FunctionIterator(nextFunction)
+public inline fun <T> iterate2(nextFunction: () -> T?): Iterator<T> = FunctionIterator(nextFunction)

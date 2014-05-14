@@ -6,7 +6,7 @@ import kotlinhack.test.*
 import junit.framework.*
 import junit.textui.TestRunner
 
-public val suite : TestSuite? = testSuite<Int>("test group") {
+public val suite: TestSuite? = testSuite<Int>("test group") {
     var staticState = 10
 
     setUp = {

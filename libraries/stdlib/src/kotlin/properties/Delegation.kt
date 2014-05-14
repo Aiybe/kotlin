@@ -10,13 +10,13 @@ public trait ReadWriteProperty<in R, T> {
 }
 
 public object Delegates {
-    public fun notNull<T: Any>(): ReadWriteProperty<Any?, T> = NotNullVar()
+    public fun notNull<T : Any>(): ReadWriteProperty<Any?, T> = NotNullVar()
 
     public fun lazy<T>(initializer: () -> T): ReadOnlyProperty<Any?, T> = LazyVal(initializer)
     public fun blockingLazy<T>(lock: Any? = null, initializer: () -> T): ReadOnlyProperty<Any?, T> = BlockingLazyVal(lock, initializer)
 
     public fun observable<T>(initial: T, onChange: (desc: PropertyMetadata, oldValue: T, newValue: T) -> Unit): ReadWriteProperty<Any?, T> {
-        return ObservableProperty<T>(initial) { (desc, old, new) ->
+        return ObservableProperty<T>(initial) {(desc, old, new) ->
             onChange(desc, old, new)
             true
         }
@@ -38,7 +38,7 @@ public object Delegates {
 }
 
 
-private class NotNullVar<T: Any>() : ReadWriteProperty<Any?, T> {
+private class NotNullVar<T : Any>() : ReadWriteProperty<Any?, T> {
     private var value: T? = null
 
     public override fun get(thisRef: Any?, desc: PropertyMetadata): T {
@@ -50,7 +50,7 @@ private class NotNullVar<T: Any>() : ReadWriteProperty<Any?, T> {
     }
 }
 
-class ObservableProperty<T>(initialValue: T, val onChange: (name: PropertyMetadata, oldValue: T, newValue: T) -> Boolean): ReadWriteProperty<Any?, T> {
+class ObservableProperty<T>(initialValue: T, val onChange: (name: PropertyMetadata, oldValue: T, newValue: T) -> Boolean) : ReadWriteProperty<Any?, T> {
     private var value = initialValue
 
     public override fun get(thisRef: Any?, desc: PropertyMetadata): T {
@@ -109,7 +109,7 @@ private class BlockingLazyVal<T>(lock: Any?, private val initializer: () -> T) :
     }
 }
 
-public class KeyMissingException(message: String): RuntimeException(message)
+public class KeyMissingException(message: String) : RuntimeException(message)
 
 public abstract class MapVal<T, in K, out V>() : ReadOnlyProperty<T, V> {
     protected abstract fun map(ref: T): Map<in K, Any?>
@@ -119,7 +119,7 @@ public abstract class MapVal<T, in K, out V>() : ReadOnlyProperty<T, V> {
         throw KeyMissingException("Key $desc is missing in $ref")
     }
 
-    public override fun get(thisRef: T, desc: PropertyMetadata) : V {
+    public override fun get(thisRef: T, desc: PropertyMetadata): V {
         val map = map(thisRef)
         val key = key(desc)
         if (!map.containsKey(key)) {
@@ -139,8 +139,8 @@ public abstract class MapVar<T, in K, V>() : MapVal<T, K, V>(), ReadWritePropert
     }
 }
 
-private val defaultKeyProvider:(PropertyMetadata) -> String = {it.name}
-private val defaultValueProvider:(Any?, Any?) -> Nothing = {(thisRef, key) -> throw KeyMissingException("$key is missing from $thisRef")}
+private val defaultKeyProvider: (PropertyMetadata) -> String = { it.name }
+private val defaultValueProvider: (Any?, Any?) -> Nothing = {(thisRef, key) -> throw KeyMissingException("$key is missing from $thisRef") }
 
 public open class FixedMapVal<T, in K, out V>(private val map: Map<in K, Any?>,
                                               private val key: (PropertyMetadata) -> K,

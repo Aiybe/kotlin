@@ -24,11 +24,11 @@ class OldStdlibTest() : TestCase() {
     fun testInputStreamIterator() {
         val x = ByteArray (10)
 
-        for(index in 0..9) {
+        for (index in 0..9) {
             x [index] = index.toByte()
         }
 
-        for(b in x.inputStream) {
+        for (b in x.inputStream) {
             System.out.println(b)
         }
     }

@@ -11,12 +11,12 @@ class PegdownTest() : TestCase() {
 
     fun testPegDown() {
         val markups = listOf(
-        "hello **there **",
-        "a [[WikiLink]] blah",
-        "a [[WikiLink someText]] blah",
-        "a [[SomeClass.property]] blah",
-        "a [[SomeClass.method()]] blah",
-        "a [Link](somewhere) blah")
+                "hello **there **",
+                "a [[WikiLink]] blah",
+                "a [[WikiLink someText]] blah",
+                "a [[SomeClass.property]] blah",
+                "a [[SomeClass.method()]] blah",
+                "a [Link](somewhere) blah")
 
         for (text in markups) {
             val answer = markdownProcessor.markdownToHtml(text, linkRenderer)!!

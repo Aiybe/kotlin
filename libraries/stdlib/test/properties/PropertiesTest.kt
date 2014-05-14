@@ -11,16 +11,16 @@ class Customer() : ChangeSupport() {
     // TODO the setter code should be generated
     // via KT-1299
     var name: String? = null
-    set(value) {
-        changeProperty("name", $name, value)
-        $name = value
-    }
+        set(value) {
+            changeProperty("name", $name, value)
+            $name = value
+        }
 
     var city: String? = null
-    set(value) {
-        changeProperty("city", $city, value)
-        $city = value
-    }
+        set(value) {
+            changeProperty("city", $city, value)
+            $city = value
+        }
 
     override fun toString() = "Customer($name, $city)"
 }

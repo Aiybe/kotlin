@@ -3,8 +3,8 @@ package org.jetbrains.kotlin.doc.templates
 import org.jetbrains.kotlin.doc.model.KModel
 
 class IndexTemplate(val model: KModel) : KDocTemplate() {
-  override fun render() {
-    print("""<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
+    override fun render() {
+        print("""<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Frameset//EN" "http://www.w3.org/TR/html4/frameset.dtd">
 <!--NewPage-->
 <HTML>
 <HEAD>
@@ -45,5 +45,5 @@ Link to<A HREF="overview-summary.html">Non-frame version.</A>
 </FRAMESET>
 </HTML>
 """)
-  }
+    }
 }

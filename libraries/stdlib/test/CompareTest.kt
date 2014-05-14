@@ -4,7 +4,7 @@ import java.util.Comparator
 import kotlin.test.*
 import org.junit.Test
 
-class Item(val name: String, val rating: Int): Comparable<Item> {
+class Item(val name: String, val rating: Int) : Comparable<Item> {
     override fun toString() = "Item($name, $rating)"
 
     public override fun compareTo(other: Item): Int {
@@ -48,7 +48,7 @@ class CompareTest {
     }
 
     Test fun sortUsingCustomComparator() {
-        val c = object : Comparator<Item>{
+        val c = object : Comparator<Item> {
             override fun compare(o1: Item, o2: Item): Int {
                 return compareBy(o1, o2, { name }, { rating })
             }

@@ -210,8 +210,8 @@ Copyright &#169; 2010-2012. All Rights Reserved.
 
 
     protected fun printClasses(kind: String, description: String): Unit {
-        val classes = pkg.classes.filter{ it.kind == kind }
-        if (! classes.isEmpty()) {
+        val classes = pkg.classes.filter { it.kind == kind }
+        if (!classes.isEmpty()) {
             print("""<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
@@ -234,8 +234,8 @@ Copyright &#169; 2010-2012. All Rights Reserved.
 
     // TODO delete
     protected fun printFunctions(): Unit {
-        val functions = pkg.functions.filter{ it.extensionClass == null }
-        if (! functions.isEmpty()) {
+        val functions = pkg.functions.filter { it.extensionClass == null }
+        if (!functions.isEmpty()) {
             print("""<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
@@ -258,7 +258,7 @@ Copyright &#169; 2010-2012. All Rights Reserved.
 
     protected fun printExtensionFunctions(): Unit {
         val map = inheritedExtensionFunctions(pkg.functions)
-        if (! map.isEmpty()) {
+        if (!map.isEmpty()) {
             print("""<TABLE BORDER="1" WIDTH="100%" CELLPADDING="3" CELLSPACING="0" SUMMARY="">
 <TR BGCOLOR="#CCCCFF" CLASS="TableHeadingColor">
 <TH ALIGN="left" COLSPAN="2"><FONT SIZE="+2">
@@ -289,14 +289,16 @@ Copyright &#169; 2010-2012. All Rights Reserved.
         val prev = model.previous(pkg)
         if (prev != null) {
             println("""&nbsp;<A HREF="${prev.nameAsRelativePath}${prev.nameAsPath}/package-summary.html"><B>PREV PACKAGE</B></A>&nbsp;""")
-        } else {
-            println("""&nbsp;PREV PACKAGE&nbsp;""" )
+        }
+        else {
+            println("""&nbsp;PREV PACKAGE&nbsp;""")
         }
         val next = model.next(pkg)
         if (next != null) {
             println("""&nbsp;<A HREF="${next.nameAsRelativePath}${next.nameAsPath}/package-summary.html"><B>NEXT PACKAGE</B></A>""")
-        } else {
-            println("""&nbsp;NEXT PACKAGE""" )
+        }
+        else {
+            println("""&nbsp;NEXT PACKAGE""")
         }
         println("""</FONT></TD>""")
 

@@ -26,20 +26,20 @@ class AnnotationsPathBuilder(val parent: ModuleBuilder) {
     }
 }
 
-open class ModuleBuilder(val name: String, val outputDir: String): Module {
+open class ModuleBuilder(val name: String, val outputDir: String) : Module {
     // http://youtrack.jetbrains.net/issue/KT-904
     private val sourceFiles0 = ArrayList<String>()
     private val classpathRoots0 = ArrayList<String>()
     private val annotationsRoots0 = ArrayList<String>()
 
     val sources: SourcesBuilder
-      get() = SourcesBuilder(this)
+        get() = SourcesBuilder(this)
 
     val classpath: ClasspathBuilder
-      get() = ClasspathBuilder(this)
+        get() = ClasspathBuilder(this)
 
     val annotationsPath: AnnotationsPathBuilder
-      get() = AnnotationsPathBuilder(this)
+        get() = AnnotationsPathBuilder(this)
 
     public fun addSourceFiles(pattern: String) {
         sourceFiles0.add(pattern)

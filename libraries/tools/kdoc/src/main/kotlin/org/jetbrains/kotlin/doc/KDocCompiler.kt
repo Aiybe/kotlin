@@ -9,8 +9,8 @@ import org.jetbrains.jet.config.CompilerConfiguration
 import org.jetbrains.jet.cli.common.messages.MessageCollector
 
 /**
-* Main for running the KDocCompiler
-*/
+ * Main for running the KDocCompiler
+ */
 fun main(args: Array<String>): Unit {
     CLICompiler.doMain(KDocCompiler(), args);
 }
@@ -21,7 +21,7 @@ fun main(args: Array<String>): Unit {
  */
 class KDocCompiler() : K2JVMCompiler() {
 
-    protected override fun configureEnvironment(configuration : CompilerConfiguration, arguments : K2JVMCompilerArguments) {
+    protected override fun configureEnvironment(configuration: CompilerConfiguration, arguments: K2JVMCompilerArguments) {
         super.configureEnvironment(configuration, arguments)
         configuration.add(CLIConfigurationKeys.COMPILER_PLUGINS, KDoc(arguments as KDocArguments))
 
@@ -29,11 +29,11 @@ class KDocCompiler() : K2JVMCompiler() {
         configuration.put(CLIConfigurationKeys.MESSAGE_COLLECTOR_KEY, MessageCollector.NONE)
     }
 
-    protected override fun createArguments() : K2JVMCompilerArguments {
+    protected override fun createArguments(): K2JVMCompilerArguments {
         return KDocArguments()
     }
 
-    protected override fun usage(target : PrintStream) {
+    protected override fun usage(target: PrintStream) {
         target.println("Usage: KDocCompiler -docOutput <docOutputDir> [-output <outputDir>|-jar <jarFileName>] [-stdlib <path to runtime.jar>] [-src <filename or dirname>|-module <module file>] [-includeRuntime]");
     }
 }

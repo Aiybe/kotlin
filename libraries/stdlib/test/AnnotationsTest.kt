@@ -17,19 +17,20 @@ class AnnotatedClass
 class AnnotationTest {
     test fun annotationType() {
         val annotations = javaClass<AnnotatedClass>().getAnnotations()!!
-        
+
         var foundMyAnno = false
         var foundDeprecated = false
-        
+
         for (annotation in annotations) {
             val clazz = annotation!!.annotationType()
             when {
                 clazz == javaClass<MyAnno>() -> foundMyAnno = true
                 clazz == javaClass<Deprecated>() -> foundDeprecated = true
-                else -> {}
+                else -> {
+                }
             }
         }
-        
+
         assertTrue(foundMyAnno)
         assertTrue(foundDeprecated)
     }

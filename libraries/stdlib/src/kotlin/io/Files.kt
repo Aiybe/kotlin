@@ -24,43 +24,44 @@ public fun File.recurse(block: (File) -> Unit): Unit {
  * Returns this if the file is a directory or the parent if its a file inside a directory
  */
 val File.directory: File
-get() = if (this.isDirectory()) this else this.getParentFile()!!
+    get() = if (this.isDirectory()) this else this.getParentFile()!!
 
 /**
  * Returns the canonical path of the file
  */
 val File.canonicalPath: String
-get() = getCanonicalPath()
+    get() = getCanonicalPath()
 
 /**
  * Returns the file name or "" for an empty name
  */
 val File.name: String
-get() = getName()
+    get() = getName()
 
 /**
  * Returns the file path or "" for an empty name
  */
 val File.path: String
-get() = getPath()
+    get() = getPath()
 
 /**
  * Returns true if the file ends with the given extension
  */
 val File.extension: String
-get() {
-    val text = this.name
-    val idx = text.lastIndexOf('.')
-    return if (idx >= 0) {
-        text.substring(idx + 1)
-    } else {
-        ""
+    get() {
+        val text = this.name
+        val idx = text.lastIndexOf('.')
+        return if (idx >= 0) {
+            text.substring(idx + 1)
+        }
+        else {
+            ""
+        }
     }
-}
 
 /**
-* Returns true if the given file is in the same directory or a descendant directory
-*/
+ * Returns true if the given file is in the same directory or a descendant directory
+ */
 public fun File.isDescendant(file: File): Boolean {
     return file.directory.canonicalPath.startsWith(this.directory.canonicalPath)
 }
@@ -75,8 +76,10 @@ public fun File.relativePath(descendant: File): String {
         val prefixSize = prefix.size
         if (answer.size > prefixSize) {
             answer.substring(prefixSize + 1)
-        } else ""
-    } else {
+        }
+        else ""
+    }
+    else {
         answer
     }
 }
@@ -106,7 +109,7 @@ public fun File.writeBytes(data: ByteArray): Unit {
  * Appends bytes to the contents of the file.
  */
 public fun File.appendBytes(data: ByteArray): Unit {
-   return FileOutputStream(this, true).use { it.write(data) }
+    return FileOutputStream(this, true).use { it.write(data) }
 }
 
 /**
@@ -114,25 +117,29 @@ public fun File.appendBytes(data: ByteArray): Unit {
  *
  * This method is not recommended on huge files.
  */
-public fun File.readText(encoding:String = Charset.defaultCharset().name()) : String = readBytes().toString(encoding)
+public fun File.readText(encoding: String = Charset.defaultCharset().name()): String = readBytes().toString(encoding)
 
 /**
  * Reads the entire content of the file as a String using a character encoding.
  *
  * This method is not recommended on huge files.
  */
-public fun File.readText(encoding: Charset) : String = readBytes().toString(encoding)
+public fun File.readText(encoding: Charset): String = readBytes().toString(encoding)
 
 /**
  * Writes the text as the contents of the file using the a
  * character encoding.
  */
-public fun File.writeText(text: String, encoding: String = Charset.defaultCharset().name()): Unit { writeBytes(text.toByteArray(encoding)) }
+public fun File.writeText(text: String, encoding: String = Charset.defaultCharset().name()): Unit {
+    writeBytes(text.toByteArray(encoding))
+}
 
 /**
  * Writes the text as the contents of the file using a character encoding.
  */
-public fun File.writeText(text: String, encoding: Charset): Unit { writeBytes(text.toByteArray(encoding)) }
+public fun File.writeText(text: String, encoding: Charset): Unit {
+    writeBytes(text.toByteArray(encoding))
+}
 
 /**
  * Appends text to the contents of the file using a given character encoding.
@@ -154,9 +161,9 @@ public fun File.appendText(text: String, encoding: String = Charset.defaultChars
 public fun File.copyTo(file: File, bufferSize: Int = defaultBufferSize): Long {
     file.directory.mkdirs()
     val input = FileInputStream(this)
-    return input.use<FileInputStream,Long>{
+    return input.use<FileInputStream, Long>{
         val output = FileOutputStream(file)
-        output.use<FileOutputStream,Long>{
+        output.use<FileOutputStream, Long>{
             input.copyTo(output, bufferSize)
         }
     }
@@ -168,7 +175,7 @@ public fun File.copyTo(file: File, bufferSize: Int = defaultBufferSize): Long {
  *
  * You can use this function for huge files
  */
-fun File.forEachBlock(closure : (ByteArray, Int) -> Unit) : Unit {
+fun File.forEachBlock(closure: (ByteArray, Int) -> Unit): Unit {
     val arr = ByteArray(4096)
     val fis = FileInputStream(this)
 
@@ -177,11 +184,13 @@ fun File.forEachBlock(closure : (ByteArray, Int) -> Unit) : Unit {
             val size = fis.read(arr)
             if (size == -1) {
                 break
-            } else if (size > 0) {
+            }
+            else if (size > 0) {
                 closure(arr, size)
             }
         } while(true)
-    } finally {
+    }
+    finally {
         fis.close()
     }
 }
@@ -191,11 +200,12 @@ fun File.forEachBlock(closure : (ByteArray, Int) -> Unit) : Unit {
  *
  * You may use this function on huge files
  */
-fun File.forEachLine (charset : String = "UTF-8", closure : (line : String) -> Unit) : Unit {
+fun File.forEachLine(charset: String = "UTF-8", closure: (line: String) -> Unit): Unit {
     val reader = BufferedReader(InputStreamReader(FileInputStream(this), charset))
     try {
         reader.forEachLine(closure)
-    } finally {
+    }
+    finally {
         reader.close()
     }
 }
@@ -205,10 +215,10 @@ fun File.forEachLine (charset : String = "UTF-8", closure : (line : String) -> U
  *
  * Do not use this function for huge files.
  */
-fun File.readLines(charset : String = "UTF-8") : List<String> {
+fun File.readLines(charset: String = "UTF-8"): List<String> {
     val rs = ArrayList<String>()
 
-    this.forEachLine(charset) { (line : String) : Unit ->
+    this.forEachLine(charset) {(line: String): Unit ->
         rs.add(line);
     }
 
@@ -218,7 +228,7 @@ fun File.readLines(charset : String = "UTF-8") : List<String> {
 /**
  * Returns an array of files and directories in the directory that satisfy the specified filter.
  */
-fun File.listFiles(filter : (file : File) -> Boolean) : Array<File>? = listFiles(
+fun File.listFiles(filter: (file: File) -> Boolean): Array<File>? = listFiles(
     object : FileFilter {
         override fun accept(file: File) = filter(file)
     }

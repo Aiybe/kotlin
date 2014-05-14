@@ -13,13 +13,13 @@ import java.lang.IndexOutOfBoundsException
 private fun emptyElementList(): List<Element> = Collections.emptyList<Element>()
 private fun emptyNodeList(): List<Node> = Collections.emptyList<Node>()
 
-var Node.text : String
-get() {
-    return textContent
-}
-set(value) {
-    textContent = value
-}
+var Node.text: String
+    get() {
+        return textContent
+    }
+    set(value) {
+        textContent = value
+    }
 
 var Element.childrenText: String
     get() {
@@ -49,24 +49,24 @@ var Element.childrenText: String
         element.addText(value)
     }
 
-var Element.id : String
-get() = this.getAttribute("id")?: ""
-set(value) {
-    this.setAttribute("id", value)
-    this.setIdAttribute("id", true)
-}
+var Element.id: String
+    get() = this.getAttribute("id") ?: ""
+    set(value) {
+        this.setAttribute("id", value)
+        this.setIdAttribute("id", true)
+    }
 
-var Element.style : String
-get() = this.getAttribute("style")?: ""
-set(value) {
-    this.setAttribute("style", value)
-}
+var Element.style: String
+    get() = this.getAttribute("style") ?: ""
+    set(value) {
+        this.setAttribute("style", value)
+    }
 
-var Element.classes : String
-get() = this.getAttribute("class")?: ""
-set(value) {
-    this.setAttribute("class", value)
-}
+var Element.classes: String
+    get() = this.getAttribute("class") ?: ""
+    set(value) {
+        this.setAttribute("class", value)
+    }
 
 /** Returns true if the element has the given CSS class style in its 'class' attribute */
 fun Element.hasClass(cssClass: String): Boolean {
@@ -91,12 +91,12 @@ fun Element?.childElements(name: String): List<Element> {
 }
 
 /** The descendent elements of this document */
-val Document?.elements : List<Element>
-get() = this?.getElementsByTagName("*").toElementList()
+val Document?.elements: List<Element>
+    get() = this?.getElementsByTagName("*").toElementList()
 
 /** The descendant elements of this elements */
-val Element?.elements : List<Element>
-get() = this?.getElementsByTagName("*").toElementList()
+val Element?.elements: List<Element>
+    get() = this?.getElementsByTagName("*").toElementList()
 
 
 /** Returns all the descendant elements given the local element name */
@@ -146,20 +146,24 @@ fun Document?.get(selector: String): List<Element> {
     return if (root != null) {
         if (selector == "*") {
             elements
-        } else if (selector.startsWith(".")) {
-            elements.filter{ it.hasClass(selector.substring(1)) }.toList()
-        } else if (selector.startsWith("#")) {
+        }
+        else if (selector.startsWith(".")) {
+            elements.filter { it.hasClass(selector.substring(1)) }.toList()
+        }
+        else if (selector.startsWith("#")) {
             val id = selector.substring(1)
             val element = this?.getElementById(id)
             return if (element != null)
                 arrayListOf(element)
             else
                 emptyElementList()
-        } else {
+        }
+        else {
             //  assume its a vanilla element name
             elements(selector)
         }
-    } else {
+    }
+    else {
         emptyElementList()
     }
 }
@@ -168,15 +172,18 @@ fun Document?.get(selector: String): List<Element> {
 fun Element.get(selector: String): List<Element> {
     return if (selector == "*") {
         elements
-    } else if (selector.startsWith(".")) {
-        elements.filter{ it.hasClass(selector.substring(1)) }.toList()
-    } else if (selector.startsWith("#")) {
+    }
+    else if (selector.startsWith(".")) {
+        elements.filter { it.hasClass(selector.substring(1)) }.toList()
+    }
+    else if (selector.startsWith("#")) {
         val element = this.ownerDocument?.getElementById(selector.substring(1))
         return if (element != null)
             arrayListOf(element)
         else
             emptyElementList()
-    } else {
+    }
+    else {
         //  assume its a vanilla element name
         elements(selector)
     }
@@ -214,14 +221,15 @@ fun Element.removeClass(varargs cssClasses: Array<String>): Boolean {
     }
     return answer
 }
-*/
+ */
 
-class NodeListAsList(val nodeList: NodeList): AbstractList<Node>() {
+class NodeListAsList(val nodeList: NodeList) : AbstractList<Node>() {
     override fun get(index: Int): Node {
         val node = nodeList.item(index)
         if (node == null) {
             throw IndexOutOfBoundsException("NodeList does not contain a node at index: " + index)
-        } else {
+        }
+        else {
             return node
         }
     }
@@ -229,14 +237,16 @@ class NodeListAsList(val nodeList: NodeList): AbstractList<Node>() {
     override fun size(): Int = nodeList.length
 }
 
-class ElementListAsList(val nodeList: NodeList): AbstractList<Element>() {
+class ElementListAsList(val nodeList: NodeList) : AbstractList<Element>() {
     override fun get(index: Int): Element {
         val node = nodeList.item(index)
         if (node == null) {
             throw IndexOutOfBoundsException("NodeList does not contain a node at index: " + index)
-        } else if (node.nodeType == Node.ELEMENT_NODE) {
+        }
+        else if (node.nodeType == Node.ELEMENT_NODE) {
             return node as Element
-        } else {
+        }
+        else {
             throw IllegalArgumentException("Node is not an Element as expected but is $node")
         }
     }
@@ -251,14 +261,15 @@ fun Node.clear(): Unit {
         val child = firstChild
         if (child == null) {
             return
-        } else {
+        }
+        else {
             removeChild(child)
         }
     }
 }
 
 /** Returns an [[Iterator]] over the next siblings of this node */
-fun Node.nextSiblings() : Iterable<Node> = NextSiblings(this)
+fun Node.nextSiblings(): Iterable<Node> = NextSiblings(this)
 
 class NextSiblings(var node: Node) : Iterable<Node> {
     override fun iterator(): Iterator<Node> = object : AbstractIterator<Node>() {
@@ -267,7 +278,8 @@ class NextSiblings(var node: Node) : Iterable<Node> {
             if (nextValue != null) {
                 setNext(nextValue)
                 node = nextValue
-            } else {
+            }
+            else {
                 done()
             }
         }
@@ -275,7 +287,7 @@ class NextSiblings(var node: Node) : Iterable<Node> {
 }
 
 /** Returns an [[Iterator]] over the next siblings of this node */
-fun Node.previousSiblings() : Iterable<Node> = PreviousSiblings(this)
+fun Node.previousSiblings(): Iterable<Node> = PreviousSiblings(this)
 
 class PreviousSiblings(var node: Node) : Iterable<Node> {
     override fun iterator(): Iterator<Node> = object : AbstractIterator<Node>() {
@@ -284,7 +296,8 @@ class PreviousSiblings(var node: Node) : Iterable<Node> {
             if (nextValue != null) {
                 setNext(nextValue)
                 node = nextValue
-            } else {
+            }
+            else {
                 done()
             }
         }
@@ -302,30 +315,32 @@ fun Element.attribute(name: String): String {
     return this.getAttribute(name) ?: ""
 }
 
-val NodeList?.head : Node?
-get() = if (this != null && this.length > 0) this.item(0) else null
+val NodeList?.head: Node?
+    get() = if (this != null && this.length > 0) this.item(0) else null
 
-val NodeList?.first : Node?
-get() = this.head
+val NodeList?.first: Node?
+    get() = this.head
 
-val NodeList?.tail : Node?
-get() {
-    if (this == null) {
-        return null
-    } else {
-        val s = this.length
-        return if (s > 0) this.item(s - 1) else null
+val NodeList?.tail: Node?
+    get() {
+        if (this == null) {
+            return null
+        }
+        else {
+            val s = this.length
+            return if (s > 0) this.item(s - 1) else null
+        }
     }
-}
 
-val NodeList?.last : Node?
-get() = this.tail
+val NodeList?.last: Node?
+    get() = this.tail
 
 
 /** Converts the node list to an XML String */
 fun NodeList?.toXmlString(xmlDeclaration: Boolean = false): String {
     return if (this == null)
-        "" else {
+        ""
+    else {
         nodesToXmlString(this.toList(), xmlDeclaration)
     }
 }
@@ -360,7 +375,7 @@ fun Element.plusAssign(text: String?): Element = this.addText(text)
 /**
  * Creates a new element which can be configured via a function
  */
-fun Document.createElement(name: String, init: Element.()-> Unit): Element {
+fun Document.createElement(name: String, init: Element.() -> Unit): Element {
     val elem = this.createElement(name)!!
     elem.init()
     return elem
@@ -369,7 +384,7 @@ fun Document.createElement(name: String, init: Element.()-> Unit): Element {
 /**
  * Creates a new element to an element which has an owner Document which can be configured via a function
  */
-fun Element.createElement(name: String, doc: Document? = null, init: Element.()-> Unit): Element {
+fun Element.createElement(name: String, doc: Document? = null, init: Element.() -> Unit): Element {
     val elem = ownerDocument(doc).createElement(name)!!
     elem.init()
     return elem
@@ -383,15 +398,16 @@ fun Node.ownerDocument(doc: Document? = null): Document {
 
     if (answer == null) {
         throw IllegalArgumentException("Element does not have an ownerDocument and none was provided for: ${this}")
-    } else {
+    }
+    else {
         return answer
     }
 }
 
 /**
 Adds a newly created element which can be configured via a function
-*/
-fun Document.addElement(name: String, init: Element.()-> Unit): Element {
+ */
+fun Document.addElement(name: String, init: Element.() -> Unit): Element {
     val child = createElement(name, init)
     this.appendChild(child)
     return child
@@ -399,8 +415,8 @@ fun Document.addElement(name: String, init: Element.()-> Unit): Element {
 
 /**
 Adds a newly created element to an element which has an owner Document which can be configured via a function
-*/
-fun Element.addElement(name: String, doc: Document? = null, init: Element.()-> Unit): Element {
+ */
+fun Element.addElement(name: String, doc: Document? = null, init: Element.() -> Unit): Element {
     val child = createElement(name, doc, init)
     this.appendChild(child)
     return child
@@ -408,7 +424,7 @@ fun Element.addElement(name: String, doc: Document? = null, init: Element.()-> U
 
 /**
 Adds a newly created text node to an element which either already has an owner Document or one must be provided as a parameter
-*/
+ */
 fun Element.addText(text: String?, doc: Document? = null): Element {
     if (text != null) {
         val child = this.ownerDocument(doc).createTextNode(text)!!

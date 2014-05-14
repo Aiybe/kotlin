@@ -19,15 +19,15 @@ import kotlin.jvm.internal.Intrinsic
 Retention(RetentionPolicy.SOURCE)
 public annotation class throws(vararg val exceptionClasses: Class<out Throwable>)
 
-[Intrinsic("kotlin.javaClass.property")] public val <T> T.javaClass : Class<T>
+[Intrinsic("kotlin.javaClass.property")] public val <T> T.javaClass: Class<T>
     get() = (this as java.lang.Object).getClass() as Class<T>
 
-[Intrinsic("kotlin.javaClass.function")] fun <reified T> javaClass() : Class<T> = null as Class<T>
+[Intrinsic("kotlin.javaClass.function")] fun <reified T> javaClass(): Class<T> = null as Class<T>
 
 Retention(RetentionPolicy.SOURCE)
 public annotation class volatile
 
 [Intrinsic("kotlin.synchronized")] public fun <R> synchronized(lock: Any, block: () -> R): R = block()
 
-public fun <T : Annotation> T.annotationType() : Class<out T> =
-    (this as java.lang.annotation.Annotation).annotationType() as Class<out T>
+public fun <T : Annotation> T.annotationType(): Class<out T> =
+        (this as java.lang.annotation.Annotation).annotationType() as Class<out T>

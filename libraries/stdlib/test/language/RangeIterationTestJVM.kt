@@ -23,7 +23,7 @@ public class RangeIterationTestJVM {
             expectedEnd: N,
             expectedIncrement: Number,
             expectedElements: List<N>
-                          ) {
+    ) {
         assertEquals(expectedStart, sequence.start)
         assertEquals(expectedEnd, sequence.end)
         assertEquals(expectedIncrement, sequence.increment)

@@ -17,7 +17,7 @@ class ImmutableArrayListTest() : TestCase() {
 
 
     fun testGet() {
-        for (length in 0 .. 55) {
+        for (length in 0..55) {
             val list = buildIntArray(length, 19)
             assertEquals(length, list.size)
             checkList(list, length, 19)
@@ -26,7 +26,7 @@ class ImmutableArrayListTest() : TestCase() {
 
     private fun buildIntArray(length: Int, firstValue: Int): List<Int> {
         val builder = ImmutableArrayListBuilder<Int>()
-        for (j in 0 .. length - 1) {
+        for (j in 0..length - 1) {
             builder.add(firstValue + j)
         }
         return builder.build()
@@ -35,13 +35,14 @@ class ImmutableArrayListTest() : TestCase() {
 
     private fun checkList(list: List<Int>, expectedLength: Int, expectedFirstValue: Int) {
         assertEquals(expectedLength, list.size)
-        for (i in 0 .. expectedLength - 1) {
+        for (i in 0..expectedLength - 1) {
             assertEquals(expectedFirstValue + i, list[i])
         }
         try {
             list[expectedLength]
             fail()
-        } catch (e: IndexOutOfBoundsException) {
+        }
+        catch (e: IndexOutOfBoundsException) {
             // expected
         }
     }
@@ -49,7 +50,7 @@ class ImmutableArrayListTest() : TestCase() {
 
     fun testSublist() {
         val r = Random(1)
-        for (i in 0 .. 200) {
+        for (i in 0..200) {
             val length = r.nextInt(55)
             val list = buildIntArray(length, 23)
             val fromIndex = r.nextInt(length + 1)

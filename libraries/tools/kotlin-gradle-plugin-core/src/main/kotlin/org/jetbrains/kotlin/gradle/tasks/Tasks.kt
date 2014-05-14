@@ -30,7 +30,7 @@ import java.util.concurrent.Callable
 import org.gradle.api.Project
 import org.jetbrains.jet.cli.common.arguments.CompilerArgumentsUtil
 
-public open class KotlinCompile(): AbstractCompile() {
+public open class KotlinCompile() : AbstractCompile() {
 
     val srcDirsRoots = HashSet<File>()
     val compiler = K2JVMCompiler()
@@ -38,7 +38,7 @@ public open class KotlinCompile(): AbstractCompile() {
 
     public var kotlinOptions: K2JVMCompilerArguments = K2JVMCompilerArguments();
 
-    public var kotlinDestinationDir : File? = getDestinationDir()
+    public var kotlinDestinationDir: File? = getDestinationDir()
 
     // override setSource to track source directory sets
     override fun setSource(source: Any?) {
@@ -87,7 +87,8 @@ public open class KotlinCompile(): AbstractCompile() {
                 if (javaRoot != null) {
                     javaSrcRoots.add(javaRoot)
                 }
-            } else {
+            }
+            else {
                 sources.add(file)
             }
         }
@@ -99,21 +100,26 @@ public open class KotlinCompile(): AbstractCompile() {
 
         val customSources = args.src;
         if (customSources == null || customSources.isEmpty()) {
-            args.src = sources.map { it.getAbsolutePath() } .makeString(File.pathSeparator)
+            args.src = sources.map { it.getAbsolutePath() }.makeString(File.pathSeparator)
         }
 
 
         if (StringUtils.isEmpty(kotlinOptions.classpath)) {
-            val existingClasspathEntries =  getClasspath().filter(KSpec<File?>({ it != null && it.exists() }))
+            val existingClasspathEntries = getClasspath().filter(KSpec<File?>({ it != null && it.exists() }))
             val effectiveClassPath = (javaSrcRoots + existingClasspathEntries).makeString(File.pathSeparator)
             args.classpath = effectiveClassPath
         }
 
-        args.outputDir = if (StringUtils.isEmpty(kotlinOptions.outputDir)) { kotlinDestinationDir?.getPath() } else { kotlinOptions.outputDir }
+        args.outputDir = if (StringUtils.isEmpty(kotlinOptions.outputDir)) {
+            kotlinDestinationDir?.getPath()
+        }
+        else {
+            kotlinOptions.outputDir
+        }
 
         val embeddedAnnotations = getAnnotations(getProject(), logger)
         val userAnnotations = (kotlinOptions.annotations ?: "").split(File.pathSeparatorChar).toList()
-        val allAnnotations = if (kotlinOptions.noJdkAnnotations) userAnnotations else userAnnotations.plus(embeddedAnnotations.map {it.getPath()})
+        val allAnnotations = if (kotlinOptions.noJdkAnnotations) userAnnotations else userAnnotations.plus(embeddedAnnotations.map { it.getPath() })
         args.annotations = allAnnotations.makeString(File.pathSeparator)
 
         args.noStdlib = true
@@ -143,7 +149,7 @@ public open class KotlinCompile(): AbstractCompile() {
     }
 }
 
-public open class KDoc(): SourceTask() {
+public open class KDoc() : SourceTask() {
 
 
     val logger = Logging.getLogger(getClass())
@@ -182,7 +188,7 @@ public open class KDoc(): SourceTask() {
         logger.warn(args.src)
         val embeddedAnnotations = getAnnotations(getProject(), logger)
         val userAnnotations = (kdocArgs.annotations ?: "").split(File.pathSeparatorChar).toList()
-        val allAnnotations = if (kdocArgs.noJdkAnnotations) userAnnotations else userAnnotations.plus(embeddedAnnotations.map {it.getPath()})
+        val allAnnotations = if (kdocArgs.noJdkAnnotations) userAnnotations else userAnnotations.plus(embeddedAnnotations.map { it.getPath() })
         args.annotations = allAnnotations.makeString(File.pathSeparator)
 
         args.noStdlib = true
@@ -207,14 +213,15 @@ fun getAnnotations(project: Project, logger: Logger): Collection<File> {
     val annotations = project.getExtensions().getByName(DEFAULT_ANNOTATIONS) as Collection<File>
 
     if (!annotations.isEmpty()) {
-        logger.info("using default annontations from [${annotations.map {it.getPath()}}]")
+        logger.info("using default annontations from [${annotations.map { it.getPath() }}]")
         return annotations
-    } else {
+    }
+    else {
         throw GradleException("Default annotations not found in Kotlin gradle plugin classpath")
     }
 }
 
-class GradleMessageCollector(val logger : Logger): MessageCollector {
+class GradleMessageCollector(val logger: Logger) : MessageCollector {
     public override fun report(severity: CompilerMessageSeverity, message: String, location: CompilerMessageLocation) {
         val path = location.getPath()
         val hasLocation = path != null && location.getLine() > 0 && location.getColumn() > 0

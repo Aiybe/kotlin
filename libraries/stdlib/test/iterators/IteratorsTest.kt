@@ -7,7 +7,9 @@ import java.util.ArrayList
 
 fun fibonacci(): Iterator<Int> {
     // fibonacci terms
-    var index = 0; var a = 0; var b = 1
+    var index = 0;
+    var a = 0;
+    var b = 1
     return iterate<Int> { when (index++) { 0 -> a; 1 -> b; else -> { val result = a + b; a = b; b = result; result } } }
 }
 
@@ -18,7 +20,7 @@ class IteratorsTest {
     }
 
     test fun foldReducesTheFirstNElements() {
-        val sum = { (a: Int, b: Int) -> a + b }
+        val sum = {(a: Int, b: Int) -> a + b }
         assertEquals(arrayList(13, 21, 34, 55, 89).fold(0, sum), fibonacci().filter { it > 10 }.take(5).fold(0, sum))
     }
 
@@ -27,7 +29,7 @@ class IteratorsTest {
     }
 
     test fun mapAndTakeWhileExtractTheTransformedElements() {
-        assertEquals(arrayList(0, 3, 3, 6, 9, 15), fibonacci().map { it * 3 }.takeWhile { (i: Int) -> i < 20 }.toList())
+        assertEquals(arrayList(0, 3, 3, 6, 9, 15), fibonacci().map { it * 3 }.takeWhile {(i: Int) -> i < 20 }.toList())
     }
 
     test fun joinConcatenatesTheFirstNElementsAboveAThreshold() {
@@ -75,12 +77,12 @@ class IteratorsTest {
 
     test fun toStringJoinsNoMoreThanTheFirstTenElements() {
         assertEquals("0, 1, 1, 2, 3, 5, 8, 13, 21, 34, ...", fibonacci().makeString(limit = 10))
-        assertEquals("13, 21, 34, 55, 89, 144, 233, 377, 610, 987, ...", fibonacci().filter {  it > 10 }.makeString(limit = 10))
+        assertEquals("13, 21, 34, 55, 89, 144, 233, 377, 610, 987, ...", fibonacci().filter { it > 10 }.makeString(limit = 10))
         assertEquals("144, 233, 377, 610, 987", fibonacci().filter { it > 100 }.takeWhile { it < 1000 }.makeString())
     }
 
     test fun pairIterator() {
-        val pairStr = (fibonacci() zip fibonacci().map { i -> i*2 }).makeString(limit = 10)
+        val pairStr = (fibonacci() zip fibonacci().map { i -> i * 2 }).makeString(limit = 10)
         assertEquals("(0, 0), (1, 2), (1, 2), (2, 4), (3, 6), (5, 10), (8, 16), (13, 26), (21, 42), (34, 68), ...", pairStr)
     }
 
@@ -106,7 +108,7 @@ class IteratorsTest {
     test fun iterableExtension() {
         val c = arrayList(0, 1, 2, 3, 4, 5)
         val d = ArrayList<Int>()
-        c.iterator().takeWhileTo(d, {i -> i < 4 })
+        c.iterator().takeWhileTo(d, { i -> i < 4 })
         assertEquals(4, d.size())
     }
 }

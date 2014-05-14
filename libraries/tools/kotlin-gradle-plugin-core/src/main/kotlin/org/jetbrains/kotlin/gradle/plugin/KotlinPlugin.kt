@@ -44,7 +44,7 @@ import javax.inject.Inject
 
 val DEFAULT_ANNOTATIONS = "org.jebrains.kotlin.gradle.defaultAnnotations"
 
-open class KotlinPlugin [Inject] (val scriptHandler: ScriptHandler): Plugin<Project> {
+open class KotlinPlugin [Inject] (val scriptHandler: ScriptHandler) : Plugin<Project> {
 
     public override fun apply(project: Project) {
         val javaBasePlugin = project.getPlugins().apply(javaClass<JavaBasePlugin>())
@@ -67,7 +67,7 @@ open class KotlinPlugin [Inject] (val scriptHandler: ScriptHandler): Plugin<Proj
             override fun execute(sourceSet: SourceSet?) {
                 if (sourceSet is HasConvention) {
                     val sourceSetName = sourceSet.getName()
-                    val kotlinSourceSet = KotlinSourceSetImpl( sourceSetName, project.getFileResolver())
+                    val kotlinSourceSet = KotlinSourceSetImpl(sourceSetName, project.getFileResolver())
                     sourceSet.getConvention().getPlugins().put("kotlin", kotlinSourceSet)
 
                     val kotlinDirSet = kotlinSourceSet.getKotlin()
@@ -124,7 +124,7 @@ open class KotlinPlugin [Inject] (val scriptHandler: ScriptHandler): Plugin<Proj
 }
 
 
-open class KotlinAndroidPlugin [Inject] (val scriptHandler: ScriptHandler): Plugin<Project> {
+open class KotlinAndroidPlugin [Inject] (val scriptHandler: ScriptHandler) : Plugin<Project> {
 
     val log = Logging.getLogger(getClass())
 
@@ -180,7 +180,8 @@ open class KotlinAndroidPlugin [Inject] (val scriptHandler: ScriptHandler): Plug
         val mainSourceSet = sourceSets.getByName(BuilderConstants.MAIN)
         val testSourceSet = try {
             sourceSets.getByName("instrumentTest")
-        } catch (e: UnknownDomainObjectException) {
+        }
+        catch (e: UnknownDomainObjectException) {
             sourceSets.getByName("androidTest")
         }
 
@@ -188,13 +189,14 @@ open class KotlinAndroidPlugin [Inject] (val scriptHandler: ScriptHandler): Plug
             if (variant is LibraryVariant || variant is ApkVariant) {
                 val buildType: BuildType = if (variant is LibraryVariant) {
                     variant.getBuildType()
-                } else {
+                } 
+                else {
                     (variant as ApkVariant).getBuildType()
                 }
 
                 val buildTypeSourceSetName = buildType.getName()
                 logger.debug("Variant build type is [$buildTypeSourceSetName]")
-                val buildTypeSourceSet : AndroidSourceSet? = sourceSets.findByName(buildTypeSourceSetName)
+                val buildTypeSourceSet: AndroidSourceSet? = sourceSets.findByName(buildTypeSourceSetName)
 
                 val javaTask = variant.getJavaCompile()!!
                 val variantName = variant.getName()
@@ -218,7 +220,8 @@ open class KotlinAndroidPlugin [Inject] (val scriptHandler: ScriptHandler): Plug
                     javaSourceList.addAll(testSourceSet.getJava().getSrcDirs())
                     val testKotlinSource = getExtention<KotlinSourceSet>(testSourceSet, "kotlin")
                     kotlinTask.source(testKotlinSource.getKotlin())
-                } else {
+                }
+                else {
                     javaSourceList.addAll(mainSourceSet.getJava().getSrcDirs())
                     val mainKotlinSource = getExtention<KotlinSourceSet>(mainSourceSet, "kotlin")
                     kotlinTask.source(mainKotlinSource.getKotlin())
@@ -235,8 +238,8 @@ open class KotlinAndroidPlugin [Inject] (val scriptHandler: ScriptHandler): Plug
 
                 if (variant is ApkVariant) {
                     for (flavour in variant.getProductFlavors().iterator()) {
-                       val flavourSourceSetName = buildTypeSourceSetName + flavour.getName()
-                        val flavourSourceSet : AndroidSourceSet? = sourceSets.findByName(flavourSourceSetName)
+                        val flavourSourceSetName = buildTypeSourceSetName + flavour.getName()
+                        val flavourSourceSet: AndroidSourceSet? = sourceSets.findByName(flavourSourceSetName)
                         if (flavourSourceSet != null) {
                             javaSourceList.add(flavourSourceSet.getJava())
                             kotlinTask.source((buildTypeSourceSet as ExtensionAware).getExtensions().getByName("kotlin"))
@@ -269,7 +272,7 @@ open class KotlinAndroidPlugin [Inject] (val scriptHandler: ScriptHandler): Plug
 
 }
 
-open class KSpec<T: Any?>(val predicate: (T) -> Boolean): Spec<T> {
+open class KSpec<T : Any?>(val predicate: (T) -> Boolean) : Spec<T> {
     public override fun isSatisfiedBy(p0: T?): Boolean {
         return p0 != null && predicate(p0)
     }
@@ -277,8 +280,8 @@ open class KSpec<T: Any?>(val predicate: (T) -> Boolean): Spec<T> {
 
 open class GradleUtils(val scriptHandler: ScriptHandler) {
     public fun resolveDependencies(vararg coordinates: String): Collection<File> {
-        val dependencyHandler : DependencyHandler = scriptHandler.getDependencies()
-        val configurationsContainer : ConfigurationContainer = scriptHandler.getConfigurations()
+        val dependencyHandler: DependencyHandler = scriptHandler.getDependencies()
+        val configurationsContainer: ConfigurationContainer = scriptHandler.getConfigurations()
 
         val deps = coordinates.map { dependencyHandler.create(it) }
         val configuration = configurationsContainer.detachedConfiguration(*deps.copyToArray())

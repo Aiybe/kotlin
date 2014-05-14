@@ -8,18 +8,18 @@ class IteratorsJVMTest {
 
     test fun testEnumeration() {
         val v = Vector<Int>()
-        for(i in 1..5)
+        for (i in 1..5)
             v.add(i)
 
         var sum = 0
-        for(k in v.elements())
+        for (k in v.elements())
             sum += k
 
         assertEquals(15, sum)
     }
 
     test fun flatMapAndTakeExtractTheTransformedElements() {
-        fun intToBinaryDigits() = { (i: Int) ->
+        fun intToBinaryDigits() = {(i: Int) ->
             val binary = Integer.toBinaryString(i)!!
             var index = 0
             stream<Char> { if (index < binary.length()) binary.get(index++) else null }

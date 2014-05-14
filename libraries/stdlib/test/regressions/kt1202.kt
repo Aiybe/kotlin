@@ -5,11 +5,11 @@ import junit.framework.TestCase.*
 import junit.framework.Assert.* // TODO unnecessary import
 
 trait Expression
-class Num(val value : Int) : Expression
-class Sum(val left : Expression, val right : Expression) : Expression
-class Mult(val left : Expression, val right : Expression) : Expression
+class Num(val value: Int) : Expression
+class Sum(val left: Expression, val right: Expression) : Expression
+class Mult(val left: Expression, val right: Expression) : Expression
 
-fun eval(e : Expression) : Int {
+fun eval(e: Expression): Int {
     return when (e) {
         is Num -> e.value
         is Sum -> eval(e.left) + eval (e.right)
@@ -19,20 +19,20 @@ fun eval(e : Expression) : Int {
 }
 
 trait ParseResult<out T> {
-    val success : Boolean
-    val value : T
+    val success: Boolean
+    val value: T
 }
 
-class Success<T>(override val value : T) : ParseResult<T> {
-    public override val success : Boolean = true
+class Success<T>(override val value: T) : ParseResult<T> {
+    public override val success: Boolean = true
 }
 
-class Failure(val message : String) : ParseResult<Nothing> {
+class Failure(val message: String) : ParseResult<Nothing> {
     override val success = false
-    override val value : Nothing = throw UnsupportedOperationException("Don't call value on a Failure")
+    override val value: Nothing = throw UnsupportedOperationException("Don't call value on a Failure")
 }
 
-open class Token(val text : String) {
+open class Token(val text: String) {
     override fun toString() = text
 }
 object LPAR : Token("(")
@@ -40,11 +40,11 @@ object RPAR : Token(")")
 object PLUS : Token("+")
 object TIMES : Token("*")
 object EOF : Token("EOF")
-class Number(text : String) : Token(text)
-class Error(text : String) : Token("[Error: $text]")
+class Number(text: String) : Token(text)
+class Error(text: String) : Token("[Error: $text]")
 
 
-fun tokenize(text : String) : Deque<Token> {
+fun tokenize(text: String): Deque<Token> {
     val result = LinkedList<Token>()
     for (c in text) {
         result add when (c) {
@@ -60,7 +60,7 @@ fun tokenize(text : String) : Deque<Token> {
     return result
 }
 
-fun parseSum(tokens : Deque<Token>) : ParseResult<Expression> {
+fun parseSum(tokens: Deque<Token>): ParseResult<Expression> {
     val left = parseMult(tokens)
     if (!left.success) return left
 
@@ -74,7 +74,7 @@ fun parseSum(tokens : Deque<Token>) : ParseResult<Expression> {
     return left
 }
 
-fun parseMult(tokens : Deque<Token>) : ParseResult<Expression> {
+fun parseMult(tokens: Deque<Token>): ParseResult<Expression> {
     val left = parseAtomic(tokens)
     if (!left.success) return left
 
@@ -88,7 +88,7 @@ fun parseMult(tokens : Deque<Token>) : ParseResult<Expression> {
     return left
 }
 
-fun parseAtomic(tokens : Deque<Token>) : ParseResult<Expression> {
+fun parseAtomic(tokens: Deque<Token>): ParseResult<Expression> {
     val token = tokens.poll()
     return when (token) {
         LPAR -> {
@@ -104,7 +104,7 @@ fun parseAtomic(tokens : Deque<Token>) : ParseResult<Expression> {
     }
 }
 
-fun parse(text : String) : ParseResult<Expression> = parseSum(tokenize(text))
+fun parse(text: String): ParseResult<Expression> = parseSum(tokenize(text))
 
 class EvalTest : junit.framework.TestCase() {
     fun testEval() {

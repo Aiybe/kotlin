@@ -4,8 +4,8 @@ import java.util.*
 import org.jetbrains.kotlin.doc.model.KPackage
 
 /**
-* The configuration used with KDoc
-*/
+ * The configuration used with KDoc
+ */
 class KDocConfig() {
 
     /**
@@ -35,9 +35,9 @@ class KDocConfig() {
     public val ignorePackages: MutableSet<String> = HashSet<String>()
 
     /**
-    * Returns true if a warning should be generated if there are no comments
-    * on documented function or property
-    */
+     * Returns true if a warning should be generated if there are no comments
+     * on documented function or property
+     */
     public var warnNoComments: Boolean = true
 
     /**
@@ -54,16 +54,16 @@ class KDocConfig() {
      * A map of package name to html or markdown files used to describe the package. If none is
      * specified we will look for a package.html or package.md file in the source tree
      */
-    public var packageDescriptionFiles: MutableMap<String,String> = HashMap<String,String>()
+    public var packageDescriptionFiles: MutableMap<String, String> = HashMap<String, String>()
 
     /**
      * A map of package name to summary text used in the package overviews
      */
-    public var packageSummaryText: MutableMap<String,String> = HashMap<String, String>()
+    public var packageSummaryText: MutableMap<String, String> = HashMap<String, String>()
 
     /**
-    * Returns true if protected functions and properties should be documented
-    */
+     * Returns true if protected functions and properties should be documented
+     */
     public var includeProtected: Boolean = true
 
     {
@@ -97,7 +97,7 @@ class KDocConfig() {
             if (packageName.startsWith(p)) {
                 return url
             }
-       }
+        }
         if (warn && mutableMissingPackageUrls.add(packageName)) {
             println("Warning: could not find external link to package: $packageName")
         }
@@ -108,7 +108,7 @@ class KDocConfig() {
      * Returns true if the package should be included in the report
      */
     fun includePackage(pkg: KPackage): Boolean {
-        return !ignorePackages.any{ pkg.name.startsWith(it) }
+        return !ignorePackages.any { pkg.name.startsWith(it) }
     }
 }
 

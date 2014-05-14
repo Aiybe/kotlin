@@ -40,8 +40,8 @@ ${stylesheets()}
     }
 
     protected fun printClasses(kind: String, description: String): Unit {
-        val classes = pkg.classes.filter{ it.kind == kind }
-        if (! classes.isEmpty()) {
+        val classes = pkg.classes.filter { it.kind == kind }
+        if (!classes.isEmpty()) {
             println("""<TABLE BORDER="0" WIDTH="100%" SUMMARY="">
 <TR>
 <TD NOWRAP><FONT size="+1" CLASS="FrameHeadingFont">""")
@@ -61,7 +61,7 @@ ${stylesheets()}
 
     protected fun printFunctions(): Unit {
         val functions = filterDuplicateNames(pkg.packageFunctions())
-        if (! functions.isEmpty()) {
+        if (!functions.isEmpty()) {
             println("""<TABLE BORDER="0" WIDTH="100%" SUMMARY="">
 <TR>
 <TD NOWRAP><FONT size="+1" CLASS="FrameHeadingFont">Functions</FONT>&nbsp;

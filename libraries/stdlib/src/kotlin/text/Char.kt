@@ -38,4 +38,4 @@ public fun Char.isLowerCase(): Boolean = Character.isLowerCase(this)
 /**
  * Concatenates this Char and a String
  */
-public fun Char.plus(string: String) : String = this.toString() + string
+public fun Char.plus(string: String): String = this.toString() + string

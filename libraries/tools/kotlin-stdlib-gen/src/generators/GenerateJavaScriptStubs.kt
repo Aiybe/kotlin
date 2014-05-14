@@ -11,27 +11,27 @@ import org.w3c.dom.*
 import org.w3c.dom.events.*
 
 /**
-* This tool generates JavaScript stubs for classes available in the JDK which are already available in the browser environment
-* such as the W3C DOM
-*/
+ * This tool generates JavaScript stubs for classes available in the JDK which are already available in the browser environment
+ * such as the W3C DOM
+ */
 fun generateDomAPI(file: File): Unit {
     val packageName = "org.w3c.dom"
     val imports = ""
 
     val classes: List<Class<*>> = arrayListOf(javaClass<Attr>(), javaClass<CDATASection>(),
-            javaClass<CharacterData>(), javaClass<Comment>(),
-            javaClass<Document>(), javaClass<DocumentFragment>(), javaClass<DocumentType>(),
-            javaClass<DOMConfiguration>(),
-            javaClass<DOMError>(), javaClass<DOMErrorHandler>(),
-            javaClass<DOMImplementation>(), javaClass<DOMImplementationList>(),
-            javaClass<DOMLocator>(),
-            javaClass<DOMStringList>(),
-            javaClass<Element>(),
-            javaClass<Entity>(), javaClass<EntityReference>(),
-            javaClass<NameList>(), javaClass<NamedNodeMap>(), javaClass<Node>(), javaClass<NodeList>(),
-            javaClass<Notation>(), javaClass<ProcessingInstruction>(),
-            javaClass<Text>(), javaClass<TypeInfo>(),
-            javaClass<UserDataHandler>())
+                                              javaClass<CharacterData>(), javaClass<Comment>(),
+                                              javaClass<Document>(), javaClass<DocumentFragment>(), javaClass<DocumentType>(),
+                                              javaClass<DOMConfiguration>(),
+                                              javaClass<DOMError>(), javaClass<DOMErrorHandler>(),
+                                              javaClass<DOMImplementation>(), javaClass<DOMImplementationList>(),
+                                              javaClass<DOMLocator>(),
+                                              javaClass<DOMStringList>(),
+                                              javaClass<Element>(),
+                                              javaClass<Entity>(), javaClass<EntityReference>(),
+                                              javaClass<NameList>(), javaClass<NamedNodeMap>(), javaClass<Node>(), javaClass<NodeList>(),
+                                              javaClass<Notation>(), javaClass<ProcessingInstruction>(),
+                                              javaClass<Text>(), javaClass<TypeInfo>(),
+                                              javaClass<UserDataHandler>())
 
     writeClassesFile(file, packageName, imports, classes)
 }
@@ -82,7 +82,8 @@ import js.noImpl
             val answer = simpleTypeName(klass)
             return if (answer == "String" || answer == "Event" || answer.endsWith("DocumentType")) {
                 answer + "?"
-            } else answer
+            }
+            else answer
         }
 
         for (klass in classes) {
@@ -103,7 +104,8 @@ import js.noImpl
                             val answer = name.substring(3).decapitalize()
                             return if (answer == "type") {
                                 "`type`"
-                            } else answer
+                            }
+                            else answer
                         }
                         fun propertyType() = simpleTypeName(method.getReturnType())
                         fun propertyKind(method: Method): PropertyKind {
@@ -116,17 +118,20 @@ import js.noImpl
                         if (name.size > 3) {
                             if (name.startsWith("get") && paramSize == 0) {
                                 propertyKind(method).typeName = propertyType()
-                            } else if (name.startsWith("set") && paramSize == 1) {
+                            }
+                            else if (name.startsWith("set") && paramSize == 1) {
                                 propertyKind(method).kind = "var"
-                            } else {
+                            }
+                            else {
                                 validMethods.add(method)
                             }
-                        } else {
+                        }
+                        else {
                             validMethods.add(method)
                         }
                     }
                 }
-                
+
                 for (pk in properties.values()!!) {
                     // some properties might not have a getter defined
                     // so lets ignore those
@@ -134,7 +139,8 @@ import js.noImpl
                     val typeName = pk.typeName
                     if (typeName == null) {
                         validMethods.add(pk.method)
-                    } else {
+                    }
+                    else {
                         println("    public ${pk.kind} ${pk.name}: ${typeName}")
                     }
                 }
@@ -143,7 +149,7 @@ import js.noImpl
 
                     // TODO in java 7 its not easy with reflection to get the parameter argument name...
                     var counter = 0
-                    val parameters = parameterTypes.map{ "arg${++counter}: ${parameterTypeName(it)}" }.makeString(", ")
+                    val parameters = parameterTypes.map { "arg${++counter}: ${parameterTypeName(it)}" }.makeString(", ")
                     val returnType = simpleTypeName(method.getReturnType())
                     println("    public fun ${method.getName()}($parameters): $returnType = js.noImpl")
                 }
@@ -164,7 +170,8 @@ import js.noImpl
                                         val fieldType = simpleTypeName(field.getType())
                                         println("        public val ${field.getName()}: $fieldType = $value")
                                     }
-                                } catch (e: Exception) {
+                                }
+                                catch (e: Exception) {
                                     println("Caught: $e")
                                     e.printStackTrace()
                                 }

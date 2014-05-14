@@ -3,7 +3,7 @@ package org.jetbrains.kotlin.doc.templates
 import java.util.*
 import org.jetbrains.kotlin.doc.model.*
 
-class SearchXmlTemplate(val model: KModel): KDocTemplate() {
+class SearchXmlTemplate(val model: KModel) : KDocTemplate() {
 
     class Search(val name: String, val href: String, val kind: String) {
         override fun toString() = "Search($name, $href, $kind)"

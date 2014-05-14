@@ -10,21 +10,21 @@ import java.util.Date
 
 // TODO this class should move into the runtime
 // in kotlin.StringTemplate
-class StringTemplate(val values : Array<Any?>) {
+class StringTemplate(val values: Array<Any?>) {
 
     /**
      * Converts the template into a String
      */
-    override fun toString() : String {
+    override fun toString(): String {
         val out = StringBuilder()
-        forEach{ out.append(it) }
+        forEach { out.append(it) }
         return out.toString()
     }
 
     /**
      * Performs the given function on each value in the collection
      */
-    public fun forEach(fn : (Any?) -> Unit) : Unit {
+    public fun forEach(fn: (Any?) -> Unit): Unit {
         for (v in values) {
             fn(v)
         }
@@ -38,7 +38,7 @@ class StringTemplate(val values : Array<Any?>) {
  *
  * See [[HtmlFormatter] and [[LocaleFormatter] respectively.
  */
-public fun StringTemplate.toString(formatter : Formatter) : String {
+public fun StringTemplate.toString(formatter: Formatter): String {
     val buffer = StringBuilder()
     append(buffer, formatter)
     return buffer.toString()
@@ -48,17 +48,19 @@ public fun StringTemplate.toString(formatter : Formatter) : String {
  * Appends the text representation of this string template to the given output
  * using the supplied formatter
  */
-public fun StringTemplate.append(out : Appendable, formatter : Formatter) : Unit {
+public fun StringTemplate.append(out: Appendable, formatter: Formatter): Unit {
     var constantText = true
     this.forEach {
         if (constantText) {
             if (it == null) {
                 throw IllegalStateException("No constant checks should be null");
-            } else {
+            }
+            else {
                 val text = it.toString()
                 out.append(text)
             }
-        } else {
+        }
+        else {
             formatter.format(out, it)
         }
         constantText = !constantText
@@ -69,12 +71,12 @@ public fun StringTemplate.append(out : Appendable, formatter : Formatter) : Unit
  * Converts this string template to internationalised text using the supplied
  * [[LocaleFormatter]]
  */
-public fun StringTemplate.toLocale(formatter : LocaleFormatter = LocaleFormatter()) : String = toString(formatter)
+public fun StringTemplate.toLocale(formatter: LocaleFormatter = LocaleFormatter()): String = toString(formatter)
 
 /**
  * Converts this string template to HTML text
  */
-public fun StringTemplate.toHtml(formatter : HtmlFormatter = HtmlFormatter()) : String = toString(formatter)
+public fun StringTemplate.toHtml(formatter: HtmlFormatter = HtmlFormatter()): String = toString(formatter)
 
 /**
  * Represents a formatter and encoder of values in a [[StringTemplate]] which understands
@@ -82,7 +84,7 @@ public fun StringTemplate.toHtml(formatter : HtmlFormatter = HtmlFormatter()) : 
  * to escape particular characters in different output formats such as [[HtmlFormatter]
  */
 public trait Formatter {
-    public fun format(buffer : Appendable, value : Any?) : Unit
+    public fun format(buffer: Appendable, value: Any?): Unit
 }
 
 /**
@@ -91,16 +93,18 @@ public trait Formatter {
  */
 public open class ToStringFormatter : Formatter {
 
-    var nullString : String = "null"
+    var nullString: String = "null"
 
-    override fun toString() : String = "ToStringFormatter"
+    override fun toString(): String = "ToStringFormatter"
 
-    public override fun format(out : Appendable, value : Any?) {
+    public override fun format(out: Appendable, value: Any?) {
         if (value == null) {
             format(out, nullString)
-        } else if (value is StringTemplate) {
+        }
+        else if (value is StringTemplate) {
             value.append(out, this)
-        } else {
+        }
+        else {
             format(out, value.toString())
         }
     }
@@ -109,39 +113,41 @@ public open class ToStringFormatter : Formatter {
      * Formats the given string allowing derived classes to override this method
      * to escape strings with special characters such as for HTML
      */
-    public open fun format(out : Appendable, text : String) : Unit {
+    public open fun format(out: Appendable, text: String): Unit {
         out.append(text)
     }
 }
 
-public val defaultLocale : Locale = Locale.getDefault()
+public val defaultLocale: Locale = Locale.getDefault()
 
 /**
  * Formats values using a given [[Locale]] for internationalisation
  */
-public open class LocaleFormatter(val locale : Locale = defaultLocale) : ToStringFormatter() {
+public open class LocaleFormatter(val locale: Locale = defaultLocale) : ToStringFormatter() {
 
-    override fun toString() : String = "LocaleFormatter{$locale}"
+    override fun toString(): String = "LocaleFormatter{$locale}"
 
-    public var numberFormat : NumberFormat = NumberFormat.getInstance(locale)!!
+    public var numberFormat: NumberFormat = NumberFormat.getInstance(locale)!!
 
-    public var dateFormat : DateFormat = DateFormat.getDateTimeInstance(DateFormat.DEFAULT, DateFormat.DEFAULT, locale)!!
+    public var dateFormat: DateFormat = DateFormat.getDateTimeInstance(DateFormat.DEFAULT, DateFormat.DEFAULT, locale)!!
 
-    public override fun format(out : Appendable, value : Any?) {
+    public override fun format(out: Appendable, value: Any?) {
         if (value is Number) {
             format(out, format(value))
-        } else if (value is Date) {
+        }
+        else if (value is Date) {
             format(out, format(value))
-        } else {
+        }
+        else {
             super.format(out, value)
         }
     }
 
-    public fun format(number : Number) : String {
+    public fun format(number: Number): String {
         return numberFormat.format(number) ?: ""
     }
 
-    public fun format(date : Date) : String {
+    public fun format(date: Date): String {
         return dateFormat.format(date) ?: ""
     }
 }
@@ -149,19 +155,20 @@ public open class LocaleFormatter(val locale : Locale = defaultLocale) : ToStrin
 /**
  * Formats values for HTML encoding, escaping special characters in HTML.
  */
-public class HtmlFormatter(locale : Locale = defaultLocale) : LocaleFormatter(locale) {
+public class HtmlFormatter(locale: Locale = defaultLocale) : LocaleFormatter(locale) {
 
-    override fun toString() : String = "HtmlFormatter{$locale}"
+    override fun toString(): String = "HtmlFormatter{$locale}"
 
-    public override fun format(out : Appendable, value : Any?) {
+    public override fun format(out: Appendable, value: Any?) {
         if (value is Node) {
             out.append(value.toXmlString())
-        } else {
+        }
+        else {
             super.format(out, value)
         }
     }
 
-    public override fun format(buffer : Appendable, text : String) : Unit {
+    public override fun format(buffer: Appendable, text: String): Unit {
         for (c in text) {
             if (c == '<') buffer.append("&lt;")
             else if (c == '>') buffer.append("&gt;")

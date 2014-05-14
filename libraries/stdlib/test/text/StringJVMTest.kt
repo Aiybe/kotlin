@@ -8,7 +8,7 @@ import org.junit.Test as test
 class StringJVMTest {
     test fun stringIterator() {
         var sum = 0
-        for(c in "239")
+        for (c in "239")
             sum += (c.toInt() - '0'.toInt())
         assertTrue(sum == 14)
     }
@@ -16,12 +16,12 @@ class StringJVMTest {
     test fun stringBuilderIterator() {
         var sum = 0
         val sb = StringBuilder()
-        for(c in "239")
+        for (c in "239")
             sb.append(c)
 
         println(sb)
 
-        for(c in sb)
+        for (c in sb)
             sum += (c.toInt() - '0'.toInt())
         assertTrue(sum == 14)
     }
@@ -67,7 +67,7 @@ class StringJVMTest {
     }
 
     test fun repeat() {
-        fails{ "foo".repeat(-1) }
+        fails { "foo".repeat(-1) }
         assertEquals("", "foo".repeat(0))
         assertEquals("foo", "foo".repeat(1))
         assertEquals("foofoo", "foo".repeat(2))
@@ -87,7 +87,7 @@ class StringJVMTest {
     test fun forEach() {
         val data = "abcd1234"
         var count = 0
-        data.forEach{ count++ }
+        data.forEach { count++ }
         assertEquals(data.length(), count)
     }
 
@@ -179,7 +179,7 @@ class StringJVMTest {
     test fun fold() {
         // calculate number of digits in the string
         val data = "a1b2c3def"
-        val result = data.fold(0, { digits, c -> if(c.isDigit()) digits + 1 else digits } )
+        val result = data.fold(0, { digits, c -> if (c.isDigit()) digits + 1 else digits })
         assertEquals(3, result)
 
         //simulate all method
@@ -192,7 +192,7 @@ class StringJVMTest {
     test fun foldRight() {
         // calculate number of digits in the string
         val data = "a1b2c3def"
-        val result = data.foldRight(0, { c, digits -> if(c.isDigit()) digits + 1 else digits })
+        val result = data.foldRight(0, { c, digits -> if (c.isDigit()) digits + 1 else digits })
         assertEquals(3, result)
 
         //simulate all method
@@ -225,7 +225,7 @@ class StringJVMTest {
         val data = "abAbaABcD"
         val result = data.groupBy { it.isLowerCase() }
         assertEquals(2, result.size)
-        assertEquals(listOf('a','b','b','a','c'), result.get(true))
+        assertEquals(listOf('a', 'b', 'b', 'a', 'c'), result.get(true))
     }
 
     test fun makeString() {
@@ -333,7 +333,7 @@ class StringJVMTest {
 
     test fun testReplaceAllClosure() {
         val s = "test123zzz"
-        val result = s.replaceAll("\\d+") { (mr) ->
+        val result = s.replaceAll("\\d+") {(mr) ->
             "[" + mr.group() + "]"
         }
         assertEquals("test[123]zzz", result)
@@ -341,7 +341,7 @@ class StringJVMTest {
 
     test fun testReplaceAllClosureAtStart() {
         val s = "123zzz"
-        val result = s.replaceAll("\\d+") { (mr) ->
+        val result = s.replaceAll("\\d+") {(mr) ->
             "[" + mr.group() + "]"
         }
         assertEquals("[123]zzz", result)
@@ -349,7 +349,7 @@ class StringJVMTest {
 
     test fun testReplaceAllClosureAtEnd() {
         val s = "test123"
-        val result = s.replaceAll("\\d+") { (mr) ->
+        val result = s.replaceAll("\\d+") {(mr) ->
             "[" + mr.group() + "]"
         }
         assertEquals("test[123]", result)
@@ -357,7 +357,7 @@ class StringJVMTest {
 
     test fun testReplaceAllClosureEmpty() {
         val s = ""
-        val result = s.replaceAll("\\d+") { (mr) ->
+        val result = s.replaceAll("\\d+") {(mr) ->
             "x"
         }
         assertEquals("", result)

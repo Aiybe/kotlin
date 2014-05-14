@@ -26,9 +26,9 @@ class SyntaxHighlighter() {
         try {
             val builder = StringBuilder()
             builder.append(
-            "<div class=\"code panel\" style=\"border-width: 1px\">" +
-            "<div class=\"codeContent panelContent\">" +
-            "<div class=\"container\">"
+                    "<div class=\"code panel\" style=\"border-width: 1px\">" +
+                    "<div class=\"codeContent panelContent\">" +
+                    "<div class=\"container\">"
             )
 
             // lets add the leading whitespace first
@@ -50,7 +50,8 @@ class SyntaxHighlighter() {
                 var style: String? = null
                 if (token is JetKeywordToken) {
                     style = "keyword"
-                } else if (token == JetTokens.IDENTIFIER) {
+                }
+                else if (token == JetTokens.IDENTIFIER) {
                     for (softKeyword in JetTokens.SOFT_KEYWORDS.getTypes()) {
                         if (softKeyword is JetKeywordToken) {
                             if (softKeyword.getValue() == tokenText) {
@@ -60,12 +61,14 @@ class SyntaxHighlighter() {
                         }
                     }
                     style = if (style == null) "plain" else style
-                } else if (styleMap.containsKey(token)) {
+                }
+                else if (styleMap.containsKey(token)) {
                     style = styleMap.get(token)
                     if (style == null) {
                         println("Warning: No style for token $token")
                     }
-                } else {
+                }
+                else {
                     style = "plain"
                 }
                 builder.append("""<code class="jet $style">""")
@@ -77,7 +80,8 @@ class SyntaxHighlighter() {
             builder.append("</div>")
             builder.append("</div>")
             return builder.toString()
-        } catch (e: Exception) {
+        }
+        catch (e: Exception) {
             println("Warning: failed to parse code $e")
             val builder = StringBuilder()
             builder.append("""<div class="jet herror">Jet highlighter error ["${e.javaClass.getSimpleName()}"]: """)
