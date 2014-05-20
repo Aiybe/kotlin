@@ -18,6 +18,7 @@ package org.jetbrains.jet.lang.resolve.calls.model;
 
 import com.google.common.collect.Maps;
 import com.intellij.util.Function;
+import kotlin.Function1;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.jet.lang.descriptors.CallableDescriptor;
@@ -77,9 +78,9 @@ public class ResolvedCallImpl<D extends CallableDescriptor> implements MutableRe
     private final boolean isSafeCall;
 
     private final Map<TypeParameterDescriptor, JetType> typeArguments = Maps.newLinkedHashMap();
-    private final Map<ValueParameterDescriptor, ResolvedValueArgument> valueArguments = Maps.newLinkedHashMap();
+    private Map<ValueParameterDescriptor, ResolvedValueArgument> valueArguments = Maps.newLinkedHashMap();
     private final MutableDataFlowInfoForArguments dataFlowInfoForArguments;
-    private final Map<ValueArgument, ArgumentMatchImpl> argumentToParameterMap = Maps.newHashMap();
+    private Map<ValueArgument, ArgumentMatchImpl> argumentToParameterMap = Maps.newHashMap();
 
     private DelegatingBindingTrace trace;
     private TracingStrategy tracing;
@@ -165,28 +166,44 @@ public class ResolvedCallImpl<D extends CallableDescriptor> implements MutableRe
             }
         }
 
-        Map<ValueParameterDescriptor, ValueParameterDescriptor> substitutedParametersMap = Maps.newHashMap();
+        final Map<ValueParameterDescriptor, ValueParameterDescriptor> substitutedParametersMap = Maps.newHashMap();
         for (ValueParameterDescriptor valueParameterDescriptor : resultingDescriptor.getValueParameters()) {
             substitutedParametersMap.put(valueParameterDescriptor.getOriginal(), valueParameterDescriptor);
         }
 
-        Map<ValueParameterDescriptor, ResolvedValueArgument> originalValueArguments = Maps.newLinkedHashMap(valueArguments);
-        valueArguments.clear();
-        for (Map.Entry<ValueParameterDescriptor, ResolvedValueArgument> entry : originalValueArguments.entrySet()) {
-            ValueParameterDescriptor substitutedVersion = substitutedParametersMap.get(entry.getKey().getOriginal());
-            assert substitutedVersion != null : entry.getKey();
-            valueArguments.put(substitutedVersion, entry.getValue());
-        }
+        valueArguments = transformKeys(valueArguments, new Function1<ValueParameterDescriptor, ValueParameterDescriptor>() {
+            @Override
+            public ValueParameterDescriptor invoke(ValueParameterDescriptor parameterDescriptor) {
+                return substitutedParametersMap.get(parameterDescriptor.getOriginal());
+            }
+        });
+        argumentToParameterMap = transformValues(argumentToParameterMap, new Function1<ArgumentMatchImpl, ArgumentMatchImpl>() {
+            @Override
+            public ArgumentMatchImpl invoke(ArgumentMatchImpl argumentMatch) {
+                ValueParameterDescriptor valueParameterDescriptor = argumentMatch.getValueParameter();
+                ValueParameterDescriptor substitutedVersion = substitutedParametersMap.get(valueParameterDescriptor.getOriginal());
+                assert substitutedVersion != null : valueParameterDescriptor;
+                return argumentMatch.replaceValueParameter(substitutedVersion);
+            }
+        });
+    }
 
-        Map<ValueArgument, ArgumentMatchImpl> originalArgumentToParameterMap = Maps.newLinkedHashMap(argumentToParameterMap);
-        argumentToParameterMap.clear();
-        for (Map.Entry<ValueArgument, ArgumentMatchImpl> entry : originalArgumentToParameterMap.entrySet()) {
-            ArgumentMatchImpl argumentMatch = entry.getValue();
-            ValueParameterDescriptor valueParameterDescriptor = argumentMatch.getValueParameter();
-            ValueParameterDescriptor substitutedVersion = substitutedParametersMap.get(valueParameterDescriptor.getOriginal());
-            assert substitutedVersion != null : valueParameterDescriptor;
-            argumentToParameterMap.put(entry.getKey(), argumentMatch.replaceValueParameter(substitutedVersion));
+    @NotNull
+    private static <K1, K2, V> Map<K2, V> transformKeys(@NotNull Map<K1, V> map, @NotNull Function1<K1, K2> function) {
+        Map<K2, V> result = Maps.newLinkedHashMap();
+        for (Map.Entry<K1, V> entry : map.entrySet()) {
+            result.put(function.invoke(entry.getKey()), entry.getValue());
         }
+        return result;
+    }
+
+    @NotNull
+    private static <K, V1, V2> Map<K, V2> transformValues(@NotNull Map<K, V1> map, @NotNull Function1<V1, V2> function) {
+        Map<K, V2> result = Maps.newLinkedHashMap();
+        for (Map.Entry<K, V1> entry : map.entrySet()) {
+            result.put(entry.getKey(), function.invoke(entry.getValue()));
+        }
+        return result;
     }
 
     @Override
