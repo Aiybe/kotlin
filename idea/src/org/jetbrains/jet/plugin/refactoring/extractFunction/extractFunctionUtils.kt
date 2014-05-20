@@ -420,7 +420,7 @@ private fun ExtractionData.inferParametersInfo(
                         }
 
                 replacementMap[refInfo.offsetInBody] =
-                if (hasThisReceiver && extractThis) AddPrefixReplacement(parameter) else RenameReplacement(parameter)
+                        if (hasThisReceiver && extractThis) AddPrefixReplacement(parameter) else RenameReplacement(parameter)
             }
         }
     }

@@ -94,7 +94,8 @@ public class KotlinSafeDeleteProcessor : JavaSafeDeleteProcessor() {
                                     SafeDeleteImportDirectiveUsageInfo(importDirective, element.unwrapped as JetDeclaration)
                                 } ?: if (forceReferencedElementUnwrapping) {
                                     SafeDeleteReferenceJavaDeleteUsageInfo(usageElement, element.unwrapped, usageInfo.isSafeDelete())
-                                } else usageInfo
+                                }
+                                else usageInfo
                             }
                         }
 

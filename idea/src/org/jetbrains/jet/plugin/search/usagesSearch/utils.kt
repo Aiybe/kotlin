@@ -122,7 +122,7 @@ fun PsiReference.isExtensionOfDeclarationClassUsage(declaration: JetNamedDeclara
                     val containingDescriptor = targetDescriptor.getContainingDeclaration()
 
                     containingDescriptor == receiverDescriptor
-                        || (containingDescriptor is ClassDescriptor
+                    || (containingDescriptor is ClassDescriptor
                         && receiverDescriptor is ClassDescriptor
                         && DescriptorUtils.isSubclass(containingDescriptor, receiverDescriptor))
                 }

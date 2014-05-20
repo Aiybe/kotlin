@@ -38,12 +38,10 @@ public open class ReplaceBinaryInfixIntention : AttributeCallReplacementIntentio
     }
 
     override fun isApplicableToCall(call: CallDescription): Boolean {
-        return (
-            lookup(call.functionName) != null &&
-            call.argumentCount == 1 &&
-            !call.hasTypeArguments &&
-            !call.hasEmptyArguments
-        )
+        return (lookup(call.functionName) != null &&
+                call.argumentCount == 1 &&
+                !call.hasTypeArguments &&
+                !call.hasEmptyArguments)
     }
 
     override fun replaceCall(call: CallDescription, editor: Editor) {
