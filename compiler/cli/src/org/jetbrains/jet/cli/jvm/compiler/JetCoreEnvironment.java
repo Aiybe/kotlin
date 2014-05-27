@@ -31,7 +31,6 @@ import com.intellij.openapi.fileTypes.PlainTextFileType;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Disposer;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.psi.PsiDocumentManager;
 import com.intellij.psi.PsiElementFinder;
 import com.intellij.psi.PsiFile;
 import com.intellij.psi.PsiManager;
@@ -56,7 +55,7 @@ import org.jetbrains.jet.lang.parsing.JetScriptDefinitionProvider;
 import org.jetbrains.jet.lang.psi.JetFile;
 import org.jetbrains.jet.lang.resolve.java.JetFilesProvider;
 import org.jetbrains.jet.lang.resolve.kotlin.KotlinBinaryClassCache;
-import org.jetbrains.jet.lang.resolve.kotlin.VirtualFileFinder;
+import org.jetbrains.jet.lang.resolve.kotlin.VirtualFileFinderFactory;
 import org.jetbrains.jet.lang.resolve.lazy.declarations.CliDeclarationProviderFactoryService;
 import org.jetbrains.jet.lang.resolve.lazy.declarations.DeclarationProviderFactoryService;
 import org.jetbrains.jet.plugin.JetFileType;
@@ -210,7 +209,7 @@ public class JetCoreEnvironment {
         JetScriptDefinitionProvider.getInstance(project).addScriptDefinitions(
                 configuration.getList(CommonConfigurationKeys.SCRIPT_DEFINITIONS_KEY));
 
-        project.registerService(VirtualFileFinder.class, new CliVirtualFileFinder(classPath));
+        project.registerService(VirtualFileFinderFactory.class, new CliVirtualFileFinderFactory(classPath));
     }
 
     public CompilerConfiguration getConfiguration() {
