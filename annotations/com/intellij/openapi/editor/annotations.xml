@@ -2,4 +2,10 @@
   <item name='com.intellij.openapi.editor.Document java.lang.String getText()'>
     <annotation name='org.jetbrains.annotations.NotNull'/>
   </item>
+  <item name='com.intellij.openapi.editor.Editor'>
+    <annotation name='org.jetbrains.annotations.NotNull'/>
+  </item>
+  <item name='com.intellij.openapi.editor.RangeMarker'>
+    <annotation name='org.jetbrains.annotations.NotNull'/>
+  </item>
 </root>
