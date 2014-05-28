@@ -26,20 +26,20 @@ import com.intellij.openapi.util.text.StringUtil;
 import com.intellij.psi.PsiElement;
 import com.intellij.rt.execution.junit.FileComparisonFailure;
 import com.intellij.testFramework.LightProjectDescriptor;
-import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
 import com.intellij.util.ArrayUtil;
 import junit.framework.Assert;
 import junit.framework.ComparisonFailure;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.jet.InTextDirectivesUtils;
+import org.jetbrains.jet.plugin.JetLightCodeInsightFixtureTestCase;
 import org.jetbrains.jet.plugin.ProjectDescriptorWithStdlibSources;
 
 import java.io.File;
 import java.util.Collection;
 import java.util.List;
 
-public abstract class AbstractJetQuickDocProviderTest extends LightCodeInsightFixtureTestCase {
+public abstract class AbstractJetQuickDocProviderTest extends JetLightCodeInsightFixtureTestCase {
     public void doTest(@NotNull String path) throws Exception {
         myFixture.configureByFiles(ArrayUtil.toStringArray(getTestFiles(path)));
 

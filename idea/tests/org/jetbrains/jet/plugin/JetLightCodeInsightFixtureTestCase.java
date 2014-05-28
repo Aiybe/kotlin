@@ -22,6 +22,7 @@ import com.intellij.openapi.actionSystem.ex.ActionManagerEx;
 import com.intellij.openapi.editor.ex.EditorEx;
 import com.intellij.openapi.startup.StartupManager;
 import com.intellij.openapi.util.io.FileUtil;
+import com.intellij.openapi.vfs.newvfs.impl.VirtualDirectoryImpl;
 import com.intellij.testFramework.LightProjectDescriptor;
 import com.intellij.testFramework.fixtures.LightCodeInsightFixtureTestCase;
 import org.jetbrains.annotations.NotNull;
@@ -37,6 +38,13 @@ public abstract class JetLightCodeInsightFixtureTestCase extends LightCodeInsigh
     protected void setUp() throws Exception {
         super.setUp();
         ((StartupManagerImpl) StartupManager.getInstance(getProject())).runPostStartupActivities();
+        VirtualDirectoryImpl.allowRootAccess(PluginTestCaseBase.getTestDataPathBase());
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        VirtualDirectoryImpl.disallowRootAccess(PluginTestCaseBase.getTestDataPathBase());
+        super.tearDown();
     }
 
     @NotNull
@@ -73,6 +81,7 @@ public abstract class JetLightCodeInsightFixtureTestCase extends LightCodeInsigh
         return getTestName(false).startsWith("AllFilesPresentIn");
     }
 
+    @NotNull
     protected String fileName() {
         return getTestName(false) + ".kt";
     }

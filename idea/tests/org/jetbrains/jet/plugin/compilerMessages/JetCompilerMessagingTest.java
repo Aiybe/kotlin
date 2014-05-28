@@ -16,6 +16,7 @@
 
 package org.jetbrains.jet.plugin.compilerMessages;
 
+import com.intellij.openapi.vfs.newvfs.impl.VirtualDirectoryImpl;
 import kotlin.Function1;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.jet.plugin.PluginTestCaseBase;
@@ -25,6 +26,17 @@ import static org.jetbrains.jet.plugin.compilerMessages.Message.error;
 import static org.jetbrains.jet.plugin.compilerMessages.Message.warning;
 
 public final class JetCompilerMessagingTest extends IDECompilerMessagingTest {
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        VirtualDirectoryImpl.allowRootAccess(PluginTestCaseBase.getTestDataPathBase());
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        VirtualDirectoryImpl.disallowRootAccess(PluginTestCaseBase.getTestDataPathBase());
+        super.tearDown();
+    }
 
     private static final String TEST_DATA_PATH = PluginTestCaseBase.getTestDataPathBase() + "/compilerMessages/k2jvm";
 

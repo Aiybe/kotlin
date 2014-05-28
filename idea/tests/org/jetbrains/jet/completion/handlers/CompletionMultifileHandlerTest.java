@@ -17,11 +17,23 @@
 package org.jetbrains.jet.completion.handlers;
 
 import com.intellij.codeInsight.completion.CompletionTestCase;
+import com.intellij.openapi.vfs.newvfs.impl.VirtualDirectoryImpl;
 import org.jetbrains.jet.plugin.PluginTestCaseBase;
 
 import java.io.File;
 
 public class CompletionMultifileHandlerTest extends CompletionTestCase {
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        VirtualDirectoryImpl.allowRootAccess(PluginTestCaseBase.getTestDataPathBase());
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        VirtualDirectoryImpl.disallowRootAccess(PluginTestCaseBase.getTestDataPathBase());
+        super.tearDown();
+    }
 
     public void testExtensionFunctions() throws Exception {
         doTest();

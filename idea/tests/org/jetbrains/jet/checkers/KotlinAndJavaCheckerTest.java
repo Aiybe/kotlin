@@ -20,6 +20,7 @@ import com.intellij.codeInsight.daemon.DaemonAnalyzerTestCase;
 import com.intellij.codeInspection.LocalInspectionTool;
 import com.intellij.codeInspection.nullable.NullableStuffInspection;
 import com.intellij.openapi.projectRoots.Sdk;
+import com.intellij.openapi.vfs.newvfs.impl.VirtualDirectoryImpl;
 import com.siyeh.ig.bugs.StaticCallOnSubclassInspection;
 import com.siyeh.ig.bugs.StaticFieldReferenceOnSubclassInspection;
 import org.jetbrains.jet.JetTestCaseBuilder;
@@ -43,6 +44,18 @@ public class KotlinAndJavaCheckerTest extends DaemonAnalyzerTestCase {
     @Override
     protected String getTestDataPath() {
         return JetTestCaseBuilder.getHomeDirectory() + "/idea/testData/kotlinAndJavaChecker/";
+    }
+
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        VirtualDirectoryImpl.allowRootAccess(PluginTestCaseBase.getTestDataPathBase());
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        VirtualDirectoryImpl.disallowRootAccess(PluginTestCaseBase.getTestDataPathBase());
+        super.tearDown();
     }
 
     public void testName() throws Exception {

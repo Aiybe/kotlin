@@ -18,6 +18,7 @@ package org.jetbrains.jet.completion;
 
 import com.intellij.codeInsight.completion.CompletionTestCase;
 import com.intellij.codeInsight.lookup.LookupElement;
+import com.intellij.openapi.vfs.newvfs.impl.VirtualDirectoryImpl;
 import kotlin.Function0;
 import kotlin.Function1;
 import kotlin.Unit;
@@ -28,6 +29,17 @@ import org.jetbrains.jet.plugin.project.TargetPlatform;
 import org.jetbrains.jet.plugin.stubs.AstAccessControl;
 
 public abstract class AbstractMultiFileJvmBasicCompletionTest extends CompletionTestCase {
+    @Override
+    protected void setUp() throws Exception {
+        super.setUp();
+        VirtualDirectoryImpl.allowRootAccess(PluginTestCaseBase.getTestDataPathBase());
+    }
+
+    @Override
+    protected void tearDown() throws Exception {
+        VirtualDirectoryImpl.disallowRootAccess(PluginTestCaseBase.getTestDataPathBase());
+        super.tearDown();
+    }
 
     protected void doTest(@NotNull String testPath) throws Exception {
         configureByFile(getTestName(false) + ".kt", "");
