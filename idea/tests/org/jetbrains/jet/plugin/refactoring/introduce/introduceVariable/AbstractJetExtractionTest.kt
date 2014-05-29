@@ -52,8 +52,8 @@ public abstract class AbstractJetExtractionTest() : LightCodeInsightFixtureTestC
             var explicitNextSibling: PsiElement? = null
             file.accept(
                     object: JetTreeVisitorVoid() {
-                        override fun visitComment(comment: PsiComment?) {
-                            if (comment?.getText() == "// NEXT_SIBLING:") {
+                        override fun visitComment(comment: PsiComment) {
+                            if (comment.getText() == "// NEXT_SIBLING:") {
                                 explicitNextSibling = PsiTreeUtil.skipSiblingsForward(
                                         comment,
                                         javaClass<PsiWhiteSpace>(),
