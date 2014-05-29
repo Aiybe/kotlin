@@ -117,19 +117,19 @@ public class OverridingUtil {
                 return OverrideCompatibilityInfo.valueParameterTypeMismatch(null, null, OverrideCompatibilityInfo.Result.CONFLICT);
             }
 
-            final Map<TypeConstructor, TypeConstructor> axioms = new HashMap<TypeConstructor, TypeConstructor>();
+            final Map<TypeConstructor, TypeConstructor> matchingTypeConstructors = new HashMap<TypeConstructor, TypeConstructor>();
             for (int i = 0, typeParametersSize = superTypeParameters.size(); i < typeParametersSize; i++) {
                 TypeParameterDescriptor superTypeParameter = superTypeParameters.get(i);
                 TypeParameterDescriptor subTypeParameter = subTypeParameters.get(i);
-                axioms.put(superTypeParameter.getTypeConstructor(), subTypeParameter.getTypeConstructor());
+                matchingTypeConstructors.put(superTypeParameter.getTypeConstructor(), subTypeParameter.getTypeConstructor());
             }
 
             JetTypeChecker.TypeConstructorEquality localEqualityAxioms = new JetTypeChecker.TypeConstructorEquality() {
                 @Override
                 public boolean equals(@NotNull TypeConstructor a, @NotNull TypeConstructor b) {
                     if (equalityAxioms.equals(a, b)) return true;
-                    TypeConstructor img1 = axioms.get(a);
-                    TypeConstructor img2 = axioms.get(b);
+                    TypeConstructor img1 = matchingTypeConstructors.get(a);
+                    TypeConstructor img2 = matchingTypeConstructors.get(b);
                     if (!(img1 != null && img1.equals(b)) &&
                         !(img2 != null && img2.equals(a))) {
                         return false;
