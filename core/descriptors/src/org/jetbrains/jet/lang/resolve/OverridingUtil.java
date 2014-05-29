@@ -110,9 +110,6 @@ public class OverridingUtil {
                 }
                 return OverrideCompatibilityInfo.valueParameterTypeMismatch(null, null, OverrideCompatibilityInfo.Result.CONFLICT);
             }
-        }
-
-        if (forOverride) {
 
             List<TypeParameterDescriptor> superTypeParameters = superDescriptor.getTypeParameters();
             List<TypeParameterDescriptor> subTypeParameters = subDescriptor.getTypeParameters();
