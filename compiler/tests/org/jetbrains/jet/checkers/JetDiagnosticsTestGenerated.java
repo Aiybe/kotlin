@@ -4687,7 +4687,7 @@ public class JetDiagnosticsTestGenerated extends AbstractJetDiagnosticsTest {
         }
         
         @TestMetadata("compiler/testData/diagnostics/tests/multimodule")
-        @InnerTestClasses({Multimodule.DuplicateClass.class})
+        @InnerTestClasses({Multimodule.DuplicateClass.class, Multimodule.DuplicateMethod.class})
         public static class Multimodule extends AbstractJetDiagnosticsTest {
             public void testAllFilesPresentInMultimodule() throws Exception {
                 JetTestUtils.assertAllTestsPresentByMetadata(this.getClass(), "org.jetbrains.jet.generators.tests.TestsPackage", new File("compiler/testData/diagnostics/tests/multimodule"), Pattern.compile("^(.+)\\.kt$"), true);
@@ -4771,10 +4771,99 @@ public class JetDiagnosticsTestGenerated extends AbstractJetDiagnosticsTest {
                 
             }
             
+            @TestMetadata("compiler/testData/diagnostics/tests/multimodule/duplicateMethod")
+            public static class DuplicateMethod extends AbstractJetDiagnosticsTest {
+                public void testAllFilesPresentInDuplicateMethod() throws Exception {
+                    JetTestUtils.assertAllTestsPresentByMetadata(this.getClass(), "org.jetbrains.jet.generators.tests.TestsPackage", new File("compiler/testData/diagnostics/tests/multimodule/duplicateMethod"), Pattern.compile("^(.+)\\.kt$"), true);
+                }
+                
+                @TestMetadata("classGenericsInParams.kt")
+                public void testClassGenericsInParams() throws Exception {
+                    doTest("compiler/testData/diagnostics/tests/multimodule/duplicateMethod/classGenericsInParams.kt");
+                }
+                
+                @TestMetadata("classGenericsInParamsBoundMismatch.kt")
+                public void testClassGenericsInParamsBoundMismatch() throws Exception {
+                    doTest("compiler/testData/diagnostics/tests/multimodule/duplicateMethod/classGenericsInParamsBoundMismatch.kt");
+                }
+                
+                @TestMetadata("classGenericsInParamsIndexMismatch.kt")
+                public void testClassGenericsInParamsIndexMismatch() throws Exception {
+                    doTest("compiler/testData/diagnostics/tests/multimodule/duplicateMethod/classGenericsInParamsIndexMismatch.kt");
+                }
+                
+                @TestMetadata("classGenericsInParamsNameMismatch.kt")
+                public void testClassGenericsInParamsNameMismatch() throws Exception {
+                    doTest("compiler/testData/diagnostics/tests/multimodule/duplicateMethod/classGenericsInParamsNameMismatch.kt");
+                }
+                
+                @TestMetadata("classVsFunctionGenericsInParamsMismatch.kt")
+                public void testClassVsFunctionGenericsInParamsMismatch() throws Exception {
+                    doTest("compiler/testData/diagnostics/tests/multimodule/duplicateMethod/classVsFunctionGenericsInParamsMismatch.kt");
+                }
+                
+                @TestMetadata("differenceInParamNames.kt")
+                public void testDifferenceInParamNames() throws Exception {
+                    doTest("compiler/testData/diagnostics/tests/multimodule/duplicateMethod/differenceInParamNames.kt");
+                }
+                
+                @TestMetadata("differentGenericsInParams.kt")
+                public void testDifferentGenericsInParams() throws Exception {
+                    doTest("compiler/testData/diagnostics/tests/multimodule/duplicateMethod/differentGenericsInParams.kt");
+                }
+                
+                @TestMetadata("differentNumberOfParams.kt")
+                public void testDifferentNumberOfParams() throws Exception {
+                    doTest("compiler/testData/diagnostics/tests/multimodule/duplicateMethod/differentNumberOfParams.kt");
+                }
+                
+                @TestMetadata("differentReturnTypes.kt")
+                public void testDifferentReturnTypes() throws Exception {
+                    doTest("compiler/testData/diagnostics/tests/multimodule/duplicateMethod/differentReturnTypes.kt");
+                }
+                
+                @TestMetadata("extensionMatch.kt")
+                public void testExtensionMatch() throws Exception {
+                    doTest("compiler/testData/diagnostics/tests/multimodule/duplicateMethod/extensionMatch.kt");
+                }
+                
+                @TestMetadata("functionGenericsInParams.kt")
+                public void testFunctionGenericsInParams() throws Exception {
+                    doTest("compiler/testData/diagnostics/tests/multimodule/duplicateMethod/functionGenericsInParams.kt");
+                }
+                
+                @TestMetadata("noGenericsInParams.kt")
+                public void testNoGenericsInParams() throws Exception {
+                    doTest("compiler/testData/diagnostics/tests/multimodule/duplicateMethod/noGenericsInParams.kt");
+                }
+                
+                @TestMetadata("noParams.kt")
+                public void testNoParams() throws Exception {
+                    doTest("compiler/testData/diagnostics/tests/multimodule/duplicateMethod/noParams.kt");
+                }
+                
+                @TestMetadata("sameGenericsInParams.kt")
+                public void testSameGenericsInParams() throws Exception {
+                    doTest("compiler/testData/diagnostics/tests/multimodule/duplicateMethod/sameGenericsInParams.kt");
+                }
+                
+                @TestMetadata("simpleWithInheritance.kt")
+                public void testSimpleWithInheritance() throws Exception {
+                    doTest("compiler/testData/diagnostics/tests/multimodule/duplicateMethod/simpleWithInheritance.kt");
+                }
+                
+                @TestMetadata("substitutedGenericInParams.kt")
+                public void testSubstitutedGenericInParams() throws Exception {
+                    doTest("compiler/testData/diagnostics/tests/multimodule/duplicateMethod/substitutedGenericInParams.kt");
+                }
+                
+            }
+            
             public static Test innerSuite() {
                 TestSuite suite = new TestSuite("Multimodule");
                 suite.addTestSuite(Multimodule.class);
                 suite.addTestSuite(DuplicateClass.class);
+                suite.addTestSuite(DuplicateMethod.class);
                 return suite;
             }
         }
