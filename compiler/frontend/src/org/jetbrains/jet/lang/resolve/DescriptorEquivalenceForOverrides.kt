@@ -23,6 +23,7 @@ import org.jetbrains.jet.lang.descriptors.Visibilities
 import org.jetbrains.jet.lang.descriptors.PackageFragmentDescriptor
 import org.jetbrains.jet.lang.descriptors.TypeParameterDescriptor
 import org.jetbrains.jet.utils.emptyOrSingletonList
+import org.jetbrains.jet.lang.resolve.OverridingUtil.OverrideCompatibilityInfo
 
 object DescriptorEquivalenceForOverrides {
 
@@ -73,32 +74,21 @@ object DescriptorEquivalenceForOverrides {
 
         if (!ownersEquivalent(a, b, {x, y -> false})) return false
 
-        // compare parameter types
-        fun CallableMemberDescriptor.parameterTypes() = emptyOrSingletonList(this.getReceiverParameter()?.getType()) +
-                                                        this.getValueParameters().map { it.getType() }
-
-        val aTypes = a.parameterTypes()
-        val bTypes = b.parameterTypes()
-
-        if (aTypes.size != bTypes.size) return false
-
-        // This is a heuristic check. We do not take generic arguments into account and whenever we encounter a generic parameter T
-        // as a top-level type, we call areTypeParametersEquivalent
-        return aTypes.stream().zip(bTypes.stream()).all {
-            (p): Boolean -> val (t1, t2) = p
-
-            val c1 = t1.getConstructor()
-            val c2 = t2.getConstructor()
-
-            if (c1 == c2) return@all true
+        val overridingUtil = OverridingUtil.createWithEqualityAxioms @eq {
+            (c1, c2): Boolean ->
+            if (c1 == c2) return@eq true
 
             val d1 = c1.getDeclarationDescriptor()
             val d2 = c2.getDeclarationDescriptor()
 
-            if (d1 !is TypeParameterDescriptor || d2 !is TypeParameterDescriptor) return@all false
+            if (d1 !is TypeParameterDescriptor || d2 !is TypeParameterDescriptor) return@eq false
 
             areTypeParametersEquivalent(d1, d2, {x, y -> x == a && y == b})
         }
+
+        return overridingUtil.isOverridableBy(a, b).getResult() == OverrideCompatibilityInfo.Result.OVERRIDABLE
+                && overridingUtil.isOverridableBy(b, a).getResult() == OverrideCompatibilityInfo.Result.OVERRIDABLE
+
     }
 
     private fun ownersEquivalent(

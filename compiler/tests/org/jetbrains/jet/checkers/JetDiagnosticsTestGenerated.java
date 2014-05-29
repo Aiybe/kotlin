@@ -4687,7 +4687,7 @@ public class JetDiagnosticsTestGenerated extends AbstractJetDiagnosticsTest {
         }
         
         @TestMetadata("compiler/testData/diagnostics/tests/multimodule")
-        @InnerTestClasses({Multimodule.DuplicateClass.class, Multimodule.DuplicateMethod.class})
+        @InnerTestClasses({Multimodule.DuplicateClass.class, Multimodule.DuplicateMethod.class, Multimodule.DuplicateSuper.class})
         public static class Multimodule extends AbstractJetDiagnosticsTest {
             public void testAllFilesPresentInMultimodule() throws Exception {
                 JetTestUtils.assertAllTestsPresentByMetadata(this.getClass(), "org.jetbrains.jet.generators.tests.TestsPackage", new File("compiler/testData/diagnostics/tests/multimodule"), Pattern.compile("^(.+)\\.kt$"), true);
@@ -4832,6 +4832,11 @@ public class JetDiagnosticsTestGenerated extends AbstractJetDiagnosticsTest {
                     doTest("compiler/testData/diagnostics/tests/multimodule/duplicateMethod/functionGenericsInParams.kt");
                 }
                 
+                @TestMetadata("functionGenericsInParamsBoundsMismatch.kt")
+                public void testFunctionGenericsInParamsBoundsMismatch() throws Exception {
+                    doTest("compiler/testData/diagnostics/tests/multimodule/duplicateMethod/functionGenericsInParamsBoundsMismatch.kt");
+                }
+                
                 @TestMetadata("noGenericsInParams.kt")
                 public void testNoGenericsInParams() throws Exception {
                     doTest("compiler/testData/diagnostics/tests/multimodule/duplicateMethod/noGenericsInParams.kt");
@@ -4859,11 +4864,40 @@ public class JetDiagnosticsTestGenerated extends AbstractJetDiagnosticsTest {
                 
             }
             
+            @TestMetadata("compiler/testData/diagnostics/tests/multimodule/duplicateSuper")
+            public static class DuplicateSuper extends AbstractJetDiagnosticsTest {
+                public void testAllFilesPresentInDuplicateSuper() throws Exception {
+                    JetTestUtils.assertAllTestsPresentByMetadata(this.getClass(), "org.jetbrains.jet.generators.tests.TestsPackage", new File("compiler/testData/diagnostics/tests/multimodule/duplicateSuper"), Pattern.compile("^(.+)\\.kt$"), true);
+                }
+                
+                @TestMetadata("differentSuperTraits.kt")
+                public void testDifferentSuperTraits() throws Exception {
+                    doTest("compiler/testData/diagnostics/tests/multimodule/duplicateSuper/differentSuperTraits.kt");
+                }
+                
+                @TestMetadata("sameSuperTrait.kt")
+                public void testSameSuperTrait() throws Exception {
+                    doTest("compiler/testData/diagnostics/tests/multimodule/duplicateSuper/sameSuperTrait.kt");
+                }
+                
+                @TestMetadata("sameSuperTraitDifferentBounds.kt")
+                public void testSameSuperTraitDifferentBounds() throws Exception {
+                    doTest("compiler/testData/diagnostics/tests/multimodule/duplicateSuper/sameSuperTraitDifferentBounds.kt");
+                }
+                
+                @TestMetadata("sameSuperTraitGenerics.kt")
+                public void testSameSuperTraitGenerics() throws Exception {
+                    doTest("compiler/testData/diagnostics/tests/multimodule/duplicateSuper/sameSuperTraitGenerics.kt");
+                }
+                
+            }
+            
             public static Test innerSuite() {
                 TestSuite suite = new TestSuite("Multimodule");
                 suite.addTestSuite(Multimodule.class);
                 suite.addTestSuite(DuplicateClass.class);
                 suite.addTestSuite(DuplicateMethod.class);
+                suite.addTestSuite(DuplicateSuper.class);
                 return suite;
             }
         }

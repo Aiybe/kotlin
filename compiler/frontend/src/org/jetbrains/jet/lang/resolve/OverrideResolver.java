@@ -263,6 +263,7 @@ public class OverrideResolver {
     }
 
     public static <D extends CallableDescriptor> boolean overrides(@NotNull D f, @NotNull D g) {
+        if (DescriptorEquivalenceForOverrides.instance$.areEquivalent(f.getOriginal(), g.getOriginal())) return true;
         CallableDescriptor originalG = g.getOriginal();
         for (D overriddenFunction : getAllOverriddenDescriptors(f)) {
             if (DescriptorEquivalenceForOverrides.instance$.areEquivalent(originalG, overriddenFunction.getOriginal())) return true;
