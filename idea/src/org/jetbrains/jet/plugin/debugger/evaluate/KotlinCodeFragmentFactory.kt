@@ -25,14 +25,36 @@ import org.jetbrains.jet.plugin.JetFileType
 import org.jetbrains.jet.lang.psi.JetExpressionCodeFragment
 import com.intellij.psi.PsiCodeBlock
 import com.intellij.debugger.engine.evaluation.CodeFragmentKind
-import com.intellij.psi.JavaCodeFragmentFactory
 import org.jetbrains.jet.plugin.debugger.KotlinEditorTextProvider
 import com.intellij.psi.util.PsiTreeUtil
 import org.jetbrains.jet.lang.psi.JetExpression
-import org.jetbrains.jet.lang.psi.JetBlockExpression
 import org.jetbrains.jet.lang.psi.JetBlockCodeFragment
+import com.intellij.psi.util.CachedValue
+import com.intellij.psi.util.CachedValuesManager
+import com.intellij.psi.util.PsiModificationTracker
+import com.intellij.psi.util.CachedValueProvider.Result
+import com.intellij.psi.PsiFile
+import org.jetbrains.jet.lang.psi.JetCodeFragment
+import java.util.WeakHashMap
 
-class KotlinCodeFragmentFactory: CodeFragmentFactory() {
+class KotlinCodeFragmentFactory : CodeFragmentFactory() {
+
+    private var cachedFragments = WeakHashMap<JetCodeFragment, CachedValue<CompiledDataDescriptor>>()
+
+    fun getCachedFragment(codeFragment: JetCodeFragment): CompiledDataDescriptor? {
+        return cachedFragments[codeFragment]?.getValue()
+    }
+
+    fun cacheFragment(codeFragment: JetCodeFragment, compiledData: CompiledDataDescriptor) {
+        val project = codeFragment.getProject()
+        val newValue = CachedValuesManager.getManager(project).createCachedValue<CompiledDataDescriptor>(
+                        { Result(compiledData, PsiModificationTracker.MODIFICATION_COUNT) },
+                        false
+        )
+
+        cachedFragments.put(codeFragment, newValue)
+    }
+
     override fun createCodeFragment(item: TextWithImports, context: PsiElement?, project: Project): JavaCodeFragment {
         val codeFragment = if (item.getKind() == CodeFragmentKind.EXPRESSION) {
             JetExpressionCodeFragment(project, "fragment.kt", item.getText(), getContextElement(context))
@@ -71,3 +93,5 @@ class KotlinCodeFragmentFactory: CodeFragmentFactory() {
         }
     }
 }
+
+data class CompiledDataDescriptor(val bytecodes: ByteArray, val funcName: String, val parameterNames: List<String>)

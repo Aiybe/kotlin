@@ -73,6 +73,18 @@ object KotlinEvaluationBuilder: EvaluatorBuilder {
         if (packageName != null) {
             codeFragment.addImportsFromString("import $packageName.*")
         }
+
+        val compiledData = codeFragment.getCodeFragmentFactory().getCachedFragment(codeFragment)
+        if (compiledData != null) {
+            return ExpressionEvaluatorImpl(object : BaseKotlinEvaluator {
+                override fun evaluate(context: EvaluationContextImpl): Any? {
+                    return catchExceptions({ "Couldn't evaluate expression:\nfileText = ${position.getFile().getText()}\nline = ${position.getLine()}\ncodeFragment = ${codeFragment.getText()}"}) {
+                        val (bytecodes, funcName, parameterNames) = compiledData
+                        runEval4j(context, bytecodes, funcName, parameterNames)
+                    }
+                }
+            })
+        }
         return ExpressionEvaluatorImpl(KotlinEvaluator(codeFragment as JetCodeFragment, position))
     }
 }
@@ -83,7 +95,7 @@ class KotlinEvaluator(val codeFragment: JetCodeFragment,
                       val sourcePosition: SourcePosition
 ) : BaseKotlinEvaluator {
     override fun evaluate(context: EvaluationContextImpl): Any? {
-        try {
+        return catchExceptions({ "Couldn't evaluate expression:\nfileText = ${sourcePosition.getFile().getText()}\nline = ${sourcePosition.getLine()}\ncodeFragment = ${codeFragment.getText()}"}) {
             val extractedFunction = extractFunctionForDebugger(codeFragment, sourcePosition.getFile(), sourcePosition.getLine())
             if (extractedFunction == null) {
                 throw IllegalStateException("Code fragment cannot be extracted to function: ${sourcePosition.getFile().getText()}:${sourcePosition.getLine()},\ncodeFragment = ${codeFragment.getText()}")
@@ -96,18 +108,13 @@ class KotlinEvaluator(val codeFragment: JetCodeFragment,
             if (outputFiles.size() != 1) exception("Expression compiles to more than one class file. Note that lambdas, classes and objects are unsupported yet. List of files: ${outputFiles.makeString(",")}")
 
             val funcName = extractedFunction.getName()
-            if (funcName == null) {
-                throw IllegalStateException("Extracted function should have a name: ${extractedFunction.getText()}")
-            }
-            return runEval4j(context, outputFiles.first().asByteArray(), funcName, extractedFunction.getParameterNamesForDebugger())
-        }
-        catch(e: EvaluateException) {
-            throw e
-        }
-        catch (e: Exception) {
-            logger.error("Couldn't evaluate expression:\nfileText = ${sourcePosition.getFile().getText()}\nline = ${sourcePosition.getLine()}\ncodeFragment = ${codeFragment.getText()}", e)
-            val cause = if (e.getMessage() != null) ": ${e.getMessage()}" else ""
-            exception("An exception occurs during Evaluate Expression Action $cause")
+            if (funcName == null) throw IllegalStateException("Extracted function should have a name: ${extractedFunction.getText()}")
+            val bytecodes = outputFiles.first().asByteArray()
+            val parameterNamesForDebugger = extractedFunction.getParameterNamesForDebugger()
+
+            codeFragment.getCodeFragmentFactory().cacheFragment(codeFragment, CompiledDataDescriptor(bytecodes, funcName, parameterNamesForDebugger))
+
+            runEval4j(context, bytecodes, funcName, parameterNamesForDebugger)
         }
     }
 
@@ -270,6 +277,26 @@ trait BaseKotlinEvaluator: Evaluator {
         return Collections.emptyList()
     }
 
+    protected fun <T> catchExceptions(message: () -> String, f: () -> T): T {
+        try {
+            return f()
+        }
+        catch(e: EvaluateException) {
+            throw e
+        }
+        catch (e: Exception) {
+            logger.error(message(), e)
+            val cause = if (e.getMessage() != null) ": ${e.getMessage()}" else ""
+            exception("An exception occurs during Evaluate Expression Action $cause")
+        }
+    }
+
     override fun getModifier() = null
+}
+
+private fun JetCodeFragment.getCodeFragmentFactory(): KotlinCodeFragmentFactory {
+    val extensions = ApplicationManager.getApplication()!!.getExtensions(CodeFragmentFactory.EXTENSION_POINT_NAME)
+    return (extensions.firstOrNull {it is KotlinCodeFragmentFactory} as? KotlinCodeFragmentFactory)
+            ?: throw IllegalStateException(javaClass<KotlinCodeFragmentFactory>().getSimpleName() + " is not found for project " + getProject())
 }
 

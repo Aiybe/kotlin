@@ -117,6 +117,17 @@ public abstract class JetCodeFragment(
         return true
     }
 
+    override fun hashCode(): Int {
+        return 31 * (getText()?.hashCode() ?: 0) + importsToString().hashCode() + (getContext()?.hashCode() ?: 0)
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this.identityEquals(other)) return true
+        if (other !is JetCodeFragment) return false
+
+        return this.getText() == other.getText() && this.importsToString() == other.importsToString() && this.getContext() == other.getContext()
+    }
+
     class object {
         val IMPORT_SEPARATOR = ","
 
