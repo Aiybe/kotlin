@@ -22,8 +22,8 @@ import org.jetbrains.jet.lang.descriptors.CallableMemberDescriptor
 import org.jetbrains.jet.lang.descriptors.Visibilities
 import org.jetbrains.jet.lang.descriptors.PackageFragmentDescriptor
 import org.jetbrains.jet.lang.descriptors.TypeParameterDescriptor
-import org.jetbrains.jet.utils.emptyOrSingletonList
 import org.jetbrains.jet.lang.resolve.OverridingUtil.OverrideCompatibilityInfo
+import org.jetbrains.jet.lang.resolve
 
 object DescriptorEquivalenceForOverrides {
 
@@ -70,7 +70,7 @@ object DescriptorEquivalenceForOverrides {
         if (a.getContainingDeclaration() == b.getContainingDeclaration()) return false
 
         // Distinct locals are not equivalent
-        if (a.getVisibility() == Visibilities.LOCAL || b.getVisibility() == Visibilities.LOCAL) return false
+        if (DescriptorUtils.isLocal(a) || DescriptorUtils.isLocal(b)) return false
 
         if (!ownersEquivalent(a, b, {x, y -> false})) return false
 
