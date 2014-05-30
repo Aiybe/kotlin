@@ -68,6 +68,10 @@ public class SpecialFiles {
         excludedFiles.add("packageQualifiedMethod.kt"); // Cannot change package name
         excludedFiles.add("classObjectToString.kt"); // Cannot change package name
 
+        /* Reflection tests with full-qualified names*/
+        excludedFiles.add("insideLambda");
+        excludedFiles.add("lambda");
+
         excludedFiles.add("kt326.kt"); // Commented
         excludedFiles.add("kt1213.kt"); // Commented
 
