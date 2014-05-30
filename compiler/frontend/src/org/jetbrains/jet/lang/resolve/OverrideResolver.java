@@ -263,7 +263,11 @@ public class OverrideResolver {
     }
 
     public static <D extends CallableDescriptor> boolean overrides(@NotNull D f, @NotNull D g) {
-        if (DescriptorEquivalenceForOverrides.instance$.areEquivalent(f.getOriginal(), g.getOriginal())) return true;
+        // This first check cover the case of duplicate classes in different modules:
+        // when B is defined in modules m1 and m2, and C (indirectly) inherits from both versions,
+        // we'll be getting sets of members that do not override each other, but are structurally equivalent.
+        // As other code relies on no equal descriptors passed here, we guard against f == g, but this may not be necessary
+        if (!f.equals(g) && DescriptorEquivalenceForOverrides.instance$.areEquivalent(f.getOriginal(), g.getOriginal())) return true;
         CallableDescriptor originalG = g.getOriginal();
         for (D overriddenFunction : getAllOverriddenDescriptors(f)) {
             if (DescriptorEquivalenceForOverrides.instance$.areEquivalent(originalG, overriddenFunction.getOriginal())) return true;
