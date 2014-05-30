@@ -36,3 +36,6 @@ public fun booleanArray(vararg content : Boolean): BooleanArray = js.noImpl
 
 library("copyToArray")
 public fun <reified T> Collection<T>.copyToArray(): Array<T> = js.noImpl
+
+library
+public class DuplicateKeyException(message: String? = null) : Exception() {}
